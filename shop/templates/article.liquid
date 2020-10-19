@@ -1,0 +1,42 @@
+{% section 'article-templateV2' %}
+{% assign hasCollection = false %}
+{% if article.tags.size > 0 %}
+  {% for tag in article.tags %}
+    {%- if tag contains 'collection__' -%}
+	  {% assign hasCollection = true %}
+    {%- endif -%}
+  {% endfor %}
+{% endif %}
+{%- if hasCollection -%}
+{% section 'collection-slider__article-old' %}
+{% endif %}
+
+
+{% comment %}
+
+block
+3 types de block :
+button_1
+button_2
+encart_1
+encart_2
+
+
+[
+	article
+	button_1
+]
+
+{{ article.content }}
+{% assign articleDescription = article.content %}
+
+{% if articleDescription contains '{{ BUTTON_1 }}' %}
+	1. on loop dans les block pour voir si un block "button_1" a le même article
+	2. si on trouve ce block, on capture :
+	{% capture button_1_content %}
+		<a href="{{ block.settings.button_url }}" class="button button--primary">{{ block.settings.button_text }}</a>
+	{% endcapture %}
+	3. puis on remplace : {% assign articleDescription = article.content | replace : '{{ BUTTON_1}}' with : button_1_content %}
+{% endif %}
+
+{% endcomment %}

@@ -1,0 +1,48 @@
+{% case Settings.icon_per_line %}
+	{% when 2 %}
+		{% assign grid_cell_width = 'grid--center 1/1--phone 1/2--desk' %}
+	{% when 3 %}
+		{% assign grid_cell_width = 'grid--center 1/1--phone 1/3--desk' %}
+	{% when 4 %}
+		{% assign grid_cell_width = 'grid--center 1/1--phone 1/4--desk' %}
+	{% when 5 %}
+		{% assign grid_cell_width = 'grid--center 1/1--phone 1/3--desk' %}
+	{% else %}
+		{% assign grid_cell_width = 'grid--center 1/1--phone 1/3--desk' %}
+{% endcase %}
+
+{%- capture flickity_options -%}
+{
+  "prevNextButtons": false,
+  "groupCells": 1,
+  "pageDots": true,
+  "autoPlay":2500
+}
+{%- endcapture -%}
+
+<section class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="icons-list">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div class="container--medium">
+		<h2 class="heading z-h3 align-center icons_list__title">{{Settings.title}}</h2>
+
+		<div class="grid grid--middle" data-only-mobile-f='{{ flickity_options }}'>
+			{% for i in (1..6) %}
+			{% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+			{% assign iconKey = 'icon_' | append : current %}
+			{% assign titleKey = 'title_' | append : current %}
+			{% assign subtitleKey = 'subtitle_' | append : current %}
+			{% if Settings[titleKey] == blank %}{% continue %}{% endif %}
+				<div class="grid__cell {{grid_cell_width}} icons_list" data-slider-mobile-item>
+					<div class="icons_list--icon">
+						<img src="{{ Settings[iconKey] | img_url: '400x' }}" alt="{{ Settings[iconKey].alt }}">
+					</div>
+					<p class="text t-3 icons_list--title">{{ Settings[titleKey] }}</p>
+					<div class="text t-5  icons_list--subtitle">
+						{{ Settings[subtitleKey] }}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+</section>

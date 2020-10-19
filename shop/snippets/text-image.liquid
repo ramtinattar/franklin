@@ -1,0 +1,51 @@
+<style>
+	#section-{{ id }} .image_text_flex--image {
+		width: {{ Settings.width_image }}%;
+	}
+	#section-{{ id }} .image_text_flex--text--content {
+		width: {{ Settings.width_text }}%;
+		margin: auto;
+	}
+	#section-{{ id }} .image_text__title {
+		margin-bottom: {{ Settings.margin_bottom_title }}px;
+	}
+	#section-{{ id }} .image_text_flex {
+		align-items: {{ Settings.align_position }};
+	}
+</style>
+
+<section class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="text-image">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div class="page-width image_text_flex {% if Settings.content_position == 'Image-right' %}image_text_flex--mobile-reverse{% endif %}">
+
+		{%- if Settings.content_position == 'Image-left' -%}
+			<div class="image_text_flex--image--container {{Settings.image_position}}">
+				{% include 'image' with img : Settings.image, classes:'image_text_flex--image' %}
+			</div>
+			<div class="image_text_flex--text">
+				<div class="image_text_flex--text--content {{Settings.text_position}}">
+					<h2 class="heading z-h3 image_text__title">{{Settings.title}}</h2>
+					<div class="image_text__content">
+						{{ Settings.text }}
+					</div>
+				</div>
+			</div>
+		{%- else -%}
+			<div class="image_text_flex--text">
+				<div class="image_text_flex--text--content {{Settings.text_position}}">
+					<h2 class="heading z-h3 image_text__title">{{Settings.title}}</h2>
+					<div class="image_text__content">
+						{{ Settings.text }}
+					</div>
+				</div>
+			</div>
+			<div class="image_text_flex--image--container {{Settings.image_position}}">
+				{% include 'image' with img : Settings.image, classes:'image_text_flex--image' %}
+			</div>
+		{%- endif -%}
+
+
+
+	</div>
+
+</section>

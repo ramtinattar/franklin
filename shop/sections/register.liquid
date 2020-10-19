@@ -1,0 +1,152 @@
+<section id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="page-register">
+	<div class="{{ section.settings.container_size }} customer--container">
+		<div class="{{ section.settings.title_alignment }}">
+			{% unless section.settings.image == blank %}
+				{% include 'image' with img : section.settings.image, classes : 'login_image' %}
+			{% endunless %}
+			<h1 class="heading z-h2">{{ section.settings.title }}</h1>
+      {% unless section.settings.text == blank %}
+      <p class="login_text text t-1">
+        {{ section.settings.text }}
+      </p>
+      {% endunless %}
+		</div>
+		<div class="grid align-center login_form">
+			{% form 'create_customer' %}
+			{{ form.errors | default_errors }}
+
+			<div class="grid__cell">
+				<label for="FirstName" class="label-hidden">
+					{{ 'customer.register.first_name' | t }}
+				</label>
+				<input class="input input--medium input--customer" type="text" name="customer[first_name]" id="FirstName" placeholder="{{ 'customer.register.first_name' | t }}" autofocus {% if form.first_name %}value="{{ form.first_name }}"{% endif %}>
+			</div>
+
+			<div class="grid__cell">
+				<label for="LastName" class="label-hidden">
+					{{ 'customer.register.last_name' | t }}
+				</label>
+				<input class="input input--medium input--customer" type="text" name="customer[last_name]" id="LastName" placeholder="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+			</div>
+
+			<div class="grid__cell">
+				<label for="Email" class="label-hidden">
+					{{ 'customer.register.email' | t }}
+				</label>
+				<input class="input input--medium input--customer" type="email" name="customer[email]" id="Email"
+					class="{% if form.errors contains 'email' %}input-error{% endif %}"
+					placeholder="{{ 'customer.register.email' | t }}"
+					value="{% if form.email %}{{ form.email }}{% endif %}"
+					spellcheck="false"
+					autocomplete="off"
+					autocapitalize="off">
+			</div>
+
+			<div class="grid__cell">
+				<label for="CreatePassword" class="label-hidden">
+					{{ 'customer.register.password' | t }}
+				</label>
+				<input class="input input--medium input--customer" type="password" name="customer[password]" id="CreatePassword" class="{% if form.errors contains 'password' %}input-error{% endif %}" placeholder="{{ 'customer.register.password' | t }}">
+			</div>
+
+			<div class="grid__cell">
+				<input class="input input--medium button button--secondary" type="submit" value="{{ 'customer.register.submit' | t }}">
+			</div>
+
+			<div class="grid__cell">
+        <div class="mt-10">
+          <a class="link" href="/account/login">{{ section.settings.login }}</a>
+          <span class="spacer_link"> ou </span>
+			    <a class="link" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a>
+        </div>
+			</div>
+
+			{% endform %}
+		</div>
+	</div>
+</section>
+
+{% schema %}
+{
+	"name": "register",
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title (optionnal)"
+		},
+		{
+            "type": "select",
+            "id": "title_alignment",
+            "label": "Title alignment",
+            "options": [
+				{
+					"group": "Alignment",
+					"value": "align-left",
+					"label": "Left"
+				},
+				{
+					"group": "Alignment",
+					"value": "align-center",
+					"label": "Center"
+				},
+				{
+					"group": "Alignment",
+					"value": "align-right",
+					"label": "Right"
+				}
+            ],
+            "default": "align-center"
+		},
+		{
+			"type": "select",
+			"id": "container_size",
+			"label": "Container size",
+			"options": [
+			{
+				"group": "Container size",
+				"value": "container--small",
+				"label": "Small"
+			},
+			{
+				"group": "Container size",
+				"value": "container--medium",
+				"label": "Medium"
+			},
+			{
+				"group": "Container size",
+				"value": "container",
+				"label": "Normal"
+			},
+			{
+				"group": "Container size",
+				"value": "container--large",
+				"label": "Large"
+			},
+			{
+				"group": "Container size",
+				"value": "container--full",
+				"label": "Full"
+			}
+			],
+			"default": "container--small"
+		},
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Texte"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "login",
+      "label": "Login label",
+      "default": "Login"
+    }
+	]
+}
+{% endschema %}

@@ -1,0 +1,474 @@
+{% assign product_update = settings.product_update %}
+{% assign product_delivery_each = settings.product_delivery_each %}
+{% assign product_text_reviews = settings.product_text_reviews %}
+{% assign product_oneshot = settings.product_oneshot %}
+{% assign product_subscribe = settings.product_subscribe %}
+{% assign product_unite = settings.product_unite %}
+{% assign product_add = settings.product_add %}
+{% assign product_quantity = settings.product_quantity %}
+{% assign product_frequency = settings.product_frequency %}
+{% assign go_to_product = settings.go_to_product %}
+{% assign product_why_subscribe = settings.product_why_subscribe %}
+{% assign subscribe_popup_title = settings.subscribe_popup_title %}
+{% assign subscribe_popup_picto_1 = settings.subscribe_popup_picto_1 %}
+{% assign subscribe_popup_title_1 = settings.subscribe_popup_title_1 %}
+{% assign subscribe_popup_text_1 = settings.subscribe_popup_text_1 %}
+{% assign subscribe_popup_picto_2 = settings.subscribe_popup_picto_2 %}
+{% assign subscribe_popup_title_2 = settings.subscribe_popup_title_2 %}
+{% assign subscribe_popup_text_2 = settings.subscribe_popup_text_2 %}
+{% assign subscribe_popup_picto_3 = settings.subscribe_popup_picto_3 %}
+{% assign subscribe_popup_title_3 = settings.subscribe_popup_title_3 %}
+{% assign subscribe_popup_text_3 = settings.subscribe_popup_text_3 %}
+{% assign subscribe_popup_picto_4 = settings.subscribe_popup_picto_4 %}
+{% assign subscribe_popup_title_4 = settings.subscribe_popup_title_4 %}
+{% assign subscribe_popup_text_4 = settings.subscribe_popup_text_4 %}
+{% assign subscribe_popup_content = settings.subscribe_popup_content %}
+{% assign subscribe_popup_cta = settings.subscribe_popup_cta %}
+{% assign subscribe_popup_url = settings.subscribe_popup_url %}
+
+{% assign product_why_guide = settings.product_why_guide %}
+{% assign guide_popup_title = settings.guide_popup_title %}
+{% assign guide_popup_picto_1 = settings.guide_popup_picto_1 %}
+{% assign guide_popup_title_1 = settings.guide_popup_title_1 %}
+{% assign guide_popup_text_1 = settings.guide_popup_text_1 %}
+{% assign guide_popup_picto_2 = settings.guide_popup_picto_2 %}
+{% assign guide_popup_title_2 = settings.guide_popup_title_2 %}
+{% assign guide_popup_text_2 = settings.guide_popup_text_2 %}
+
+
+{% assign product_reinsurance_text_1 = settings.product_reinsurance_text_1 %}
+{% assign product_reinsurance_logo_1 = settings.product_reinsurance_logo_1 %}
+{% assign product_reinsurance_text_2 = settings.product_reinsurance_text_2 %}
+{% assign product_reinsurance_logo_2 = settings.product_reinsurance_logo_2 %}
+{% assign product_reinsurance_text_3 = settings.product_reinsurance_text_3 %}
+{% assign product_reinsurance_logo_3 = settings.product_reinsurance_logo_3 %}
+
+{%- assign selectedVariant = _product.selected_or_first_available_variant -%}
+{%- assign featured_image = selectedVariant.featured_image | default: _product.featured_image -%}
+
+{% assign productTag = false %}
+{% for tag in _product.tags %}
+{% if tag contains 'tag__' %}
+{% assign productTag = tag | remove : 'tag__' %}
+{% endif %}
+{% endfor %}
+
+{% capture check_icon %}
+{% include 'icon' with classes:'icon-check', src:settings.check_icon, alt:'checkbox' %}
+{% endcapture %}
+{% assign product_description_array = _product.description | split : '</h6>' %}
+{% assign product_predescription = product_description_array[0] | remove : '<h6>' %}
+	{% assign product_description = product_description_array[1] | replace : '*', check_icon %}
+	{% assign slider_options = '{ "lazyLoad" : 1, "adaptiveHeight" : true, "groupCells" : true, "pageDots" : false, "prevNextButtons" : false, "wrapAround" : false}' %}
+	{% assign oneshot_unite_price = selectedVariant.price | money_without_currency %}
+
+	{% if _product.tags contains 'active_per_weight' and selectedVariant.options[0] contains 'kg' %}
+	{% assign selectedWeight = selectedVariant.options[0] | remove : ' kg' | remove : 'kg' %}
+	{% assign oneshot_weight_price =  oneshot_unite_price | divided_by : selectedWeight | round : 2 %}
+	{% endif %}
+
+	{% if _product.tags contains 'active_per_lot' %}
+		{% assign product_unite = "le lot" %}
+	{% endif %}
+	{% if _product.metafields.subscriptions.has_subscription == 'True' %}
+	{% assign subscriptionEnabled = true %}
+	{% assign subscription_percentage = _product.metafields.subscriptions.discount_percentage | round %}
+	{% assign subscription_interval_frequencies = _product.metafields.subscriptions.shipping_interval_frequency | split : ',' %}
+	{% assign subscription_interval_unit_type = _product.metafields.subscriptions.shipping_interval_unit_type %}
+	{% assign subscription_id = _product.metafields.subscriptions.subscription_id %}
+	{% assign subscription_unite_price = selectedVariant.metafields.subscriptions.discount_variant_price %}
+
+	{% if _product.tags contains 'active_per_weight' and selectedVariant.options[0] contains 'kg' %}
+	{% assign subscription_weight_price =  subscription_unite_price | divided_by : selectedWeight | round : 2 %}
+	{% endif %}
+	{% endif %}
+	<div {% unless ajax %}data-section-id="{{ section.id }}"{% endunless %} data-section-type="product" data-enable-history-state="true">
+		<div data-product-container class="product">
+			<div class="product-grid relative">
+				{% unless ajax %}
+				<div class="product__breadcrumb only-desktop">
+					{% include 'breadcrumb' with product : _product %}
+				</div>
+				{% endunless %}
+				<div class="product-grid__cell product__images-container">
+					{% if ajax and productTag %}
+					<div class="product__image-tag product-card__tag text--small bg--secondary only-desktop">
+						{{ productTag }}
+					</div>
+					{% endif %}
+					<div class="product__images-container relative">
+						<div class="product__thumbnails-container only-desktop" data-product-thumbnails>
+							{% for image in _product.images %}
+							<div class="product__thumbnail-border {% if forloop.first %}product__thumbnail-border--active{% endif %}" data-product-thumbnail="{{ forloop.index | minus : 1 }}">
+								<div class="product__thumbnail">
+									{% include 'image' with img: image, classes : "product__thumbnail-image" %}
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+						<div class="product__slider-container">
+							<div class="product__slider carousel" data-product-slider='{{ slider_options }}'>
+								{% for image in _product.images %}
+								<div class="product__slide" data-image-id="{{ image.id }}" data-product-slide="{{ forloop.index }}">
+									{% include 'image' with img: image, __with_effect : true, responsiveSizes : false, classes : "product__slide-image" %}
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="product-grid__cell">
+					<div data-close-quickview class="quickview__close">
+						{% include 'icon-croix' %}
+					</div>
+					<div class="product__content page-width--mobile">
+
+						<h1 class="heading z-h4 product__title">{{ _product.title }}</h1>
+						<div class="product__subtitle-container">
+							<h2 class="text t-3 product__vendor">{{ _product.vendor }}</h2>
+							<div class="product__rate-container">
+								<div class="reviews-social__rating">
+									<div class="yotpo bottomLine"
+									    data-appkey="ib3UZsEMCWTakCBdQIiLYciJnTn4wbwvcu2EfhwC"
+									    data-domain="{{shop.permanent_domain | escape }}"
+									    data-product-id="{{ _product.id }}"
+									    data-product-models="{{ product.id }}"
+									    data-name="{{ _product.title | escape }}"
+									    data-url="{{ shop.url }}{{ product.url }}"
+									    data-image-url="{{ _product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+									    data-description="{{ _product.description | escape }}"
+									    data-bread-crumbs="{% for tag in _product.tags %}{{ tag | escape }};{% endfor %}">
+									</div>
+
+									{% comment %}
+									{% for i in (1..5) %}
+									{% if i <= 4 %}
+									{% include 'icon' with classes:'icon-star', src:settings.full_star_green, alt:'étoile note' %}
+									{% else %}
+									{% include 'icon' with classes:'icon-star', src:settings.empty_star_green, alt:'étoile note' %}
+									{% endif %}
+									{% endfor %}
+									{% endcomment %}
+								</div>
+								{% comment %}
+								<div class="reviews-social__text text--small only-desktop">
+									{{ product_text_reviews }}
+								</div>
+								{% endcomment %}
+
+							</div>
+						</div>
+						<div class="product__description-container">
+							<h3 class="heading product__predescription z-h9">{{ product_predescription }}</h3>
+							<div class="product__description text t-5">
+								{{ product_description }}
+							</div>
+						</div>
+
+						<div data-product-form class="product__form">
+							<div class="product__choices {% unless subscriptionEnabled == true %}hide{% endunless %}">
+								<div data-oneshot-activate class="product__choice product__choice-oneshot product__choice--active">
+									<div class="product__choice-header">
+										<div class="product__choice-outbox"><div class="product__choice-inbox"></div></div>
+										<div class="product__choice-header-title text bold t-3 uppercase">
+											{{ product_oneshot }}
+										</div>
+									</div>
+									<div class="product__choice-content">
+										<div class="product__choice-left">
+											<p class="product__choice-text uppercase t-10">
+												<span data-oneshot-unit-price>{{ oneshot_unite_price }}</span>€ {{ product_unite }}
+											</p>
+											{% if selectedWeight %}
+											<p class="product__choice-text uppercase t-10">
+												(<span data-oneshot-weight-price>{{ oneshot_weight_price | replace : '.' , ',' }}</span>€/kg)
+											</p>
+											{% endif %}
+										</div>
+										<div class="product__choice-right">
+											<div class="product__choice-text t-2 bold">
+												<span data-oneshot-quantity-price>{{ oneshot_unite_price }}</span>€
+											</div>
+										</div>
+									</div>
+								</div>
+								{% if subscriptionEnabled == true %}
+								<div data-subscription-activate data-subscription-id="{{ subscription_id }}" class="product__choice product__choice-subscription">
+									<div class="product__choice-header">
+										<div class="product__choice-outbox"><div class="product__choice-inbox"></div></div>
+										<div class="product__choice-header-title text bold t-3 uppercase">
+											{{ product_subscribe }} (-{{ subscription_percentage }}%)
+										</div>
+									</div>
+									<div class="product__choice-content">
+										<div class="product__choice-left">
+											<p class="product__choice-text uppercase t-10">
+												<span data-subscription-unit-price>{{ subscription_unite_price | replace : '.', ','}}</span>€ {{ product_unite }}
+											</p>
+											{% if selectedWeight %}
+											<p class="product__choice-text uppercase t-10">
+												(<span data-subscription-weight-price>{{ subscription_weight_price | replace : '.' , ',' }}</span>€/kg)
+											</p>
+											{% endif %}
+										</div>
+										<div class="product__choice-right">
+											<div class="product__choice-text t-2 bold">
+												<span data-subscription-quantity-price>{{ subscription_unite_price | replace : '.' , ',' }}</span>€
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+							{% if subscriptionEnabled == true %}
+
+							<div class="subscribe-popup__container">
+								<div class="subscribe-popup">
+									<div class="subscribe-popup__hover text t-10">
+										{{ product_why_subscribe }}
+										<div class="subscribe-popup__block">
+											<div class="subscribe-popup__block-content">
+												<div class="heading z-h12 subscribe-popup__title">
+													{{ subscribe_popup_title }}
+												</div>
+												<div class="subscribe-popup__description">
+													<div class="popup__picto-container">
+														<img src="{{ subscribe_popup_picto_1 }}" class="popup__picto" alt="Picto popup 1"/>
+														<div class="text t-7 bold uppercase popup__title">
+															{{ subscribe_popup_title_1 }}
+														</div>
+														<div class="text t-10 popup__text">
+															{{ subscribe_popup_text_1 }}
+														</div>
+													</div>
+													<div class="popup__picto-container">
+														<img src="{{ subscribe_popup_picto_2 }}" class="popup__picto" alt="Picto popup 2"/>
+														<div class="text t-7 bold uppercase popup__title">
+															{{ subscribe_popup_title_2 }}
+														</div>
+														<div class="text t-10 popup__text">
+															{{ subscribe_popup_text_2 }}
+														</div>
+													</div>
+													<div class="popup__picto-container">
+														<img src="{{ subscribe_popup_picto_3 }}" class="popup__picto" alt="Picto popup 3"/>
+														<div class="text t-7 bold uppercase popup__title">
+															{{ subscribe_popup_title_3 }}
+														</div>
+														<div class="text t-10 popup__text">
+															{{ subscribe_popup_text_3 }}
+														</div>
+													</div>
+													<div class="popup__picto-container">
+														<img src="{{ subscribe_popup_picto_4 }}" class="popup__picto" alt="Picto popup 4"/>
+														<div class="text t-7 bold uppercase popup__title">
+															{{ subscribe_popup_title_4 }}
+														</div>
+														<div class="text t-10 popup__text">
+															{{ subscribe_popup_text_4 }}
+														</div>
+													</div>
+												</div>
+												<div class="subscribe-popup__link">
+													<div class="arrow-button__container">
+														<a href="{{ subscribe_popup_url }}" class="arrow-button__link secondary collection-slider__button" target="_blank">
+															<div class="arrow-button arrow-button--white">
+																{{ subscribe_popup_cta }}
+																<div class="arrow-button__line"></div>
+																<div class="arrow-button__line--hover"></div>
+															</div>
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							<div class="product__options">
+								<div class="product__option-container order-4">
+									<div class="product__option-title  text--medium">
+										{{ product_quantity }}
+									</div>
+									<div class="product__option-content product__qty-container">
+										<div data-product-minus class="product__qty-btn">
+											-
+										</div>
+										<div class="product__qty text--medium ">
+											<span data-product-quantity class="product__qty-nb">1</span>
+										</div>
+										<div data-product-plus data-product-maximum="{{ selectedVariant.quantity | default : 9 }}" class="product__qty-btn">
+											+
+										</div>
+									</div>
+								</div>
+								{% for option in _product.options_with_values %}
+								<div class="product__option-container {% if option.name contains 'Taille' or option.name == 'Taille' %}order-0{% else %}order-2{% endif %}">
+									<div class="product__option-title  text--medium {% if option.name contains 'Taille' or option.name == 'Taille' %}product__option-title--guide{% endif %}">
+										{{ option.name }}
+										{% if option.name contains 'Taille' or option.name == 'Taille' %}
+										<div class="subscribe-popup__hover text t-10">
+											{{ product_why_guide }}
+											<div class="subscribe-popup__block">
+												<div class="subscribe-popup__block-content">
+													<div class="heading z-h12 subscribe-popup__title">
+														{{ guide_popup_title }}
+													</div>
+													<div class="subscribe-popup__description">
+														<div class="popup__picto-container">
+															<img src="{{ guide_popup_picto_1 }}" class="popup__picto"/>
+															<div class="text t-7 bold uppercase popup__title">
+																{{ guide_popup_title_1 }}
+															</div>
+															<div class="text t-10 popup__text">
+																{{ guide_popup_text_1 }}
+															</div>
+														</div>
+														<div class="popup__picto-container">
+															<img src="{{ guide_popup_picto_2 }}" class="popup__picto"/>
+															<div class="text t-7 bold uppercase popup__title">
+																{{ guide_popup_title_2 }}
+															</div>
+															<div class="text t-10 popup__text">
+																{{ guide_popup_text_2 }}
+															</div>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+										{% endif %}
+									</div>
+									<div class="product__option-content">
+										<select class="product__select" data-option-selector data-variant-option-name="{{ option.name }}" data-option-index="{{ forloop.index }}">
+											{% for value in option.values %}
+											<option
+											class="product__select-option"
+											data-variant-option
+											{% if option.selected_value == value %}selected="selected"{% endif %}
+											value="{{ value }}">
+											{{ value }}
+										</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							{% endfor %}
+							{% if subscriptionEnabled == true %}
+							<div data-frequency-container style="display:none;" class="order-5 product__option-container">
+								<div class="product__option-title  text--medium">
+									{{ product_frequency }}
+								</div>
+								<div class="product__option-content">
+									<select class="product__select" data-frequency-selector data-interval-unit-type="{{ subscription_interval_unit_type }}">
+										{% for value in subscription_interval_frequencies %}
+										<option
+										class="product__select-option"
+										{% if value == "30" %}selected="selected"{% endif %}
+										value="{{ value }}">
+										Tous les {{ value }} j
+									</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+					<select name="id" class="no-js" data-product-select>
+						{% for variant in _product.variants %}
+						<option
+						{% if variant == selectedVariant %}selected="selected"{% endif %}
+						{% unless variant.available %}disabled="disabled"{% endunless %}
+						{% if variant.option1 != blank %}data-option-1="{{ variant.option1}}"{% endif %}
+						{% if variant.option2 != blank %}data-option-2="{{ variant.option2}}"{% endif %}
+						{% if variant.option3 != blank %}data-option-3="{{ variant.option3}}"{% endif %}
+						{% if variant.featured_image %}data-featured-image-id="{{ variant.featured_image.id }}"{% endif %}
+						data-subscription-variant-id="{{ variant.metafields.subscriptions.discount_variant_id | default : false }}"
+						data-oneshot-variant-id="{{ variant.id }}"
+						data-variant-available="{{ variant.available }}"
+						data-oneshot-price="{{ variant.price }}"
+						data-subscription-price="{{ variant.metafields.subscriptions.discount_variant_price | default : false }}"
+						value="{{ variant.id }}">
+						{{ variant.title }}
+					</option>
+					{% endfor %}
+				</select>
+
+				<div class="product__add-to-cart-container">
+					 {% if _product.available %}
+					 <button data-add-to-cart class="button--add-to-cart button button--secondary button--full">{{ product_add }}<span class="button__product-price" data-order-price>{{ oneshot_unite_price }}</span>€</button>
+					 {% else %}
+					 <button disabled class="button--add-to-cart button button--secondary button--disabled button--full">Épuisé</button>
+					 {% endif %}
+				</div>
+				<div class="product__pictos">
+					<div class="product__pictos-carousel carousel" data-flickity='{ "pageDots" : true, "watchCSS" : true, "prevNextButtons" : false, "wrapAround" : true}'>
+						<div class="product__picto-container carousel-cell">
+							<div class="product__picto">
+								<img class="product__picto-image" alt="picto reassurance 1" src="{{ product_reinsurance_logo_1 }}" />
+								<div class="product__picto-title text t-10">
+									{{ product_reinsurance_text_1 }}
+								</div>
+							</div>
+						</div>
+						<div class="product__picto-container carousel-cell">
+							<div class="product__picto">
+								<img class="product__picto-image" alt="picto reassurance 2" src="{{ product_reinsurance_logo_2 }}" />
+								<div class="product__picto-title text t-10">
+									{{ product_reinsurance_text_2 }}
+								</div>
+							</div>
+
+						</div>
+						<div class="product__picto-container carousel-cell">
+							<div class="product__picto">
+								<img class="product__picto-image" alt="picto reassurance 3" src="{{ product_reinsurance_logo_3 }}" />
+								<div class="product__picto-title text t-10">
+									{{ product_reinsurance_text_3 }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% if ajax %}
+			<div class="product__go-to-page align-right text--sm">
+				{% include 'arrow-button' with text : go_to_product, href : _product.url %}
+			</div>
+			{% endif %}
+		</div>
+
+	</div>
+</div>
+</div>
+{% unless ajax %}
+{% if section.settings.enable_quickbar == true %}
+<div data-product-footer class="product-footer__container only-mobile-force">
+	<div class="container--medium product-footer">
+		<div data-scroll-top class="product-footer__arrow-container">
+			<img class="product-footer__arrow" src="{{ section.settings.up_arrow }}" />
+		</div>
+		<div class="product-footer__title z-h6 product__title">
+			{{ _product.title }}
+		</div>
+		<div class="flex-grow">
+
+		</div>
+		<div class="product__add-form">
+			<button data-add-to-cart class="button--footer-add-to-cart button--add-to-cart button button--secondary button--full">{{ product_add }}<span class="button__product-price" data-order-price>{{ oneshot_unite_price }}</span>€</button>
+			{% if section.settings.quickbar_text != blank %}
+			<div class="product-footer__subtitle text uppercase t-7">
+				{{ section.settings.quickbar_text }}
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endif %}
+<script type="application/json" data-product-json>
+{{ product | json }}
+</script>
+{% endunless %}
+</div>

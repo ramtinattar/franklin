@@ -1,0 +1,899 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Studio Zerance",
+    "theme_version": "1.0.0",
+    "theme_author": "Studio Zerance",
+    "theme_documentation_url": "https:\/\/github.com\/Zerance131\/theme-zerance131\/",
+    "theme_support_email": "sulli@zerance.fr"
+  },
+  {
+    "name": "Icons",
+    "settings": [
+      {
+        "type": "url",
+        "id": "white_logo",
+        "label": "Logo blanc"
+      },
+      {
+        "type": "url",
+        "id": "logo",
+        "label": "Logo vert"
+      },
+      {
+        "type": "url",
+        "id": "empty_star",
+        "label": "Étoile vide"
+      },
+      {
+        "type": "url",
+        "id": "full_star",
+        "label": "Étoile pleine"
+      },
+      {
+        "type": "url",
+        "id": "empty_star_green",
+        "label": "Étoile verte vide"
+      },
+      {
+        "type": "url",
+        "id": "full_star_green",
+        "label": "Étoile verte pleine"
+      },
+      {
+        "type": "url",
+        "id": "right_arrow_white",
+        "label": "Flèche droite blanche"
+      },
+      {
+        "type": "url",
+        "id": "right_arrow_green",
+        "label": "Flèche droite verte"
+      },
+      {
+        "type": "url",
+        "id": "bottom_arrow_green_faq",
+        "label": "Flèche bas verte (FAQ)"
+      },
+      {
+        "type": "url",
+        "id": "check_icon",
+        "label": "Check icon"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background color",
+        "default": "#F7F1ED"
+      },
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary color",
+        "default": "#0D3C32"
+      },
+      {
+        "type": "color",
+        "id": "checkbox_color",
+        "label": "Checkbox color",
+        "default": "#92C7AD"
+      },
+      {
+        "type": "color",
+        "id": "font_color",
+        "label": "Font color",
+        "default": "#807672"
+      },
+      {
+        "type": "color",
+        "id": "contour_color",
+        "label": "Contour color",
+        "default": "#B0A39D"
+      },
+      {
+        "type": "color",
+        "id": "secondary_color",
+        "label": "secondary color",
+        "default": "#DE7154"
+      },
+      {
+        "type": "color",
+        "id": "white_color",
+        "label": "White color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "white_hover_color",
+        "label": "White hover color",
+        "default": "#FAF1F0"
+      },
+      {
+        "type": "header",
+        "content": " Old General"
+      },
+      {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Body text",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "text_invert_color",
+        "label": "Body invert text",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "label": "Border color",
+        "default": "#6a6a6a"
+      },
+      {
+        "type": "color",
+        "id": "link_color",
+        "label": "Link color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "error_color",
+        "label": "Error color",
+        "default": "#f94c43"
+      },
+      {
+        "type": "color",
+        "id": "background",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "product_on_sale_color",
+        "label": "On sale accent",
+        "default": "#f94c43"
+      },
+      {
+        "type": "header",
+        "content": "Buttons"
+      },
+      {
+        "type": "color",
+        "id": "button_background",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "button_text_color",
+        "label": "Text",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "color",
+        "id": "header_background",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "header_heading_color",
+        "label": "Heading and icons",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "header_invert_heading_color",
+        "label": "Heading and icons (invert)",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Footer"
+      },
+      {
+        "type": "color",
+        "id": "footer_background",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "footer_text_color",
+        "label": "Text",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Sidebar navigation"
+      },
+      {
+        "type": "color",
+        "id": "navigation_background",
+        "label": "Background",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "navigation_text_color",
+        "label": "Text",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Side cart"
+      },
+      {
+        "type": "color",
+        "id": "side_cart_background",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "side_cart_text_color",
+        "label": "Text",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "side_cart_border_color",
+        "label": "Text",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "side_cart_overlay_color",
+        "label": "Overlay color",
+        "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "side_cart_opacity",
+        "label": "Overlay opacity",
+        "default": 0.5,
+        "min": 0,
+        "max": 1,
+        "step": 0.1,
+        "unit": "%"
+      }
+    ]
+  },
+  {
+    "name": "Cart \/ Sidecart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "integrate_checkout",
+        "label": "Type de checkout ReCharge",
+        "default": "false",
+        "options": [
+          {
+            "value": "false",
+            "label": "Classique"
+          },
+          {
+            "value": "true",
+            "label": "Intégré à Shopify"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "cart_title",
+        "label": "Titre panier",
+        "default": "Mon panier."
+      },
+      {
+        "type": "text",
+        "id": "cart_subtitle",
+        "label": "Sous titre panier",
+        "default": "Mes produits"
+      },
+      {
+        "type": "header",
+        "content": "Progress bar"
+      },
+      {
+        "type": "text",
+        "id": "cart_progress_prefix",
+        "label": "Progress bar - Plus que",
+        "default": "Plus que"
+      },
+      {
+        "type": "text",
+        "id": "cart_progress_goal",
+        "label": "Progress bar - goal",
+        "default": "50.00",
+        "info": "48.99, 50.00"
+      },
+      {
+        "type": "text",
+        "id": "cart_progress_sufix",
+        "label": "Progress bar - pour la livraison offerte",
+        "default": "Pour la livraison offerte"
+      },
+      {
+        "type": "text",
+        "id": "cart_progress_offer",
+        "label": "Progress bar - livraison offerte !",
+        "default": "Vous avez la livraison offerte"
+      },
+      {
+        "type": "image_picker",
+        "id": "cart_progress_icon",
+        "label": "Progress bar - icon"
+      },
+      {
+        "type": "header",
+        "content": "Paiement"
+      },
+      {
+        "type": "text",
+        "id": "cart_payment_button",
+        "label": "Cart payment button",
+        "default": "Paiement"
+      },
+      {
+        "type": "image_picker",
+        "id": "gobelet_image",
+        "label": "Image gobelet"
+      },
+      {
+        "type": "text",
+        "id": "gobelet_text",
+        "label": "Texte gobelet",
+        "default": "Voulez-vous ajouter un verre doseur offert à votre commande ?"
+      },
+      {
+        "type": "text",
+        "id": "gobelet_min",
+        "label": "Minimum gobelet",
+        "default": "20.00",
+        "info": "48.99, 50.00"
+      },
+      {
+        "type": "product",
+        "id": "gobelet_product",
+        "label": "Produit gobelet"
+      },
+      {
+        "type": "text",
+        "id": "cart_continue_shopping",
+        "label": "Cart continue shopping",
+        "default": "Continuer mes achats."
+      },
+      {
+        "type": "url",
+        "id": "cart_continue_url_1",
+        "label": "Cart continue url 1"
+      },
+      {
+        "type": "text",
+        "id": "cart_continue_text_1",
+        "label": "Cart continue text 1",
+        "default": "Chien"
+      },
+      {
+        "type": "url",
+        "id": "cart_continue_url_2",
+        "label": "Cart continue url 2"
+      },
+      {
+        "type": "text",
+        "id": "cart_continue_text_2",
+        "label": "Cart continue text 2",
+        "default": "Chat"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Font",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "text",
+        "id": "heading_font_text",
+        "label": "Police heading",
+        "placeholder": "Laisser vide pour choisir une Shopify font."
+      },
+      {
+        "type": "checkbox",
+        "id": "uppercase_heading",
+        "label": "Display headings in uppercase",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Body text"
+      },
+      {
+        "type": "font_picker",
+        "id": "text_font",
+        "label": "Font",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "text",
+        "id": "text_font_text",
+        "label": "Police body",
+        "placeholder": "Laisser vide pour choisir une Shopify font."
+      },
+      {
+        "type": "range",
+        "id": "base_text_font_size",
+        "label": "Base size",
+        "min": 12,
+        "max": 18,
+        "unit": "px",
+        "default": 15
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social sharing options"
+      },
+      {
+        "type": "image_picker",
+        "id": "jsonld_logo",
+        "label": "Google Schema"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_sharing_blog",
+        "label": "Enable sharing for blog articles",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Share on Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Tweet on Twitter",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_pinterest",
+        "label": "Pin on Pinterest",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Sharing links"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter link"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook link"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest link"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram link"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat link"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr link"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "Youtube link"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo link"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Product card",
+    "settings": [
+      {
+        "type": "text",
+        "id": "card_from",
+        "label": "À partir de...",
+        "default": "À partir de"
+      },
+      {
+        "type": "text",
+        "id": "card_button",
+        "label": "Texte du bouton",
+        "default": "Voir"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_tag_mobile",
+        "label": "Afficher les tags sur mobile",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_hover",
+        "label": "Hover sur les produits",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "settings": [
+      {
+        "type": "text",
+        "id": "search_placeholder",
+        "label": "Rechercher",
+        "default": "Rechercher"
+      },
+      {
+        "type": "checkbox",
+        "id": "predictive_search_enabled",
+        "label": "Enable product suggestions",
+        "info": "This will also affect the search field on the search page."
+      },
+      {
+        "type": "checkbox",
+        "id": "predictive_search_show_vendor",
+        "label": "Show vendor"
+      },
+      {
+        "type": "checkbox",
+        "id": "predictive_search_show_price",
+        "label": "Show price"
+      }
+    ]
+  },
+  {
+    "name": "Account",
+    "settings": [
+      {
+        "type": "text",
+        "id": "account_info",
+        "label": "Info Account",
+        "default": "Accéder à mon espace utilisateur"
+      }
+    ]
+  },
+  {
+    "name": "Blog\/Article",
+    "settings": [
+      {
+        "type": "text",
+        "id": "back_journal",
+        "label": "Text link back to blog",
+        "default": "Retour au journal"
+      }
+    ]
+  },
+  {
+    "name": "Product",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "text_ration_chien",
+        "label": "Texte ration chien",
+        "default": "<p>Indications à adapter selon la race, l’âge, la personnalité et le niveau d’activité de votre compagnon de jeu. Et pour sa gamelle d’eau, bien sûr, c’est à volonté et à renouveler tous les jours !<\/p>"
+      },
+      {
+        "type": "richtext",
+        "id": "text_ration_chat",
+        "label": "Texte ration chat"
+      },
+      {
+        "type": "richtext",
+        "id": "text_transition_chien",
+        "label": "Texte transition chien",
+        "default": "<p>Quand vous changez le régime alimentaire de votre chien, il est préférable de le faire progressivement, sur une période de 5 à 7 jours. Son système digestif peut ainsi s'habituer en douceur. Nous vous conseillons de commencer par mélanger la nourriture de votre compagnon avec une petite quantité de croquettes Franklin et d'augmenter progressivement la dose jusqu'à ce que sa gamelle soit 100% Franklin ! Juste du bon et rien d'autre !<\/p>"
+      },
+      {
+        "type": "richtext",
+        "id": "text_transition_chat",
+        "label": "Texte transition chat"
+      },
+      {
+        "type": "text",
+        "id": "product_update",
+        "label": "Update",
+        "default": "Modifier"
+      },
+      {
+        "type": "text",
+        "id": "product_delivery_each",
+        "label": "Tous les XXX",
+        "default": "Tous les"
+      },
+      {
+        "type": "text",
+        "id": "product_text_reviews",
+        "label": "Text reviews",
+        "default": "+650 avis",
+        "placeholder": "+650 avis"
+      },
+      {
+        "type": "text",
+        "id": "product_oneshot",
+        "label": "Product oneshot",
+        "default": "Produit unique"
+      },
+      {
+        "type": "text",
+        "id": "product_subscribe",
+        "label": "Product subscribe",
+        "default": "S'abonner"
+      },
+      {
+        "type": "text",
+        "id": "product_unite",
+        "label": "Product unity",
+        "default": "l'unité"
+      },
+      {
+        "type": "text",
+        "id": "product_quantity",
+        "label": "Product quantity",
+        "default": "Quantité"
+      },
+      {
+        "type": "text",
+        "id": "product_frequency",
+        "label": "Product frequency",
+        "default": "Fréquence de livraison"
+      },
+      {
+        "type": "text",
+        "id": "product_add",
+        "label": "Product add button",
+        "default": "Ajouter"
+      },
+      {
+        "type": "text",
+        "id": "go_to_product",
+        "label": "Voir la fiche produit",
+        "default": "Voir la fiche produit"
+      },
+      {
+        "type": "text",
+        "id": "product_reinsurance_text_1",
+        "label": "Product reinsurance text 1",
+        "default": "LIVRAISON OFFERTE à partir de 45€ d'achat"
+      },
+      {
+        "type": "url",
+        "id": "product_reinsurance_logo_1",
+        "label": "Product reinsurance logo 1"
+      },
+      {
+        "type": "text",
+        "id": "product_reinsurance_text_2",
+        "label": "Product reinsurance text 2",
+        "default": "En France métropolitaine et en Belgique"
+      },
+      {
+        "type": "url",
+        "id": "product_reinsurance_logo_2",
+        "label": "Product reinsurance logo 2"
+      },
+      {
+        "type": "text",
+        "id": "product_reinsurance_text_3",
+        "label": "Product reinsurance text 3",
+        "default": "En point relais ou à domicile"
+      },
+      {
+        "type": "url",
+        "id": "product_reinsurance_logo_3",
+        "label": "Product reinsurance logo 3"
+      },
+      {
+        "type": "header",
+        "content": "Popup s'abonner"
+      },
+      {
+        "type": "text",
+        "id": "product_why_subscribe",
+        "label": "Pourquoi s'abonner",
+        "default": "Pourquoi s'abonner ?"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_title",
+        "label": "Subscribe popup title",
+        "default": "Pourquoi s'abonner ?"
+      },
+      {
+        "type": "url",
+        "id": "subscribe_popup_picto_1",
+        "label": "Subscribe popup picto 1"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_title_1",
+        "label": "Subscribe popup title 1",
+        "default": "Recevez chez vous"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_text_1",
+        "label": "Subscribe popup text 1",
+        "default": "Pour vous remercier de votre fidélité"
+      },
+      {
+        "type": "url",
+        "id": "subscribe_popup_picto_2",
+        "label": "Subscribe popup picto 2"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_title_2",
+        "label": "Subscribe popup title 2",
+        "default": "Recevez chez vous"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_text_2",
+        "label": "Subscribe popup text 2",
+        "default": "Pour vous remercier de votre fidélité"
+      },
+      {
+        "type": "url",
+        "id": "subscribe_popup_picto_3",
+        "label": "Subscribe popup picto 3"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_title_3",
+        "label": "Subscribe popup title 3",
+        "default": "Recevez chez vous"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_text_3",
+        "label": "Subscribe popup text 3",
+        "default": "Pour vous remercier de votre fidélité"
+      },
+      {
+        "type": "url",
+        "id": "subscribe_popup_picto_4",
+        "label": "Subscribe popup picto 4"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_title_4",
+        "label": "Subscribe popup title 4",
+        "default": "Recevez chez vous"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_text_4",
+        "label": "Subscribe popup text 4",
+        "default": "Pour vous remercier de votre fidélité"
+      },
+      {
+        "type": "text",
+        "id": "subscribe_popup_cta",
+        "label": "Subscribe popup cta",
+        "default": "Plus d'infos sur l'abonnement ici"
+      },
+      {
+        "type": "url",
+        "id": "subscribe_popup_url",
+        "label": "Subscribe popup url"
+      },
+      {
+        "type": "header",
+        "content": "Popup Guide des tailles"
+      },
+      {
+        "type": "text",
+        "id": "product_why_guide",
+        "label": "Quelle taille",
+        "default": "Quelle taille ?"
+      },
+      {
+        "type": "text",
+        "id": "guide_popup_title",
+        "label": "guide popup title",
+        "default": "Quelle taille choisir ?"
+      },
+      {
+        "type": "url",
+        "id": "guide_popup_picto_1",
+        "label": "guide popup picto 1"
+      },
+      {
+        "type": "text",
+        "id": "guide_popup_title_1",
+        "label": "guide popup title 1",
+        "default": "Recevez chez vous"
+      },
+      {
+        "type": "text",
+        "id": "guide_popup_text_1",
+        "label": "guide popup text 1",
+        "default": "Pour vous remercier de votre fidélité"
+      },
+      {
+        "type": "url",
+        "id": "guide_popup_picto_2",
+        "label": "guide popup picto 2"
+      },
+      {
+        "type": "text",
+        "id": "guide_popup_title_2",
+        "label": "guide popup title 2",
+        "default": "Recevez chez vous"
+      },
+      {
+        "type": "text",
+        "id": "guide_popup_text_2",
+        "label": "guide popup text 2",
+        "default": "Pour vous remercier de votre fidélité"
+      }
+    ]
+  }
+]

@@ -1,0 +1,63 @@
+{% comment %}
+   {% include 'product-card'
+      , cardProduct     : product
+      , classes         : ""
+	  , dimensions : XX
+   %}
+{% endcomment %}
+{% assign productTag = false %}
+{% for tag in cardProduct.tags %}
+	{% if tag contains 'tag__' %}
+		{% assign productTag = tag | remove : 'tag__' %}
+	{% endif %}
+{% endfor %}
+
+{% if _collection.url != blank %}
+	{% assign productUrl = '/collections/' | append : _collection.handle | append : '/' | append : cardProduct.url %}
+{% else %}
+	{% assign productUrl = cardProduct.url %}
+{% endif %}
+
+{% assign quickviewAttr = 'data-open-quickview data-product-handle="' | append : cardProduct.handle | append : '"' %}
+
+{% assign __dimensions       = dimensions | default: "300x" %}
+
+{% if cardProduct != blank %}
+<div class="{{ classes }} product-card">
+	{% if productTag %}
+		<div class="product-card__tag secondary text--small bg--primary uppercase {% unless settings.card_tag_mobile %}only-desktop{% endunless %}">
+			{{ productTag }}
+		</div>
+	{% endif %}
+	<div class="product-card__image-container {% if settings.card_hover == true %}product-card__image-container--hover{% endif %}">
+		<a href="{{ productUrl }}">
+		{% include 'image' with dimensions:__dimensions, img: cardProduct.featured_image, __with_effect : true, responsiveSizes : false, classes:"border--desktop product-card__image" %}
+		{% if settings.card_hover == true %}
+		{% include 'image' with img: cardProduct.images[1], classes:"product-card__image--hover" %}
+		{% endif %}
+		{% include 'button' with classes : 'product-card__button-hover button--primary', text:settings.card_button, href:productUrl %}
+		</a>
+	</div>
+	<div class="product-card__content">
+		<a href="{{ productUrl }}">
+			<div class="product-card__title z-h10 heading">{{ cardProduct.title }}</div>
+		<div class="product-card__subtitle uppercase text t-7">{{ cardProduct.vendor }}</div>
+		{% include 'button' with classes : 'only-desktop product-card__button-mobile button--primary only-mobile', text:settings.card_button, href:productUrl %}
+	</a>
+
+		<div class="text t-9 product-card__from">
+			{{ settings.card_from }}
+			{% if cardProduct.metafields.is_subscription %}
+			{{ cardProduct.price_min | times : 0.85 | money }}
+			{% else %}
+				{{ cardProduct.price_min | money }}
+			{% endif %}
+			{% unless cardProduct.price_min %}Épuisé{% endunless %}
+		</div>
+		<div class="only-desktop product-card__quickview" {{ quickviewAttr }}>
+			{% include 'icon-eye' %}
+		</div>
+	</div>
+
+</div>
+{% endif %}

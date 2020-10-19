@@ -1,0 +1,85 @@
+{% for block in section.blocks %}
+	{% if block.type == 'anchor-menu' %}
+	{% include 'anchor-menu' with Settings : block.settings, id : block.id %}
+
+	{% elsif block.type == 'banner' %}
+	{% include 'banner' with Settings:block.settings, id : block.id %}
+
+	{% elsif block.type == 'breadcrumb' %}
+	{% include 'breadcrumb' with Settings:block.settings, id : block.id %}
+
+	{% elsif block.type == 'collection-slider' %}
+	{% include 'collection-slider' with Settings:block.settings, id:block.id, sliderCollection : collections[block.settings.collection] %}
+
+	{% elsif block.type == 'collection' %}
+	{% assign selectedCollection = collection %}
+	{% if block.settings.collection != blank %}
+		{% assign selectedCollection = collections[block.settings.collection] %}
+	{% endif %}
+	{% include 'collection' with Settings:block.settings, id:block.id, sectionCollection:selectedCollection %}
+
+	{% elsif block.type == 'description-tab' %}
+	{% include 'description-tab' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'faq' %}
+	{% include 'faq' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'complex-faq' %}
+	{% include 'complex-faq' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'search-faq' %}
+	{% include 'search__faq' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'featured-articles' %}
+	{% include 'featured-articles' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'featured-collection' %}
+		{% include 'featured-collection' with Settings:block.settings, id : block.id %}
+
+	{% elsif block.type == 'featured-reviews' %}
+	{% include 'featured-reviews' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'image-bullets' %}
+	{% include 'image-bullets' with Settings : block.settings, id : block.id %}
+
+	{% elsif block.type == 'ingredients' %}
+	{% include 'ingredients' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'ingredients-image' %}
+	{% include 'ingredients-image' with Settings : block.settings, id : block.id %}
+
+	{% elsif block.type == 'press' %}
+	{% include 'press' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'reviews-product' %}
+	{% include 'reviews-product' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'related-collections' %}
+	{% include 'related-collections' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'table-dropdowns' %}
+	{% include 'table-dropdowns' with Settings:block.settings, id : block.id %}
+
+	{% elsif block.type == 'text-cta' %}
+	{% include 'text-cta' with Settings:block.settings, id : block.id %}
+
+	{% elsif block.type == 'vertical-scroll-timeline' %}
+	{% include 'vertical-scroll-timeline' with Settings : block.settings, id : block.id %}
+
+	{% elsif block.type == 'icons-list' %}
+	{% include 'icons-list' with Settings : block.settings, id : block.id %}
+
+	{% elsif block.type == 'text-buttons-grid' %}
+	{% include 'text-buttons-grid' with Settings : block.settings, id : block.id %}
+
+	{% elsif block.type == 'text-image' %}
+	{% include 'text-image' with Settings : block.settings, id : block.id %}
+
+	{% elsif block.type == 'text-block-grid' %}
+	{% include 'text-bloc-grid' with Settings : block.settings, id : block.id %}
+
+	{% elsif block.type == 'text-background-image' %}
+	{% include 'text-background-image' with Settings : block.settings, id : block.id %}
+
+	{% endif %}
+{% endfor %}

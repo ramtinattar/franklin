@@ -1,0 +1,113 @@
+{%- assign main_menu_mobile = linklists[section.settings.main_menu_link_list] -%}
+
+<div data-header-side-nav class="side-nav only-mobile">
+  <div class="side-nav__container-relative page-width">
+    <ul class="side-nav__links-container" role="navigation" aria-label="Primary">
+      {% for link in main_menu_mobile.links %}
+          {%- assign child_list_handle = link.url | handleize | append: forloop.index -%}
+          {%- assign has_dropdown = false -%}
+          {% if link.links != blank %}
+            {%- assign has_dropdown = true -%}
+          {% endif %}
+          <li class="side-nav__link-container {% if has_dropdown %}side-nav__link--dropdown{% endif %}" {% if has_dropdown %}id="accordionGroup" data-accordion data-allow-multiple{% endif %}>
+
+            {% if has_dropdown %}
+              <div {% unless link.url contains 'nolink' %}data-double-link="{{ link.url }}"{% endunless %} data-accordion-trigger aria-expanded="false" class="heading z-h9 side-nav__link" aria-controls="#mobile-nav-{{- forloop.index -}}">
+                {% if link.url contains 'customer-portal' and customer.metafields.subscriptions.customer_string %}
+                  {% assign link_url = '/tools/recurring/customer_portal/' | append : customer.metafields.subscriptions.customer_string | append : '/subscriptions/' %}
+                  {% assign link_url = '/pages/recharge-customer-portal' %}
+                {% else %}
+                  {% assign link_url = link.url %}
+                {% endif %}
+                <a href="{{ link_url }}">
+                  {{ link.title }}
+                </a>
+              </div>
+              <div class="side-nav__sublinks-container" id="mobile-nav-{{- forloop.index -}}" data-accordion-panel>
+                <ul class="side-nav__sublinks">
+                  {% for l in link.links %}
+                    <li class="side-nav__sublink-container">
+                      <a href="{{ l.url }}" class="side-nav__sublink text t-5">{{ l.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% else %}
+
+			{% if link.url contains 'customer-portal' and customer.metafields.subscriptions.customer_string %}
+			  {% assign link_url = '/tools/recurring/customer_portal/' | append : customer.metafields.subscriptions.customer_string | append : '/subscriptions/' %}
+			  {% assign link_url = '/pages/recharge-customer-portal' %}
+			{% else %}
+			  {% assign link_url = link.url %}
+			{% endif %}
+				{% if link.url contains 'customer-portal' and customer == blank %}
+				<a data-open-account="{{link_url}}">
+        {% comment %}<a href="{{link_url}}">{% endcomment %}
+						<div class="side-nav__link heading z-h9">
+							{{ link.title }}
+						</div>
+					</a>
+				{% else %}
+					<a href="{{ link_url }}">
+		            <div class="side-nav__link heading z-h9">
+		                {{ link.title }}
+		            </div>
+				</a>
+				{% endif %}
+            {% endif %}
+          </li>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+<div data-header-side-search class="side-nav--search side-nav only-mobile">
+	<div class="side-nav__container-relative side-nav__search">
+		  {% include 'search-bar' %}
+	</div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Burger menu",
+  "settings": [
+  {
+    "type": "header",
+    "content": "Announcement bar"
+  },
+  {
+    "type": "checkbox",
+    "id": "show_promo_banner",
+    "label": "Show top bar promo banner",
+    "default": true
+  },
+  {
+    "type": "richtext",
+    "id": "promo_text",
+    "label": "Promo banner text desktop",
+    "default": "<p>Livraison et retours gratuits !</p>"
+  },
+  {
+    "type": "color",
+    "id": "promo_color",
+    "label": "Promo banner color",
+    "default": "#ffffff"
+  },
+  {
+    "type": "color",
+    "id": "promo_color_text",
+    "label": "Promo banner text color",
+    "default": "#000000"
+  },
+  {
+    "type": "header",
+    "content": "Header"
+  },
+  {
+    "type": "link_list",
+    "id": "main_menu_link_list",
+    "label": "Menu"
+  }
+  ]
+}
+{% endschema %}

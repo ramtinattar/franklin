@@ -1,0 +1,13 @@
+<div id="shopify-section-page" class="shopify-section">
+  <section class="bg--white section--l-spacing section section-page" data-section-type="page">
+    {%- if page_title != 'Parrainage' -%}
+      <div class="section--l-spacing"></div>
+    {%- endif -%}
+    <div class="{% if page_title == 'Suivre mon colis' %}container--large {% elsif page_title == 'Parrainage' %} {% else %}container--small{% endif %}">
+      <div class="rte">
+        {{ page.content }}
+      </div>
+    </div>
+
+  </section>
+<div>

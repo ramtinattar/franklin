@@ -1,0 +1,39 @@
+<div class="reviews-social">
+<div class="reviews-social__left">
+<h4 class="z-h5 heading reviews-social__title">{{ Settings.reviews_title }}</h4>
+<a target="_blank" href="{{ Settings.reviews_url }}">
+<div class="reviews-social__rate-container">
+<div class="reviews-social__rating">
+  {% for i in (1..5) %}
+	{% if i <= Settings.reviews_range %}
+	  {% include 'icon' with classes:'icon-star', src:settings.full_star, alt:'étoile note' %}
+	{% else %}
+	{% include 'icon' with classes:'icon-star', src:settings.empty_star, alt:'étoile note' %}
+	{% endif %}
+  {% endfor %}
+</div>
+<div class="reviews-social__text text text--large">
+	{{ Settings.reviews_text }}
+</div>
+</div>
+</a>
+</div>
+<div class="reviews-social__right">
+{%- assign social_accounts = 'Instagram, Facebook, Twitter, Pinterest, Snapchat, Tumblr, YouTube, Vimeo,' | split: ', ' -%}
+<ul class="footer__social">
+{% for social in social_accounts %}
+  {%- assign social_handle = social | handleize -%}
+  {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+  {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+  {% if settings[social_link] != blank %}
+	<li>
+	  <a href="{{ settings[social_link] }}" class="social-media" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+		{% include social_icon %}
+		<span class="icon-fallback-text">{{ social }}</span>
+	  </a>
+	</li>
+  {% endif %}
+{% endfor %}
+</ul>
+</div>
+</div>

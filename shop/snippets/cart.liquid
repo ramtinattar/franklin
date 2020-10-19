@@ -1,0 +1,38 @@
+<section id="section-{{ section.id }}" class="section" data-section-id="{{ section.id }}" data-section-type="cart">
+  <form action="/cart" method="post" novalidate>
+    <div class="cart" {% if settings.cart_active_free_shipping %}data-minimum-shipping="{{ settings.cart_free_shipping }}"{% endif %}>
+      <div class="cart-header">
+        <div class="container--large relative">
+          {% unless title == blank %}
+          <h2 class="heading z-h5 cart__title">{{ title }}</h2>
+          {% endunless %}
+          <div class="cart-close {% unless aff_cart_close == true %}only-mobile{% endunless%}" data-cart-close>
+            &#10005;
+          </div>
+        </div>
+      </div>
+	  <div class="relative">
+		  <div data-cart-loader class="cart__loader-container">
+  <div class="lds-dual-ring"></div>
+  </div>
+  <div class="cart__items" data-cart-items>
+
+	{% for item in cart.items %}
+
+	{% include 'cart-item' with item : item, count : forloop.index %}
+
+	{% endfor %}
+  </div>
+	  </div>
+
+      <div class="cart-footer" data-cart-footer>
+
+      </div>
+    </div>
+  </form>
+</section>
+
+{% include 'cart-item-handlebar--subscribe-on' %}
+{% include 'cart-item-handlebar--subscribe-off' %}
+{% include 'cart-item-handlebar--no-subscribe' %}
+{% include 'cart-item-handlebar--echantillon' %}

@@ -1,0 +1,26 @@
+<section class="{% if Settings.section_spacing %}{{ Settings.section_spacing }}  {{ Settings.section_spacing_mobile }}{% endif %} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="anchor-menu">
+	<div data-anchor-container class="anchor-menu">
+		<div class="page-width">
+			<div class="anchor-menu__container">
+				{% for i in (1..5) %}
+					{% capture current %}{% cycle 1, 2, 3, 4, 5, 6, 7 %}{% endcapture %}
+					{% assign textKey = 'anchor_text_' | append : current %}
+					{% assign urlKey = 'anchor_url_' | append : current %}
+					{% assign idKey = 'anchor_id_' | append : current %}
+					{% if Settings[textKey] == blank %}{% continue %}{% endif %}
+
+					<div data-anchor-link class="anchor-link">
+						<a class="relative anchor-menu__link t-5"
+							{% if Settings[urlKey] != blank %}
+							href="{{ Settings[urlKey] }}"
+							{% else %}
+							data-anchor-slideto="{{ Settings[idKey] }}"
+							{% endif %}
+							>
+							{{ Settings[textKey] }}</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,97 @@
+<section class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="template-section">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+
+	<div class="page-width">
+		{% if section.settings.hide_menu != true %}
+		<div class="customSelect">
+				{% for block in section.blocks %}
+					{% if block.settings.title_tag_2 != blank %}
+					<select name="filter_blog" id="filter_blog_{{block.id}}" data-custom-select>
+						<option value="">{{ block.settings.title_filter }}</option>
+						{% for i in (1..8) %}
+							{% assign title = 'title_tag_' | append : i %}
+							{% assign url = 'url_tag_' | append : i %}
+							{%- if block.settings[title] != blank -%}
+								<option value="{{  block.settings[url] }}">{{ block.settings[title] }}</option>
+							{%- endif -%}
+						{% endfor %}
+					</select>
+					{% else %}
+					<a class="link_all_articles t-4 select uppercase" href="{{ block.settings.url_tag_1 }}">{{ block.settings.title_filter }}</a>
+					{% endif %}
+				{% endfor %}
+
+				{% if section.blocks.size != 0 %}
+					{% assign _blog = blogs[blog.handle] %}
+				  <a class="link_all_articles t-4" href="{{ blog.url }}">{{ Settings.all_article_text }} ({{_blog.articles_count}})</a>
+				{% endif %}
+		</div>
+		{% else %}
+			<div class="blog__empty-menu">
+
+			</div>
+		{% endif %}
+
+		{% paginate blog.articles by Settings.number_article %}
+
+			<div class="grid">
+			  {% for article in blog.articles %}
+			    <div class="grid__cell 1/1 1/3--desk">
+			        {% include 'article-card' with cardArticle : article, classes : 'blog__article-card', excerpt_length : 25, text_read : Settings.article_read_text, show_hover : true %}
+			    </div>
+			  {% endfor %}
+			</div>
+
+			<div class="align-center">
+				{% if paginate.pages > 1 %}
+				<div class="pagination t-5 pagination_blog">
+					{% if paginate.previous.url != blank %}
+						<a class="prev" href="{{ paginate.previous.url }}">{% include 'icon-right-arrow' %}</a>
+					{% else %}
+						<span class="prev">{% include 'icon-right-arrow' %}</span>
+					{% endif %}
+
+					{% if paginate.pages == 1 %}
+						<span class="page current">1</span>
+					{% else %}
+						{% for part in paginate.parts %}
+						{% if part.title == paginate.current_page %}
+							{% assign indexCurrentMinus = paginate.current_page | minus: 1 %}
+							{% assign indexCurrent = paginate.current_page %}
+							{% assign indexCurrentPlus = paginate.current_page | plus: 1 %}
+						{% endif %}
+						{% endfor %}
+
+						{% if paginate.current_page == 1 %}
+							{% for part in paginate.parts limit: 3 %}
+								{% if part.is_link %}
+									<a class="page" href="{{ part.url }}">{{ part.title }}</a>
+								{% else %}
+									<span class="page current">{{ part.title }}</span>
+								{% endif %}
+							{% endfor %}
+						{% else %}
+							{% for part in paginate.parts %}
+								{%- if part.title == indexCurrentMinus -%}
+									<a class="page" href="{{ part.url }}">{{ part.title }}</a>
+								{%- elsif part.title == paginate.current_page -%}
+									<span class="page current">{{ part.title }}</span>
+								{%- elsif part.title == indexCurrentPlus -%}
+									<a class="page" href="{{ part.url }}">{{ part.title }}</a>
+								{%- endif -%}
+							{% endfor %}
+						{% endif %}
+					{% endif %}
+
+					{% if paginate.next %}
+						<a class="next" href="{{ paginate.next.url }}">{% include 'icon-right-arrow' %}</a>
+					{% else %}
+						<span class="next">{% include 'icon-right-arrow' %}</span>
+					{% endif %}
+				</div>
+			  {% endif %}
+			</div>
+
+		{% endpaginate %}
+	</div>
+</section>

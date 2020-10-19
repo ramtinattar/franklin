@@ -1,0 +1,12 @@
+<section class="relative section--l-spacing section reviews-product" id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="reviews-product">
+	<div class="section--l-spacing">
+
+	</div>
+	<div class="page-width">
+		<h2 class="z-h3 heading reviews-product__title">Ils ont testé Franklin.</h2>
+		<div class="yotpo yotpo-main-widget" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" data-description="{{ product.description | escape }}"></div>
+	</div>
+	<div class="page-width">
+		<div class="collection--bordered"></div>
+	</div>
+</section>

@@ -1,0 +1,173 @@
+{% assign blockCounter = 0 %}
+{% for i in (0..4) %}
+	{% capture current %}{% cycle 1, 2, 3, 4, 5 %}{% endcapture %}
+  {% assign current = current | plus : 0 %}
+	{% assign imageKey = 'image_' | append : current %}
+  {% unless Settings[imageKey] %}{% continue %}{% endunless %}
+  {% assign blockCounter = blockCounter | plus : 1 %}
+{% endfor %}
+
+<section class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section vertical-scroll-timeline" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="vertical-scroll-timeline">
+  <div class="grid--middle grid relative">
+    <div class="grid__cell 1/1 1/2--desk scroll-timeline-image-container">
+      <img class="scroll-timeline-image active" src="{{ Settings.image_1 | img_url : 'master' }}" alt="{{ Settings.image_1.alt }}"/>
+      {% comment %}
+      {% for i in (0..4) %}
+      	{% capture current %}{% cycle 1, 2, 3, 4, 5 %}{% endcapture %}
+        {% assign current = current | plus : 0 %}
+        {% assign imageKey = 'image_' | append : current %}
+        {% unless Settings[imageKey] %}{% continue %}{% endunless %}
+        <img class="only-desktop-force scroll-timeline-image {% if current == 1 %} active{% endif %}" id="indic-image-{{ current }}" src="{{ Settings[imageKey] | img_url : 'master' }}" alt="{{ Settings[imageKey].alt }}">
+      {% endfor %}
+      {% endcomment %}
+  	  <img class="only-mobile-force scroll-timeline-image"  src="{{ Settings.image_1 | img_url : 'master' }}" alt="{{ Settings.image_1.alt }}">
+
+    </div>
+    <div class="grid__cell 1/1 1/2--desk">
+      <div class="scroll-timeline-container page-width--mobile">
+        <h2 class="scroll-timeline__title heading z-h2">{{ Settings.title }}</h2>
+        <div data-timeline-content class="scroll-timeline-content">
+          <div data-scroll-timeline class="scroll-timeline-line"></div>
+          <div class="final-timeline_bullet"></div>
+          {% for i in (0..4) %}
+          	{% capture current %}{% cycle 1, 2, 3, 4, 5 %}{% endcapture %}
+            {% assign current = current | plus : 0 %}
+            {% assign imageKey = 'image_' | append : current %}
+            {% assign titleKey = 'title_' | append : current %}
+            {% assign subtitleKey = 'subtitle_' | append : current %}
+            {% assign textKey = 'text_' | append : current %}
+            {% unless Settings[imageKey] %}{% continue %}{% endunless %}
+
+            <div class="timeline {% if current == 1 %} active {% endif %}" id="timeline-{{ current }}">
+              {% if Settings.bullet_full != blank %}
+              <img data-timeline-bullet class="custom-timeline-bullet custom-timeline-bullet--full" alt="Os plein" src="{{ Settings.bullet_full }}" />
+              <img data-timeline-bullet class="custom-timeline-bullet custom-timeline-bullet--empty" alt="Os plein" src="{{ Settings.bullet_empty }}" />
+              {% else %}
+              <div data-timeline-bullet class="timeline_bullet">
+
+              </div>
+              {% endif %}
+              <div class="timeline_content text--large">
+                <h3 class="timeline_title z-h7">{{ Settings[titleKey] }}</h3>
+                {% if Settings[subtitleKey] != blank %}<h4 class="timeline_subtitle u-h4">{{ Settings[subtitleKey] }}</h4>{% endif %}
+                {{ Settings[textKey] }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="scroll-time__button-container {% if Settings.button_text_2 == blank %}scroll-time__button-container--one{% endif %}">
+          {% include 'button' with classes : Settings.button_type, text : Settings.button_text, href : Settings.button_url %}
+          {% if Settings.button_text_2 != blank %}
+            {% include 'button' with classes : Settings.button_type, text : Settings.button_text_2, href : Settings.button_url_2 %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script defer>
+  // init controller
+    var controller = new ScrollMagic.Controller({
+      globalSceneOptions: {
+        triggerHook: 0.5
+      }
+    });
+
+    var sceneGlobal = new ScrollMagic.Scene({
+      triggerElement: "#timeline-1 .custom-timeline-bullet",
+      duration: $('.scroll-timeline-content').height()
+    })
+    //.addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+    sceneGlobal.on("progress", function (event) {
+      // console.log(event);
+      // Value of last event progress with 3 steps.
+      var eventProgressThreeSteps = {{ section.settings.maxEventProgress}};
+      if(event.progress){
+
+      // $('.scroll-timeline-line').css("height", event.progress * 100 + "%");
+      // if (event.progress == 1) {
+      //   $('.final-timeline_bullet').addClass('active');
+      // }
+      // else {
+      //   $('.final-timeline_bullet').removeClass('active');
+      // }
+
+
+        // Fix to remove last bullet
+        var actualHeight = parseFloat($('[data-scroll-timeline]')[0].style.height) / 100;
+        var maxTop = $('[data-timeline-bullet]').last().offset().top;
+        var maxHeight = maxTop - $('[data-scroll-timeline]').offset().top + 10;
+        if(event.progress <= eventProgressThreeSteps){
+          $('[data-scroll-timeline]').css("height", event.progress * 100 + "%");
+        }else if(event.scrollDirection == "REVERSE" && (event.progress <= eventProgressThreeSteps)){
+          $('[data-scroll-timeline]').css("height", event.progress * 100 + "%");
+        }else{
+          $('[data-scroll-timeline]').css("height", maxHeight+ "px");
+        }
+      }
+        // if (event.progress == 1) {
+        //   $('.final-timeline_bullet').addClass('active');
+        // }
+        // else {
+        //   $('.final-timeline_bullet').removeClass('active');
+        // }
+    });
+
+    {% for i in (0..4) %}
+    	{% capture current %}{% cycle 1, 2, 3, 4, 5 %}{% endcapture %}
+      {% assign current = current | plus : 0 %}
+    	{% assign imageKey = 'image_' | append : current %}
+      {% unless Settings[imageKey] %}{% continue %}{% endunless %}
+      var sceneTimeline{{ current }} = new ScrollMagic.Scene({
+        triggerElement: "#timeline-{{ current }} [data-timeline-bullet]",
+        duration: $('#timeline-{{ current }}').height()
+      })
+      // .setClassToggle("#indic-image-{{ current }}", "active") // add class toggle
+      //.addIndicators() // add indicators (requires plugin)
+      .addTo(controller);
+      sceneTimeline{{ current }}.on("start", function (event) {
+        if (event.scrollDirection == "FORWARD") {
+          {% if current == blockCounter %}
+          $('#indic-image-{{ current }}').addClass('active-ultra');
+          {% endif %}
+          {% assign j = current %}
+          {% for i in (0..4) %}
+          	{% capture current2 %}{% cycle 1, 2, 3, 4, 5 %}{% endcapture %}
+            {% assign current2 = current2 | plus : 0 %}
+          	{% assign imageKey2 = 'image_' | append : current2 %}
+            {% unless Settings[imageKey2] %}{% continue %}{% endunless %}
+          {% if current2 <= j %}
+            $("#timeline-{{ current2 }}").addClass('active');
+          {% endif %}
+          {% endfor %}
+          {% if current == 1 %}
+          $('#indic-image-1').removeClass('active-ultra');
+          {% endif %}
+        }
+        else {
+          {% if current == blockCounter %}
+          $('#indic-image-{{ current }}').removeClass('active-ultra');
+          {% endif %}
+          {% if current == 1 %}
+          $('#indic-image-1').addClass('active-ultra');
+          {% endif %}
+          {% assign j = current %}
+          {% for i in (0..4) %}
+          	{% capture current2 %}{% cycle 1, 2, 3, 4, 5 %}{% endcapture %}
+            {% assign current2 = current2 | plus : 0 %}
+          	{% assign imageKey2 = 'image_' | append : current2 %}
+            {% unless Settings[imageKey2] %}{% continue %}{% endunless %}
+          {% if current2 >= j %}
+            $("#timeline-{{ current2 }}").removeClass('active');
+          {% endif %}
+          {% endfor %}
+        }
+      });
+    {% endfor %}
+
+
+</script>

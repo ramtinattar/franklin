@@ -1,0 +1,60 @@
+<style>
+{% if Settings.background_desktop != blank %}
+	@media all and (min-width : 768px){
+		#section-{{section.id}}{
+			background:url('{{ Settings.background_desktop | img_url : "master" }}');
+		}
+	}
+{% endif %}
+</style>
+{% assign headingTag = Settings.heading_tag | default : 'h2' %}
+{% assign headingClass = Settings.heading_class | default : 'z-h2' %}
+
+<section class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section text-cta table-dropdowns" id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="text-cta">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}">
+
+	</div>
+	{% include 'image' with img : Settings.image_mobile, classes : 'table-dropdowns__image-mobile only-mobile' %}
+	<div class="page-width table-dropdown__container">
+		<div class="text-cta__container">
+			{% if Settings.title != blank %}
+				<{{ headingTag}} class="text-cta__title heading {{ headingClass }}">{{ Settings.title }}</{{ headingTag}}>
+			{% endif %}
+			{% if Settings.text != blank %}
+				<div class="text-cta__text text--xlarge {{ Settings.text_width }}">
+					{{ Settings.text }}
+				</div>
+			{% endif %}
+		</div>
+		<div class="table-dropdowns__content">
+			<div class="grid" data-accordion data-allow-multiple>
+				{% for i in (1..4) %}
+					{% assign imageKey = 'image_' | append : i %}
+					{% assign titleKey = 'title_' | append : i %}
+					{% assign previewKey = 'preview_text_' | append : i %}
+					{% assign expandedKey = 'expanded_text_' | append : i %}
+					<div class="grid__cell 1/2--desk relative">
+						<div class="table-dropdown"  aria-controls="#faq-group-table-{{ id }}-{{- i -}}" data-accordion-trigger aria-expanded="false">
+							<div class="table-dropdown__plus">
+								{% include 'icon-plus' %}
+							</div>
+							<div class="table-dropdown__image-container">
+								{% include 'image' with img : Settings[imageKey], classes : 'table-dropdown__image' %}
+							</div>
+							<div class="table-dropdown__drop-container">
+								<h3 class="z-h7 uppercase">{{ Settings[titleKey] }}</h3>
+								<div class="table-dropdown__preview-text text--large">
+									{{ Settings[previewKey] }}
+								</div>
+								<div class="table-dropdown__expanded-text text--large" id="faq-group-table-{{ id }}-{{- i -}}" data-accordion-panel>
+									{{ Settings[expandedKey] }}
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+</section>

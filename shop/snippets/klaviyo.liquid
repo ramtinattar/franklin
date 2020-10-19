@@ -1,0 +1,24 @@
+{% comment %}
+<script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=NL8MJB"></script>
+{% endcomment %}
+<script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
+<script>
+var _learnq = _learnq || [];
+var klaviyo = klaviyo || [];
+klaviyo.init({
+	account: "{{key}}",
+	platform: "shopify",
+});
+window.onload = function(){
+	$(function(){
+		{%- if customer -%}
+		_learnq.push(['identify', {
+			'$email': '{{ customer.email }}',
+			'$first_name': '{{ customer.first_name }}',
+			'$last_name': '{{ customer.last_name }}'
+		}]);
+		{%- endif -%}
+	});
+}
+
+</script>

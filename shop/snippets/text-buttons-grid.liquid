@@ -1,0 +1,57 @@
+<section class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="text-buttons-grid">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div class="page-width">
+		<div class="grid grid--middle">
+			<div class="grid__cell 1/2--desk">
+				<h2 class="heading z-h3 align-center text_button_title">{{Settings.title}}</h2>
+				<div class="text_button_text">
+					{% for i in (1..4) %}
+					{% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+					{% assign titleKey = 'title_' | append : current %}
+					{% assign subtitleKey = 'subtitle_' | append : current %}
+					{% assign gifKey = 'gif_' | append : current %}
+					{% if Settings[titleKey] == blank %}{% continue %}{% endif %}
+						<div class="text_button_list">
+							{%- if Settings[gifKey] != blank -%}
+								<img class="text_button_list--gif" src="{{ Settings[gifKey] | img_url: '200x' }}" alt="Settings[gifKey].alt">
+							{%- else -%}
+								<p data-reveal-elt-{{ i }} class="text_button_list--index text_button_list--index--{{ current }}">{{ current }}.</p>
+							{%- endif -%}
+							<div>
+								<p class="text t-3 text_button_list--title">{{ Settings[titleKey] }}</p>
+								<div class="text t-5 text_button_list--subtitle">
+									{{ Settings[subtitleKey] }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="only-mobile-force grid__cell 1/1 text-button__button-mobile-container">
+				<a class="button button--primary text-button__button-mobile" href="{{ Settings.cta_url_1 }}">{{ Settings.cta_text_1 }}</a>
+				<a class="button button--primary text-button__button-mobile" href="{{ Settings.cta_url_2 }}">{{ Settings.cta_text_2 }}</a>
+			</div>
+			<div class="grid__cell 1/2--desk text_button_image only-desktop">
+				{% for i in (1..2) %}
+				{% capture current %}{% cycle 1, 2 %}{% endcapture %}
+				{% assign imageKey = 'image_' | append : current %}
+				{% assign titleKey = 'title_box_' | append : current %}
+				{% assign ctaTextKey = 'cta_text_' | append : current %}
+				{% assign ctaUrlKey = 'cta_url_' | append : current %}
+				{% if Settings[titleKey] == blank %}{% continue %}{% endif %}
+				<div class="text_button_image--container">
+					<div class="text_button_image--frame">
+						<h3 class="text t-3 text_button_list--title">{{ Settings[titleKey] }}</h3>
+						<a class="button button--primary" href="{{ Settings[ctaUrlKey] }}">{{ Settings[ctaTextKey] }}</a>
+					</div>
+					<div class="text_button_list__image-container">
+						{% include 'image' with img : Settings[imageKey], classes:'text_button_image__image' %}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+
+</section>

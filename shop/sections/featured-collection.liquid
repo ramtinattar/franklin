@@ -1,0 +1,117 @@
+{% include 'featured-collection' with Settings:section.settings, id : section.id %}
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+  {
+    "type":"header",
+    "content":"Collection"
+  },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Featured collection",
+      "info": "Créer une collection dédiée"
+    },
+    {
+      "type": "range",
+      "id": "product_max",
+      "label": "Maximum displayed product",
+      "default": 4,
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "p"
+    },
+    {
+      "type":"header",
+      "content":"Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image displayed on desktop",
+	"info":"600x600px"
+    },
+	{
+	  "type": "url",
+	  "id": "video",
+	  "label": "video"
+  },
+    {
+      "type": "checkbox",
+      "id": "image_left",
+      "label": "Image à gauche ?",
+      "default": true
+    },
+    	{
+    		"type":"header",
+    		"content" : "Section"
+    	},
+    	{
+    	  "type": "select",
+    	  "id": "section_spacing",
+    	  "label": "Section bottom spacing",
+    	  "options": [
+    	  {
+    		  "value" : "section--xl-spacing",
+    		  "label" : "XL Spacing"
+    	  },{
+    		  "value" : "section--l-spacing",
+    		  "label" : "L Spacing"
+    	  },{
+    		  "value" : "section--m-spacing",
+    		  "label" : "M Spacing"
+    	  },{
+    		  "value" : "section--s-spacing",
+    		  "label" : "S Spacing"
+    	  },{
+    		  "value" : "section--xs-spacing",
+    		  "label" : "XS Spacing"
+    	  },{
+    		  "value" : "section--no-spacing",
+    		  "label" : "No Spacing"
+    	  }
+    	  ]
+      },
+    	{
+    		"type": "select",
+    		"id": "section_spacing_mobile",
+    		"label": "Section bottom spacing mobile",
+    		"options": [
+    		{
+    			"value":"",
+    			"label":"Same value"
+    		},
+    		{
+    			"value" : "mobile-section--xl-spacing",
+    			"label" : "XL Spacing"
+    		},{
+    			"value" : "mobile-section--l-spacing",
+    			"label" : "L Spacing"
+    		},{
+    			"value" : "mobile-section--m-spacing",
+    			"label" : "M Spacing"
+    		},{
+    			"value" : "mobile-section--s-spacing",
+    			"label" : "S Spacing"
+    		},{
+    			"value" : "mobile-section--xs-spacing",
+    			"label" : "XS Spacing"
+    		},{
+    			"value" : "mobile-section--no-spacing",
+    			"label" : "No Spacing"
+    		}
+    		],
+    		"default":""
+    	}
+  ],
+  "presets": [
+	  {
+		  "name": "Featured collection",
+		  "category": "Deprecated"
+	  }
+  ]
+}
+{% endschema %}

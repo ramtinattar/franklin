@@ -1,0 +1,122 @@
+<section id="section-{{ section.id }}" class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" data-section-id="{{ section.id }}" data-section-type="contact">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div class="container--medium contact">
+		<div class="grid">
+			<div class="1/2--desk grid__cell only-desktop">
+				<div class="contact_image">
+					{% unless section.settings.image_desktop == blank %}
+						<img src="{{ section.settings.image_desktop | img_url : '800x' }}" alt="{{ section.settings.image_desktop.alt }}">
+					{% endunless %}
+				</div>
+			</div>
+			<div class="1/2--desk grid__cell">
+				{% unless section.settings.title == blank %}
+					<h1 class="text t-2 align-center contact__title">{{ section.settings.title }}</h1>
+				{% endunless %}
+				{% unless section.settings.subtitle == blank %}
+					<h2 class="text t-1 align-center contact__subtitle">{{ section.settings.subtitle }}</h2>
+				{% endunless %}
+				{% form 'contact' %}
+
+				{% if form.posted_successfully? %}
+					<div class="contact__alert contact__alert--success">
+						<p class="form-success">
+						{{ 'contact.form.post_success' | t }}
+						</p>
+					</div>
+				{% endif %}
+				{% if form.errors %}
+					<div class="contact__alert contact__alert--errors">
+						<p class="form-errors">
+						{{ form.errors | default_errors }}
+						</p>
+					</div>
+				{% endif %}
+
+				<div class="grid">
+					{% for block in section.blocks %}
+						{%- assign name = block.settings.name -%}
+						{% if block.type == 'text-field' %}
+							{%- if name == blank -%}
+							{%- continue -%}
+							{%- endif -%}
+							<div class="1/{{ block.settings.size }}--handheld-and-up grid__cell contact__field">
+								<label class="contact__label" for="ContactForm{{ block.settings.name | Capitalize | escape }}">
+									{{ block.settings.name | Capitalize }}
+								</label>
+								<input class="input input--full text t-8" type="text"
+									name="contact[{{ block.settings.name | downcase | replace: ' ', '' | escape }}]"
+									id="ContactForm{{ block.settings.name | Capitalize | replace: ' ', '' | escape }}"
+									placeholder="{{ block.settings.placeholder }}" data-valid-input
+									{% unless block.settings.isRequired == false %} required {% endunless %}>
+							</div>
+						{%- elsif block.type == 'dropdown-field' -%}
+							{%- assign values = block.settings.options | split: ',' -%}
+							{%- if values == empty or name == blank -%}
+							{%- continue -%}
+							{%- endif -%}
+
+							<div class="1/{{ block.settings.size }}--handheld-and-up grid__cell contact__field">
+
+								<select class="input input--full text t-8 contact__select" name="contact[{{ block.settings.name | replace: ' ', '' | escape }}]" title="{{ block.settings.name | replace: ' ', '' | escape }}" {% unless block.settings.isRequired == false %} required {% endunless %}>
+								<option value="" disabled selected>{{ block.settings.name }}</option>
+
+								{%- for value in values -%}
+									{%- assign trim_value = value | strip -%}
+									<option value="{{ trim_value | replace: ' ', '' | escape }}">{{ trim_value }}</option>
+								{%- endfor -%}
+								</select>
+							</div>
+							{%- elsif  block.type == 'name' -%}
+								<div class="1/{{ block.settings.size }}--handheld-and-up grid__cell contact__field">
+									<label class="contact__label" for="ContactFormName">{{ block.settings.name | Capitalize }}</label>
+									<input class="input input--full text t-8" type="text"
+										name="contact[name]"
+										id="ContactFormName"
+										placeholder="{{ block.settings.placeholder }}"
+										value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}" data-valid-input required>
+								</div>
+							{%- elsif  block.type == 'mail' -%}
+								<div class="1/{{ block.settings.size }}--handheld-and-up grid__cell contact__field">
+									<label class="contact__label" for="ContactFormEmail">{{ block.settings.name | Capitalize }}</label>
+									<input class="input input--full text t-8" type="email"
+										name="contact[email]"
+										id="ContactFormEmail"
+										placeholder="{{ block.settings.placeholder }}"
+										value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+										spellcheck="false"
+										autocomplete="off"
+										autocapitalize="off"
+										data-valid-input
+										required>
+								</div>
+							{%- elsif  block.type == 'message' -%}
+								<div class="1/{{ block.settings.size }}--handheld-and-up grid__cell contact__field">
+									<label class="contact__label" for="ContactFormMessage">{{ block.settings.name | Capitalize }}</label>
+									<textarea class="input input--full text t-8" rows="3"
+										name="contact[body]"
+										id="ContactFormMessage"
+										placeholder="{{ block.settings.placeholder }}" data-valid-input required>
+										{%- if form.body -%}
+										{{- form.body -}}
+										{%- endif -%}
+									</textarea>
+								</div>
+						{% endif %}
+					{% endfor %}
+
+					<div class="grid__cell">
+						{% unless section.settings.text_before_button == blank %}
+							<div class="text t-5 align-center mb-10 contact__text_before_button">{{ section.settings.text_before_button }}</div>
+						{% endunless %}
+					</div>
+					<div class="grid__cell">
+						<input class="button button--secondary input input--full no-margin" data-valid-button type="submit" value="{{ 'contact.form.send' | t }}" disabled="disabled">
+					</div>
+					{% endform %}
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>

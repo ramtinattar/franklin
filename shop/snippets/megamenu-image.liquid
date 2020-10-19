@@ -1,0 +1,14 @@
+<div class="grid__cell 1/{{ gridSize }} megamenu-images__image {% if image_hover != blank %} hover-image__container{% endif %}">
+  <div class="megamenu-images__content">
+    <a class="{{ class }}" href="{{ url }}">
+		{% include 'image' with classes:'hover-image', img: image %}
+      <!-- <img class="hover-image" src="{{ image | img_url : 'master' }}" alt="{{ image.alt }}"> -->
+      	{% if image_hover != blank %}
+      		<img class="hover-image__secondary" src="{{ image_hover | img_url : 'master' }}" alt="{{ image_hover.alt }}">
+      	{% endif %}
+          <div class="megamenu-image__title text t-6">
+            {{ title }}
+          </div>
+    </a>
+  </div>
+</div>

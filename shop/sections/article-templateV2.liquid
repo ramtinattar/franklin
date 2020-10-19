@@ -1,0 +1,707 @@
+<style>
+
+{% if article.metafields.image.banner != blank %}
+	#section-{{section.id}} .article_featured_image {
+	  background:url('{{ article.metafields.image.banner }}');
+	}
+{% elsif article.image != blank %}
+  #section-{{section.id}} .article_featured_image {
+    background:url('{{ article | img_url: "1024x1024" }}');
+  }
+{% endif %}
+</style>
+
+<section class="{% if section.settings.section_bg %}{{ section.settings.section_bg }} {% endif %}{% if section.settings.section_spacing %}{{ section.settings.section_spacing }} {% endif %} {{ section.settings.section_spacing_mobile }} section" id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="article">
+	<div class="{% if section.settings.section_spacing %}{{ section.settings.section_spacing }} {% endif %} {{ section.settings.section_spacing_mobile }} articleV2"></div>
+
+	{% comment %}
+	  When a comment is submitted, the browser is redirected to a page that includes
+	  the new comment id in its URL.
+	  #comments is a required ID and is used as an anchor link by Shopify.
+	{% endcomment %}
+
+	{%- assign number_of_comments = article.comments_count -%}
+
+	{% comment %}
+	  If a comment was just submitted but requires moderation, we have an extra comment to count.
+	{% endcomment %}
+	{% if comment and comment.status != 'published' %}
+	  {% assign number_of_comments = article.comments_count | plus: 1 %}
+	{% endif %}
+
+	<article role="article" itemscope itemtype="http://schema.org/Article" class="article">
+
+	  {% if article.image %}
+      <header role="banner" class="article_featured_image">
+      	<h1 class="article_title heading z-h4">{{ article.title }}</h1>
+      </header>
+	  {% endif %}
+
+		<div class="article_header">
+			<div class="article_header-infos">
+				{% if article.metafields.article.readtime %}
+					<div class="article_header-info text t-6">
+						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)"><path d="M13.854 18.2083H6.14562C3.35394 15.5416 5.27062 11.8333 8.10394 10.0416C5.22898 8.24993 3.27062 4.49993 6.0623 1.83325H13.7706C16.5623 4.49993 14.6456 8.20825 11.8123 9.99993C14.729 11.7499 16.6873 15.4999 13.854 18.2083Z" fill="#F7F1EC"/><path d="M6.43762 14.9583C6.43762 14.75 6.52094 14.5416 6.6043 14.2916C7.02098 14.1249 7.43762 13.9583 7.8543 13.7499C8.31262 13.5833 8.68762 13.2916 8.9793 12.9166C9.39598 12.4166 9.6043 11.7916 9.6043 11.1249V8.95825C8.7293 8.41657 6.6043 6.95825 6.6043 5.83325H13.3126C13.0209 6.91657 11.2293 8.29157 10.3959 8.91657V11.0833C10.3959 11.7916 10.6459 12.4166 11.0626 12.9166C11.3543 13.2499 11.7293 13.4999 12.1459 13.6666C12.5626 13.8333 13.0209 14.0416 13.4376 14.2083C13.5209 14.4166 13.6043 14.6666 13.6043 14.8749C13.6043 18.625 6.43762 18.6667 6.43762 14.9583Z" fill="#DE7153"/><path d="M15.9792 0H3.97925C3.47925 0 3.10425 0.375 3.10425 0.875V0.91668C3.10425 1.41668 3.47925 1.79168 3.97925 1.79168H16.0209C16.5209 1.79168 16.8959 1.41668 16.8959 0.91668V0.875C16.8542 0.375 16.4792 0 15.9792 0Z" fill="#0E3C31"/><path d="M3.97925 20.0002H16.0209C16.5209 20.0002 16.8959 19.6252 16.8959 19.1252V19.0835C16.8959 18.5835 16.5209 18.2085 16.0209 18.2085H3.97925C3.47925 18.2085 3.10425 18.5835 3.10425 19.0835V19.1252C3.10425 19.6252 3.47925 20.0002 3.97925 20.0002Z" fill="#0E3C31"/></g><defs><clipPath id="clip0"><rect width="20" height="20" fill="white"/></clipPath></defs></svg>
+						<span class="article_header-info_title">{{ section.settings.label_read_time }}</span>
+						<span>{{ article.metafields.article.readtime }}</span>
+					</div>
+				{% endif %}
+				<div class="article_header-info text t-6">
+					<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)"><path d="M17.662 2.163c.72 0 1.304.639 1.304 1.427v14.983c0 .788-.583 1.427-1.304 1.427H2.338c-.72 0-1.304-.639-1.304-1.427V3.59c0-.788.584-1.427 1.304-1.427h15.324z" fill="#F7F1EC"/><path d="M17.76 2.167c.01.076.017.154.017.234l.056 10.31a6.006 6.006 0 01-5.971 6.039l-10.714.061c-.032 0-.065-.002-.097-.004.102.677.64 1.193 1.287 1.193h15.324c.72 0 1.304-.639 1.304-1.427V3.59c0-.752-.532-1.368-1.207-1.423z" fill="#F7F1EC"/><path d="M17.662 2.163H2.338c-.72 0-1.304.639-1.304 1.427V6.1h17.932V3.59c0-.788-.584-1.427-1.304-1.427z" fill="#0E3C31"/><path d="M17.76 2.167c.011.076.017.154.017.234l.02 3.7h1.17V3.59c.005-.674-.492-1.37-1.207-1.423z" fill="#0E3C31"/><path d="M9.038 15.938H9.03c-.944.012-1.954.019-2.675.017a88.099 88.099 0 002.037-2.809c.453-.647.748-1.255.876-1.807a.597.597 0 00.01-.059l.037-.285a.594.594 0 00.005-.075 2.484 2.484 0 00-2.481-2.481 2.485 2.485 0 00-2.435 2 .595.595 0 001.167.23 1.293 1.293 0 012.559.216l-.027.213c-.098.396-.328.856-.685 1.366-1.171 1.673-1.87 2.588-2.245 3.08-.16.21-.266.348-.337.451-.081.118-.25.365-.155.676.061.196.21.348.412.415.08.026.181.06 1.587.06.557 0 1.319-.005 2.365-.018a.595.595 0 00-.007-1.19z" fill="#DE7153"/><path d="M8.725 10.925a.558.558 0 01-.005.07l-.037.285a.558.558 0 01-.01.056c-.127.552-.422 1.161-.876 1.81a95.294 95.294 0 01-1.685 2.34.293.293 0 00.236.469h.006a88.31 88.31 0 002.038-2.809c.454-.649.749-1.258.876-1.81a.57.57 0 00.01-.056l.036-.285a.566.566 0 00.005-.07A2.484 2.484 0 006.54 8.457a2.484 2.484 0 012.185 2.468z" fill="#DE7153"/><path d="M4.976 10.669a.593.593 0 01-.286.4.595.595 0 00.881-.4c.099-.504.486-.892.97-1.006a1.29 1.29 0 00-1.565 1.006zM9.038 15.938H9.03c-.168.003-.338.005-.508.006a.594.594 0 01-.072 1.184c-.862.01-.452.013.595 0a.595.595 0 00-.007-1.19zM12.88 11.692c-.272 0-.536.04-.784.115.707-1.346 1.64-2.064 1.655-2.074a.595.595 0 00-.712-.953c-.1.074-2.449 1.857-2.853 5.218a2.73 2.73 0 002.694 3.147 2.73 2.73 0 002.727-2.727 2.73 2.73 0 00-2.727-2.726zm0 4.264a1.539 1.539 0 01-1.52-1.763l.002-.016v-.004a1.54 1.54 0 011.518-1.292c.848 0 1.537.69 1.537 1.537 0 .848-.69 1.538-1.537 1.538z" fill="#DE7153"/><path d="M13.277 8.902a.595.595 0 01-.12.83c-.012.01-.668.513-1.296 1.466a.322.322 0 00.289.497h.007c.698-1.274 1.58-1.952 1.594-1.962a.595.595 0 00-.654-.991c.069.04.13.093.18.16zM12.88 11.691c-.1 0-.2.006-.298.017a2.73 2.73 0 012.43 2.71 2.73 2.73 0 01-2.429 2.71 2.73 2.73 0 003.024-2.71 2.73 2.73 0 00-2.726-2.727z" fill="#DE7153"/><path d="M11.363 14.176v-.003a1.541 1.541 0 011.22-1.263 1.535 1.535 0 00-1.815 1.263v.003c0 .006-.002.011-.003.017a1.539 1.539 0 001.818 1.733 1.54 1.54 0 01-1.223-1.733c0-.006.002-.011.003-.017z" fill="#DE7153"/><path d="M4.063 3.6a.297.297 0 01-.297-.297V.297a.297.297 0 01.595 0v3.006a.297.297 0 01-.298.297z" fill="#F7F1EC"/><path d="M4.036 4.492a.595.595 0 100-1.19.595.595 0 000 1.19z" fill="#fff"/><path d="M15.991 3.6a.297.297 0 01-.297-.297V.297a.297.297 0 11.595 0v3.006a.297.297 0 01-.298.297z" fill="#F7F1EC"/><path d="M15.964 4.492a.595.595 0 100-1.19.595.595 0 000 1.19z" fill="#fff"/></g><defs><clipPath id="clip0"><path fill="#fff" d="M0 0h20v20H0z"/></clipPath></defs></svg>
+					<span class="article_header-info_title">{{ section.settings.label_date }}</span>
+					<span>{{ article.published_at | time_tag: format: 'day_month_year' }}</span>
+				</div>
+				{% if article.tags.size > 0 %}
+					<div class="article_header-info text t-6">
+						<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)"><path d="M15.83 0H4.17a1.24 1.24 0 00-1.24 1.24v18.414c0 .283.324.446.552.277l6.69-5.455 6.346 5.456c.228.168.55.006.55-.278V1.24A1.24 1.24 0 0015.83 0z" fill="#DE7153"/><path d="M5.69 2.414H2.93v.69h2.76a.345.345 0 100-.69zM6.38 4.483H2.93v.69h3.45a.345.345 0 100-.69zM7.069 6.552H2.93v.69h4.138a.345.345 0 100-.69zM10.172 14.476l.345.297v-1.675a.345.345 0 10-.69 0v1.66l.345-.281z" fill="#fff"/></g><defs><clipPath id="clip0"><path fill="#fff" d="M0 0h20v20H0z"/></clipPath></defs></svg>
+						<span class="article_header-info_title">{{ section.settings.label_tags }}</span>
+						<span>
+							{% for tag in article.tags %}
+								{% unless tag contains 'read_time' or tag contains 'author' %}
+									{% unless forloop.first %}, {% endunless %}{{ tag | strip }}
+								{% endunless %}
+							{% endfor %}
+						</span>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+
+    <div class="article_container">
+
+			<div class="article_summary">
+				<p class="z-h8 heading uppercase social-sharing-title">{{ section.settings.summary_title }}</p>
+
+				{%- if article.metafields.article.sommaire != blank -%}
+					{{article.metafields.article.sommaire}}
+				{%- endif -%}
+
+				{%- if article.metafields.article.productssuggestion != blank -%}
+				<div data-carousel-container class="article_summary_products-suggestion">
+					<div>
+						<div class="collection-slider__header page-width--mobile">
+							<h2 class="z-h8 heading article_summary_products-suggestion-title">
+								{{ article.metafields.article.productssuggestion_title }}
+							</h2>
+						</div>
+						<div class="collection-slider__container">
+							<div class="collection-slider__carousel carousel" data-collection-slider='{ "groupCells" : 1, "pageDots" : false, "prevNextButtons" : false, "wrapAround" : true}'>
+								{% for cardProduct in article.metafields.article.productssuggestion %}
+									<div class="carousel-cell article_summary_product">
+										{% include 'product-card' with cardProduct : all_products[cardProduct] %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+
+					</div>
+					<div class="carousel__prev-next-container collection-slider__prev-next-container">
+						<div data-carousel-prev class="carousel__prev-button">
+							{% include 'icon-right-arrow' %}
+						</div>
+						<div data-carousel-next class="carousel__next-button">
+							{% include 'icon-right-arrow' %}
+						</div>
+					</div>
+				</div>
+				{%- endif -%}
+			</div>
+
+  	  <div class="article_content rte" itemprop="articleBody">
+        {% if section.blocks.size == 0 %}
+  	       {{ article.content }}
+         {% else %}
+            {% assign articleDescription = article.content %}
+
+            {% if articleDescription contains '{{button_1}}' %}
+              {% for block in section.blocks %}
+                {% if block.type == 'button_1' %}
+
+                  {% capture button_1_content %}
+                    <div class="align-center"><a href="{{ block.settings.button_url }}" class="button {{ block.settings.button_type }} article_button">{{ block.settings.button_text }}</a></div>
+                  {% endcapture %}
+
+                  {%- if block.settings.article_tag != blank -%}
+                    {% if article.tags.size > 0 %}
+                      {% for tag in article.tags %}
+                        {%- if tag contains block.settings.article_tag -%}
+                          {% assign articleDescription = articleDescription | replace: '{{button_1}}', button_1_content %}
+                        {%- endif -%}
+                      {% endfor %}
+                    {% endif %}
+                  {%- elsif block.settings.featured_article != blank -%}
+                    {% assign _article = articles[block.settings.featured_article] %}
+                    {% if _article.id == article.id %}
+                      {% assign articleDescription = articleDescription | replace: '{{button_1}}', button_1_content %}
+                    {% endif %}
+                  {%- endif -%}
+
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if articleDescription contains '{{button_2}}' %}
+              {% for block in section.blocks %}
+                {% if block.type == 'button_2' %}
+
+                  {% capture button_2_content %}
+                    <div class="align-center"><a href="{{ block.settings.button_url }}" class="button {{ block.settings.button_type }} article_button">{{ block.settings.button_text }}</a></div>
+                  {% endcapture %}
+
+                  {%- if block.settings.article_tag != blank -%}
+                    {% if article.tags.size > 0 %}
+                      {% for tag in article.tags %}
+                        {%- if tag contains block.settings.article_tag -%}
+                        {% assign articleDescription = articleDescription | replace: '{{button_2}}', button_2_content %}
+                        {%- endif -%}
+                      {% endfor %}
+                    {% endif %}
+                  {%- elsif block.settings.featured_article != blank -%}
+                    {% assign _article = articles[block.settings.featured_article] %}
+                    {% if _article.id == article.id %}
+                      {% assign articleDescription = articleDescription | replace: '{{button_2}}', button_2_content %}
+                    {% endif %}
+                  {%- endif -%}
+
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if articleDescription contains '{{encart_1}}' %}
+              {% for block in section.blocks %}
+                {% if block.type == 'encart_1' %}
+
+                  {% capture encart_1_content %}
+                    <div class="article_encart {{ block.settings.section_bg }}">
+                      <img class="article_encart-icon" src="{{ block.settings.icon |img_url: '100x' }}" alt="{{ block.settings.icon.alt }}">
+                      <h6 class="article_encart-title">{{ block.settings.title }}</h6>
+                      <p>{{ block.settings.content }}</p>
+                    </div>
+                  {% endcapture %}
+
+                  {%- if block.settings.article_tag != blank -%}
+                    {% if article.tags.size > 0 %}
+                      {% for tag in article.tags %}
+                        {%- if tag contains block.settings.article_tag -%}
+                        {% assign articleDescription = articleDescription | replace: '{{encart_1}}', encart_1_content %}
+                        {%- endif -%}
+                      {% endfor %}
+                    {% endif %}
+                  {%- elsif block.settings.featured_article != blank -%}
+                    {% assign _article = articles[block.settings.featured_article] %}
+                    {% if _article.id == article.id %}
+                    {% assign articleDescription = articleDescription | replace: '{{encart_1}}', encart_1_content %}
+                    {% endif %}
+                  {%- endif -%}
+
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if articleDescription contains '{{encart_2}}' %}
+              {% for block in section.blocks %}
+                {% if block.type == 'encart_2' %}
+
+                  {% capture encart_1_content %}
+                    <div class="article_encart {{ block.settings.section_bg }}">
+                      <img class="article_encart-icon" src="{{ block.settings.icon |img_url: '100x' }}" alt="{{ block.settings.icon.alt }}">
+                      <h6 class="article_encart-title">{{ block.settings.title }}</h6>
+                      <p>{{ block.settings.content }}</p>
+                    </div>
+                  {% endcapture %}
+
+                  {%- if block.settings.article_tag != blank -%}
+                    {% if article.tags.size > 0 %}
+                      {% for tag in article.tags %}
+                        {%- if tag contains block.settings.article_tag -%}
+                        {% assign articleDescription = articleDescription | replace: '{{encart_2}}', encart_2_content %}
+                        {%- endif -%}
+                      {% endfor %}
+                    {% endif %}
+                  {%- elsif block.settings.featured_article != blank -%}
+                    {% assign _article = articles[block.settings.featured_article] %}
+                    {% if _article.id == article.id %}
+                    {% assign articleDescription = articleDescription | replace: '{{encart_2}}', encart_2_content %}
+                    {% endif %}
+                  {%- endif -%}
+
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {{ articleDescription }}
+        {% endif %}
+
+				{% if settings.social_sharing_blog %}
+					{% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+				{% endif %}
+  	  </div>
+
+		</div>
+
+		<div class="suggestion_articles container--medium">
+			<h2 class="heading z-h2 text-center featured-reviews__title">{{ section.settings.suggestion_title}}</h2>
+			<div class="grid">
+				{% assign articleID = article.id %}
+				{% assign sameArticle = false %}
+				{% for article in blog.articles limit:4 %}
+					{%- if article.id == articleID -%}{% assign sameArticle = true %}{%- endif -%}
+					{%- if forloop.index == 4 and sameArticle == false -%}
+						{%- continue -%}
+					{%- endif -%}
+
+					{%- if article.id != articleID -%}
+						<div class="grid__cell 1/1 1/3--desk">
+								{% include 'article-card' with cardArticle : article, classes : 'blog__article-card', excerpt_length : 25, text_read : Settings.article_read_text, show_hover : true %}
+						</div>
+					{%- endif -%}
+				{% endfor %}
+			</div>
+		</div>
+
+		{% if blog.comments_enabled? %}
+			<h3>{{ 'blogs.comments.with_count' | t: count: number_of_comments }}</h3>
+
+			{% paginate article.comments by 5 %}
+
+			<div id="comments">
+				{% if comment and comment.status and paginate.current_page == 1 %}
+					<p class="form-success">
+						{% if blog.moderated? and comment.status != 'published' %}
+							{{ 'blogs.comments.success_moderated' | t }}
+						{% else %}
+							{{ 'blogs.comments.success' | t }}
+						{% endif %}
+					</p>
+				{% endif %}
+
+				{% if number_of_comments > 0 %}
+					<ul>
+						{% comment %}
+							Display comment from URL parameters if it is waiting moderation
+						{% endcomment %}
+						{% if comment and comment.status != 'published' %}
+							<li id="{{ comment.id }}">
+								<div class="rte">
+									{{ comment.content }}
+								</div>
+								{% capture date %}{{ comment.created_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+								<p>{{ 'blogs.article.comment_meta_html' | t: author: comment.author, date: date }}</p>
+							</li>
+						{% endif %}
+
+						{% for comment in article.comments %}
+							<li id="{{ comment.id }}">
+								<div class="rte">
+									{{ comment.content }}
+								</div>
+								{% capture date %}{{ comment.created_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+								<p>{{ 'blogs.article.comment_meta_html' | t: author: comment.author, date: date }}</p>
+							</li>
+
+						{% endfor %}
+					</ul>
+
+					{% if paginate.pages > 1 %}
+						{% include 'pagination' %}
+					{% endif %}
+				{% endif %}
+			</div>
+
+			{% endpaginate %}
+
+			{% form 'new_comment', article %}
+				<h3>{{ 'blogs.comments.title' | t }}</h3>
+
+				{{ form.errors | default_errors }}
+
+				<label for="CommentAuthor" class="label-hidden">
+					{{ 'blogs.comments.name' | t }}
+				</label>
+				<input type="text"
+							 name="comment[author]"
+							 id="CommentAuthor"
+							 class="{% if form.errors contains 'author' %}input-error{% endif %}"
+							 placeholder="{{ 'blogs.comments.name' | t }}"
+							 value="{{ form.author }}"
+							 autocapitalize="words">
+
+				<label for="CommentEmail" class="label-hidden">
+					{{ 'blogs.comments.email' | t }}
+				</label>
+				<input type="email"
+							 name="comment[email]"
+							 id="CommentEmail"
+							 class="{% if form.errors contains 'email' %}input-error{% endif %}"
+							 placeholder="{{ 'blogs.comments.email' | t }}"
+							 value="{{ form.email }}"
+							 spellcheck="false"
+							 autocomplete="off"
+							 autocapitalize="off">
+
+				<label for="CommentBody" class="label-hidden">
+					{{ 'blogs.comments.message' | t }}
+				</label>
+				<textarea
+					name="comment[body]"
+					id="CommentBody"
+					class="{% if form.errors contains 'body' %}input-error{% endif %}"
+					placeholder="{{ 'blogs.comments.message' | t }}">
+					{{ form.body }}
+				</textarea>
+
+				{% if blog.moderated? %}
+					<p>{{ 'blogs.comments.moderated' | t }}</p>
+				{% endif %}
+
+				<input type="submit" class="btn" value="{{ 'blogs.comments.post' | t }}">
+			{% endform %}
+
+		{% endif %}
+
+	</article>
+
+
+</section>
+
+{% schema %}
+{
+  "name": "article",
+  "settings": [
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      },
+			{
+			  "type": "text",
+			  "id": "label_read_time",
+			  "label": "label read time",
+			  "default": "TEMPS DE LECTURE"
+			},
+			{
+				"type": "text",
+				"id": "label_date",
+				"label": "label date",
+				"default": "DATE"
+			},
+			{
+				"type": "text",
+				"id": "label_tags",
+				"label": "label tags",
+				"default": "TAGS"
+			},
+			{
+				"type": "text",
+				"id": "summary_title",
+				"label": "sommaire title",
+				"default": "Sommaire"
+			},
+			{
+				"type": "text",
+				"id": "suggestion_title",
+				"label": "suggestion articles title",
+				"default": "À lire aussi"
+			}
+      ],
+      "blocks": [
+        {
+          "type": "button_1",
+          "name": "Button 1",
+          "settings": [
+            {
+             "type": "article",
+             "id": "featured_article",
+             "label": "Article to display"
+           },
+           {
+             "type": "text",
+             "id": "article_tag",
+             "label": "Article Tag"
+           },
+            {
+              "type": "text",
+              "id": "button_text",
+              "label": "Button Text",
+              "default": "Button"
+            },
+            {
+              "type": "url",
+              "id": "button_url",
+              "label": "Button Url"
+            },
+            {
+              "type": "select",
+              "id": "button_type",
+              "label": "button type",
+              "options": [
+              {
+                "value" : "button--primary",
+                "label" : "button--primary"
+              },
+              {
+                "value" : "button--secondary",
+                "label" : "button--secondary"
+              },{
+                "value" : "button--invert",
+                "label" : "button--invert"
+              }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "button_2",
+          "name": "Button 2",
+          "settings": [
+            {
+             "type": "article",
+             "id": "featured_article",
+             "label": "Article to display"
+           },
+           {
+             "type": "text",
+             "id": "article_tag",
+             "label": "Article Tag"
+           },
+            {
+              "type": "text",
+              "id": "button_text",
+              "label": "Button Text",
+              "default": "Button"
+            },
+            {
+              "type": "url",
+              "id": "button_url",
+              "label": "Button Url"
+            },
+            {
+              "type": "select",
+              "id": "button_type",
+              "label": "button type",
+              "options": [
+              {
+                "value" : "button--primary",
+                "label" : "button--primary"
+              },
+              {
+                "value" : "button--secondary",
+                "label" : "button--secondary"
+              },{
+                "value" : "button--invert",
+                "label" : "button--invert"
+              }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "encart_1",
+          "name": "Encart 1",
+          "settings": [
+            {
+             "type": "article",
+             "id": "featured_article",
+             "label": "Article to display"
+           },
+           {
+             "type": "text",
+             "id": "article_tag",
+             "label": "Article Tag"
+           },
+            {
+              "type": "select",
+              "id": "section_bg",
+              "label": "Couleur du fond",
+              "options": [
+                {
+                  "value" : "bg--white",
+                  "label" : "BG white"
+                },
+                {
+                  "value" : "bg--color--border",
+                  "label" : "BG Color with border"
+                },
+                {
+                  "value" : "bg--color",
+                  "label" : "BG Color"
+                },{
+                  "value" : "bg--primary",
+                  "label" : "BG Primary"
+                },{
+                  "value" : "bg--secondary",
+                  "label" : "BG secondary"
+                }
+              ]
+            },
+            {
+              "type": "image_picker",
+              "id": "icon",
+              "label": "label"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title",
+              "default": "Title"
+            },
+            {
+              "type": "text",
+              "id": "content",
+              "label": "Content",
+              "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            }
+          ]
+        },
+        {
+          "type": "encart_2",
+          "name": "Encart 2",
+          "settings": [
+            {
+             "type": "article",
+             "id": "featured_article",
+             "label": "Article to display"
+           },
+           {
+             "type": "text",
+             "id": "article_tag",
+             "label": "Article Tag"
+           },
+            {
+              "type": "select",
+              "id": "section_bg",
+              "label": "Couleur du fond",
+              "options": [
+                {
+                  "value" : "bg--white",
+                  "label" : "BG white"
+                },
+                {
+                  "value" : "bg--color--border",
+                  "label" : "BG Color with border"
+                },
+                {
+                  "value" : "bg--color",
+                  "label" : "BG Color"
+                },{
+                  "value" : "bg--primary",
+                  "label" : "BG Primary"
+                },{
+                  "value" : "bg--secondary",
+                  "label" : "BG secondary"
+                }
+              ]
+            },
+            {
+              "type": "image_picker",
+              "id": "icon",
+              "label": "label"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title",
+              "default": "Title"
+            },
+            {
+              "type": "text",
+              "id": "content",
+              "label": "Content",
+              "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            }
+          ]
+        }
+      ],
+      "presets": [
+      {
+        "name": "article",
+        "category": "Studio Zerance"
+      }
+      ]
+    }
+    {% endschema %}

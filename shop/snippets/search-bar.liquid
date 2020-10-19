@@ -1,0 +1,15 @@
+<div data-search-bar class="search-bar">
+	<div class="search-bar__header search__result-content">
+	  <div class="input-arrow input-arrow--search">
+		<input autofocus data-search-bar-input type="text" class="input-arrow__field input-arrow__field--search" placeholder="{{ settings.search_placeholder}}" aria-required="true" aria-label="{{ settings.search_placeholder }}"/>
+		<span class="input-arrow__btn">
+			  <button data-search-launch class="btn input-arrow__submit" name="commit" id="Search">
+				  {% include 'icon' with src : settings.right_arrow_green, alt : 'green arrow', classes : 'icon--right-arrow' %}
+			  </button>
+		  </span>
+	  </div>
+	</div>
+	<div class="search-bar__result" data-search-result>
+
+	</div>
+</div>

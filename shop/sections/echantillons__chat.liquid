@@ -1,0 +1,317 @@
+{% include 'echantillons' with Settings:section.settings, id:section.id, eventCategory:'quizz chat' %}
+
+{% schema %}
+{
+  "name": "Echantillons__chat",
+  "settings": [
+      {
+        "type":"header",
+        "content" : "Echantillons"
+      },
+      {
+        "type": "text",
+        "id": "progress_bar_step_1_title",
+        "label": "Progress bar step 1 Title"
+      },
+      {
+        "type": "text",
+        "id": "progress_bar_step_1_subtitle",
+        "label": "Progress bar step 1 Subtitle"
+      },
+      {
+        "type": "text",
+        "id": "progress_bar_step_2_title",
+        "label": "Progress bar step 2 Title"
+      },
+      {
+        "type": "text",
+        "id": "progress_bar_step_2_subtitle",
+        "label": "Progress bar step 2 Subtitle"
+      },
+      {
+        "type": "text",
+        "id": "progress_bar_step_3_title",
+        "label": "Progress bar step 3 Title"
+      },
+      {
+        "type": "text",
+        "id": "progress_bar_step_3_subtitle",
+        "label": "Progress bar step 3 Subtitle"
+      },
+      {
+        "type": "text",
+        "id": "step_1_title",
+        "label": "step 1 title"
+      },
+      {
+        "type": "image_picker",
+        "id": "step_1_image",
+        "label": "step 1 image"
+      },
+      {
+        "type": "text",
+        "id": "step_1_cta",
+        "label": "step 1 CTA"
+      },
+      {
+        "type": "text",
+        "id": "step_2_title",
+        "label": "step 2 title"
+      },
+      {
+        "type": "richtext",
+        "id": "step_2_subtitle",
+        "label": "step 2 subtitle"
+      },
+      {
+        "type": "collection",
+        "id": "step_2_collection",
+        "label": "step 2 collection",
+        "info": "info"
+      },
+      {
+        "type": "image_picker",
+        "id": "step_2_image",
+        "label": "step 2 image"
+      },
+      {
+        "type": "text",
+        "id": "step_2_cta",
+        "label": "step 2 CTA"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ],
+      "blocks": [
+        {
+          "type": "block_type",
+          "name": "Block Name",
+          "settings": [
+          {
+            "id": "statement",
+            "type": "textarea",
+            "label": "Write a statement",
+            "info": "placeholders ##question1##  ##question2## can be replaced by questions| exemple:  C'est un(e) ##question1## agé(e) de ##question2## ##question3##"
+          },
+          {
+            "id": "question1_handle",
+            "type": "text",
+            "label": "Question 1 handle",
+            "info": "Handle is the identifier of this question in GA & Klaviyo."
+          },
+          {
+             "type": "radio",
+             "id": "question1_type",
+             "label": "Question 1 type",
+             "default": "input",
+             "options": [
+                {
+                  "value": "input",
+                  "label": "input"
+                },
+                {
+                  "value": "dropdown",
+                  "label": "dropdown"
+                },
+                {
+                  "value": "checkbox",
+                  "label": "checkbox"
+                },
+                {
+                  "value": "number",
+                  "label": "number"
+                }
+             ]
+          },
+          {
+            "id": "question1_placeholder",
+            "type": "text",
+            "label": "Question 1 placeholder"
+          },
+          {
+            "id": "question1_values",
+            "type": "textarea",
+            "label": "Question 1 values",
+            "info": "Only if type is dropdown. Exemple : british longhair,dobermann,labrador"
+          },
+          {
+            "id": "question2_handle",
+            "type": "text",
+            "label": "Question 2 handle",
+            "info": "Handle is the identifier of this question in GA & Klaviyo."
+          },
+          {
+             "type": "radio",
+             "id": "question2_type",
+             "label": "Question 2 type",
+             "default": "input",
+             "options": [
+                {
+                  "value": "input",
+                  "label": "input"
+                },
+                {
+                  "value": "dropdown",
+                  "label": "dropdown"
+                },
+                {
+                  "value": "checkbox",
+                  "label": "checkbox"
+                },
+                {
+                  "value": "number",
+                  "label": "number"
+                }
+             ]
+          },
+          {
+            "id": "question2_placeholder",
+            "type": "text",
+            "label": "Question 2 placeholder"
+          },
+          {
+            "id": "question2_values",
+            "type": "textarea",
+            "label": "Question 2 values",
+            "info": "Only if type is dropdown"
+          },
+          {
+            "id": "question3_handle",
+            "type": "text",
+            "label": "Question 3 handle",
+            "info": "Handle is the identifier of this question in GA & Klaviyo."
+          },
+          {
+             "type": "radio",
+             "id": "question3_type",
+             "label": "Question 3 type",
+             "default": "input",
+             "options": [
+                {
+                  "value": "input",
+                  "label": "input"
+                },
+                {
+                  "value": "dropdown",
+                  "label": "dropdown"
+                },
+                {
+                  "value": "checkbox",
+                  "label": "checkbox"
+                },
+                {
+                  "value": "number",
+                  "label": "number"
+                }
+             ]
+          },
+          {
+            "id": "question3_placeholder",
+            "type": "text",
+            "label": "Question 3 placeholder"
+          },
+          {
+            "id": "question3_values",
+            "type": "textarea",
+            "label": "Question 3 values",
+            "info": "Only if type is dropdown"
+          }
+          ]
+        }
+      ],
+      "presets": [
+      {
+        "name": "Echantillons__chat",
+        "category": "Studio Zerance"
+      }
+      ]
+    }
+    {% endschema %}

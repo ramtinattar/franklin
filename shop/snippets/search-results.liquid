@@ -1,0 +1,68 @@
+{% assign max_product_to_show = 30 %}
+{% assign max_link_to_show = 30 %}
+
+{% unless search_page %}
+{% layout none %}
+{% assign max_product_to_show = 30 %}
+{% assign max_link_to_show = 30 %}
+{% endunless %}
+{% paginate search.results by 30 %}
+{% if search.performed %}
+<div class="search__result-container {% if search_page %}search__result-container--page {% else %}search__result-container--bar{% endif %}">
+
+	{% if search.results_count > 0 %}
+	{%- if search.types contains 'product' -%}
+	<div class="search__result">
+		<div class="{% if search_page %}page-width{% else %}search__result-content{% endif %}">
+			{% assign productNumber = 0 %}
+			{% for item in search.results %}
+			{% if item.price_min and item.price_min > 500 %}{% assign productNumber = productNumber | plus : 1 %}{% endif %}
+			{% endfor %}
+			<div class="search__result-title secondary text--small page-width--mobile">
+				Résultats produits pour "{{ search.terms | remove: "*" }}" ({{ productNumber }})
+			</div>
+			<div class="grid search__result-grid search-slider__container collection-slider__carousel" data-search-slider='{ "watchCSS" : true, "groupCells" : true, "pageDots" : true, "prevNextButtons" : false, "wrapAround" : false}'>
+				{% for cardProduct in search.results %}
+				{% unless cardProduct.price_min and cardProduct.price_min > 500 %}{% continue %}{% endunless %}
+				{% if max_product_to_show <= 0 %}{% continue %}{% endif %}
+				<div class="carousel-cell search-slider__cell grid__cell 1/2--pocket {% if search_page %}1/4--desk{% else %}1/1--desk{% endif %}">
+					{% include 'product-card' with dimensions:'300x', cardProduct : cardProduct, classes : 'search__product-card' %}
+				</div>
+				{% assign max_product_to_show = max_product_to_show | minus : 1 %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% if search.types contains 'article' %}
+	<div class="search__result bg--color search__result--articles">
+		<div class="{% if search_page %}page-width{% else %}search__result-content{% endif %}">
+			{% assign articleNumber = 0 %}
+			{% for item in search.results %}
+			{% if item.author %}{% assign articleNumber = articleNumber | plus : 1 %}{% endif %}
+			{% endfor %}
+			<div class="search__result-title secondary text--small">
+				Résultats articles pour "{{ search.terms | remove: "*" }}" ({{ articleNumber }})
+			</div>
+			<div class="grid search__result-grid">
+				{% for cardArticle in search.results limit: max_link_to_show %}
+				{% unless cardArticle.author %}{% continue %}{% endunless %}
+				{% if max_link_to_show <= 0 %}{% continue %}{% endif %}
+				<div class="grid__cell 1/1 {% if search_page %}1/3--desk{% endif %}">
+					{% include 'article-card' with cardArticle : cardArticle, classes : 'search__article-card', excerpt_length : 10 %}
+				</div>
+				{% assign max_link_to_show = max_link_to_show | minus : 1 %}
+				{% endfor %}
+				<div class="search__result-button grid__cell 1/1">
+					{% include 'arrow-button' with classes:'heading uppercase', text : 'Tous les articles', href: '/blogs/news' %}
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% else %}
+	<p class="search__result-content search__no-result">Votre recherche n'a donné aucun résultat.</p>
+	{% endif %}
+</div>
+{% endif %}
+{% endpaginate %}

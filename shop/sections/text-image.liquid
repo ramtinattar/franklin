@@ -1,0 +1,230 @@
+{% include 'text-image' with Settings:section.settings, id:section.id %}
+
+{% schema %}
+{
+  "name": "Text image",
+  "settings": [
+      {
+        "type":"header",
+        "content" : "Content"
+      },
+      {
+        "type": "select",
+        "id": "content_position",
+        "label": "Content position",
+        "options": [
+        {
+          "value" : "Image-left",
+          "label" : "Image Left / Text Right"
+        },
+        {
+          "value" : "Image-right",
+          "label" : "Text Left / Image Right"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "align_position",
+        "label": "Content Align",
+        "options": [
+        {
+          "value" : "flex-start",
+          "label" : "Top"
+        },
+        {
+          "value" : "center",
+          "label" : "Center"
+        },
+        {
+          "value" : "flex-end",
+          "label" : "Bottom"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type":      "range",
+        "id":        "margin_bottom_title",
+        "min":        0,
+        "max":        50,
+        "step":       2,
+        "unit":       "px",
+        "label":     "margin bottom title",
+        "default":   10
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text"
+      },
+      {
+        "type":      "range",
+        "id":        "width_text",
+        "min":        0,
+        "max":        100,
+        "step":       5,
+        "unit":       "%",
+        "label":     "width text",
+        "default":   100
+      },
+      {
+        "type": "select",
+        "id": "text_position",
+        "label": "Postion text",
+        "options": [
+        {
+          "value" : "align-left",
+          "label" : "Left"
+        },
+        {
+          "value" : "align-center",
+          "label" : "Center"
+        },
+        {
+          "value" : "align-right",
+          "label" : "Right"
+        }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type":      "range",
+        "id":        "width_image",
+        "min":        0,
+        "max":        100,
+        "step":       5,
+        "unit":       "%",
+        "label":     "width image",
+        "default":   100
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "label": "Postion image",
+        "options": [
+        {
+          "value" : "align-left",
+          "label" : "Left"
+        },
+        {
+          "value" : "align-center",
+          "label" : "Center"
+        },
+        {
+          "value" : "align-right",
+          "label" : "Right"
+        }
+        ]
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        },
+        {
+          "value" : "bg--green-light",
+          "label" : "BG green light"
+        }
+        ]
+      }
+      ],
+      "presets": [
+      {
+        "name": "Text image",
+        "category": "Studio Zerance"
+      }
+      ]
+    }
+    {% endschema %}

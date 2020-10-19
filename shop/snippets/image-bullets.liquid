@@ -1,0 +1,60 @@
+<section class="{{ Settings.background }} {% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section vertical-scroll-timeline image-bullets" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="image-bullets">
+  <div class="image-bullets__grid relative">
+    <div class="image-bullets__grid-cell scroll-timeline-image-container">
+      <div class="image-bullets__image relative lazyload only-desktop" data-bg="{{ Settings.image | img_url : 'master' }}">
+		  {% comment %}
+        {% include 'image' with classes : 'only-desktop image-bullets__image-desktop', img:Settings.image %}
+        {% include 'image' with classes : 'only-mobile', img:Settings.image_mobile %}
+		{% endcomment %}
+      </div>
+	  {% if Settings.image_mobile != blank %}
+      <div class="image-bullets__image relative lazyload only-mobile" data-bg="{{ Settings.image_mobile | img_url : 'master' }}">
+        <h2 class="heading image-bullets__image-title z-h4 only-mobile">{{ Settings.title }}</h2>
+      </div>
+	  {% endif %}
+    </div>
+    <div class="image-bullets__grid-cell">
+      <div class="scroll-timeline-container mobile-container--small">
+        <h2 class="scroll-timeline__title heading z-h5 {% if Settings.image_mobile != blank %}only-desktop{% endif %}">{{ Settings.title }}</h2>
+        <div class="scroll-timeline-content">
+			{% for i in (0..4) %}
+            	{% capture current %}{% cycle 1, 2, 3, 4, 5 %}{% endcapture %}
+              {% assign titleKey = 'title_' | append : current %}
+              {% assign subtitleKey = 'subtitle_' | append : current %}
+			  {% assign bulletKey = 'bullet_' | append : current %}
+              {% assign textKey = 'text_' | append : current %}
+			  {% assign mobileTextKey = 'mobile_text_' | append : current %}
+              {% unless Settings[titleKey] != blank %}{% continue %}{% endunless %}
+            <div class="timeline active">
+              {% if Settings[bulletKey] != blank %}
+              <img class="custom-timeline-bullet custom-timeline-bullet--full" alt="Bullet point" src="{{ Settings[bulletKey] }}" />
+              {% else %}
+              <div class="timeline_bullet">
+
+              </div>
+              {% endif %}
+              <div class="timeline_content text--large">
+                <h3 class="timeline_title t-3 secondary">{{ Settings[titleKey] }}</h3>
+                {% if Settings[subtitleKey] != blank %}<h4 class="timeline_subtitle u-h4">{{ Settings[subtitleKey] }}</h4>{% endif %}
+          				<div class="timeline_text t-5 {% if Settings[mobileTextKey] != blank %}only-desktop{% endif %}">
+          					{{ Settings[textKey]}}
+          				</div>
+                  {% if Settings[mobileTextKey] != blank %}
+                  <div class="timeline_text t-5 only-mobile">
+                    {{ Settings[mobileTextKey]}}
+                  </div>
+                  {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="scroll-time__button-container {% if Settings.button_text_2 == blank %}scroll-time__button-container--one{% endif %}">
+          {% include 'button' with classes : Settings.button_type, text : Settings.button_text, href : Settings.button_url %}
+          {% if Settings.button_text_2 != blank %}
+            {% include 'button' with classes : Settings.button_type, text : Settings.button_text_2, href : Settings.button_url_2 %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

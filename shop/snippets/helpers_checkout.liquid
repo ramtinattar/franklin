@@ -1,0 +1,325 @@
+<script>
+  return;
+  function getIndicesOf(searchStr, str, caseSensitive) {
+    var searchStrLen = searchStr.length;
+    if (searchStrLen == 0) {
+        return [];
+    }
+    var startIndex = 0, index, indices = [];
+    if (!caseSensitive) {
+        str = str.toLowerCase();
+        searchStr = searchStr.toLowerCase();
+    }
+    while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+        indices.push(index);
+        startIndex = index + searchStrLen;
+    }
+    return indices;
+  }
+
+  function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+  }
+
+  function populateTemplate(templateId, data) {
+    var template = document.getElementById(templateId);
+    var populatedTemplate = template.innerHTML.trim();
+    var dataKeys = Object.keys(data);
+    // check conditions
+    for (var j=0; j < dataKeys.length; j++) {
+      var key = dataKeys[j];
+      var condition = "#?" + key + "##";
+      var regex = new RegExp(condition, "g");
+
+      // var indices = getIndicesOf(condition, populatedTemplate, true);
+      var openTag = false;
+      var previousIndex = -1;
+      var currentIndex = populatedTemplate.indexOf(condition);
+      while (currentIndex > -1) {
+        if (!openTag) {
+          previousIndex = populatedTemplate.indexOf(condition);
+          openTag = true;
+          continue;
+        }
+
+        if (data[key]) {
+
+        } else {
+
+        }
+      }
+
+      for (var i=0; i<indices.length; i+2) {
+        var index1= indices[i];
+        var index2= indices[i+1];
+        // only remove conditions
+        if (data[key]) {
+        	populatedTemplate = populatedTemplate.substring(0, index1) + populatedTemplate.substring(index1 + condition.length);
+        	populatedTemplate = populatedTemplate.substring(0, index2) + populatedTemplate.substring(index2 + condition.length);
+        }
+
+        // remove the condition & the wrapped
+        else
+          populatedTemplate = populatedTemplate.substring(0, index1) + populatedTemplate.substring(index2 + condition.length);
+      }
+
+      // populatedTemplate = populatedTemplate.replace(regex, data[key]);
+    }
+
+    // populate data
+    for (var j=0; j < dataKeys.length; j++) {
+      var key = dataKeys[j];
+      var regex = new RegExp("##" + key + "##", "g");
+      populatedTemplate = populatedTemplate.replace(regex, data[key]);
+    }
+
+    return populatedTemplate;
+  }
+
+  function loadScript( url, callback ) {
+    var script = document.createElement( "script" )
+    script.type = "text/javascript";
+    if(script.readyState) {  // only required for IE <9
+      script.onreadystatechange = function() {
+        if ( script.readyState === "loaded" || script.readyState === "complete" ) {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else {  //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName( "head" )[0].appendChild( script );
+  }
+
+  // polyfills .closest()\
+  if (!Element.prototype.matches)
+    Element.prototype.matches = Element.prototype.msMatchesSelector ||
+      Element.prototype.webkitMatchesSelector;
+
+  if (!Element.prototype.closest)
+    Element.prototype.closest = function(s) {
+      var el = this;
+      if (!document.documentElement.contains(el)) return null;
+      do {
+        if (el.matches(s)) return el;
+        el = el.parentElement || el.parentNode;
+      } while (el !== null && el.nodeType == 1);
+      return null;
+    };
+
+  var checkout_popups = [];
+  function checkout_popup (data) {
+    var self = this;
+
+    data.id = 'popup_' + Math.floor(Math.random() * 1000000) + 1000;
+    self.data = data;
+
+    self.open = function () {
+      if (self.isOpen) return;
+
+      for (var i=0; i < checkout_popups.length; i++) {
+      	var popup = checkout_popups.pop();
+        if (popup.data.id == self.data.id) continue;
+        popup.close();
+      }
+
+      if (!self.isAlreadyMounted) {
+        var template = populateTemplate("checkout-popup-template", data);
+        document.querySelector("body").append(htmlToElement(template));
+        self.isAlreadyMounted = true;
+      }
+
+      document.getElementById(self.data.id).classList.add('checkout-popup--open');
+
+      self.isOpen = true;
+    }
+
+    self.close = function () {
+      if (!self.isOpen) return;
+
+      document.getElementById(self.data.id).classList.remove('checkout-popup--open');
+      self.isOpen = false;
+    }
+
+    self.destroy = function () {
+      document.querySelector("body").removeChild( document.getElementById(self.data.id) )
+    }
+
+    return self;
+  }
+</script>
+
+<template id="checkout-popup-template">
+    <div class="checkout-popup d-flex justify-content-center align-items-center">
+        <div class="checkout-popup__wrapper d-flex flex-column justify-content-center align-items-center">
+
+            <i class="checkout-popup__close align-self-end"
+               onclick="this.parentNode.parentNode.remove();">
+            </i>
+
+            <img src="##image##" class="img-fluid checkout-popup__img">
+            <h3 class="checkout-popup__heading font-weight-bold text-center">##title##</h3>
+            <p class="checkout-popup__content text-center">##content##</p>
+
+<!--             #?button_text##<button class="checkout-popup__btn">##button_text##</button>#?button_text## -->
+
+        </div>
+    </div>
+</template>
+
+<style>
+  /* LOADER */
+  /* ------ */
+  .lds-dual-wrapper {
+    text-align: center;
+	transform: scale(.5);
+  }
+
+  .lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #0d3c32;
+    border-color: #0d3c32 transparent #0d3c32 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* GENERAL CLASSES */
+  /* --------------- */
+  .d-flex {
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+
+  .flex-column {
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+  }
+
+  .justify-content-center {
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+  }
+
+  .align-items-center {
+    -ms-flex-align: center !important;
+    align-items: center !important;
+  }
+
+  .align-self-end {
+    -ms-flex-item-align: end !important;
+    align-self: flex-end !important;
+  }
+
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .font-weight-bold {
+    font-weight: 700 !important;
+  }
+
+  .text-center {
+    text-align: center !important;
+  }
+
+  /* POPUP */
+  /* ----- */
+  .checkout-popup__close::after {
+    color: #000;
+    font-size: 44px;
+    content: "\d7";
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 991.98px) {
+    .checkout-popup__wrapper {
+      width: 100%;
+    }
+
+    .checkout-popup__heading {
+      width: 70%;
+      font-size: 1.2rem;
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+    .checkout-popup__content {
+      width: 90%;
+      font-size: 0.9rem;
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  @media only screen and (min-width: 992px) {
+    .checkout-popup__wrapper {
+      width: 70%;
+      max-width: 800px;
+    }
+
+    .checkout-popup__heading {
+      width: 50%;
+      font-size: 1.2rem;
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+    .checkout-popup__content {
+      width: 80%;
+      font-size: 0.9rem;
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  .checkout-popup {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(90deg, #fc9777, #f9708a) !important;
+  }
+  .checkout-popup__wrapper {
+    background-color: white;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    border-radius: 10px;
+  }
+
+  .cross-icon {
+    color: rgba(0, 0, 0, 0.5);
+    margin-right: 8px;
+  }
+
+  .checkout-popup__btn {
+    background-color: #f85872;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 8%;
+    margin-top: 20px;
+  }
+  .checkout-popup__img {
+    margin-top: 20px;
+    width: 20%;
+  }
+</style>

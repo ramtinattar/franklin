@@ -1,0 +1,155 @@
+
+<div data-header-side-nav class="side-nav only-mobile">
+  <div class="side-nav__container-relative">
+    <div class="side-nav__header">
+        {% for block in section.blocks %}
+          {% if block.type != 'carousel-element' %}{% continue %}{% endif %}
+          <div class="side-nav__image-container relative">
+            <a href="{{block.settings.url}}">
+              {% include 'image' with img : block.settings.image %}
+              <div class="absolute text--small side-nav__absolute-text">
+                <div class="side-nav__header-title">
+                  {{ block.settings.title }}
+                </div>
+                {% if block.settings.subtitle != blank %}
+                  <div class="side-nav__header-subtitle">
+                    {{ block.settings.subtitle }}
+                  </div>
+                {% endif %}
+              </div>
+            </a>
+          </div>
+
+        {% endfor %}
+    </div>
+    <div class="side-nav__main-links full-page-width">
+      <ul>
+
+      {% for block in section.blocks %}
+        {% if block.type != 'main-link' %}{% continue %}{% endif %}
+        <a href="{{ block.settings.link }}">
+          <li class="side-nav__main-link">
+            <img src="{{ block.settings.icon }}" class="side-nav__link-icon" />
+            <span class="side-nav__link-text">{{ block.settings.title }}</span>
+            <div class="flex-grow"></div>
+            {% include 'icon-right-arrow' %}
+          </li>
+        </a>
+
+      {% endfor %}
+    </ul>
+    </div>
+    <div class="side-nav__secondary-links full-page-width">
+      <ul class="side-nav__secondary">
+        {% for l in linklists[section.settings.secondary_menu].links %}
+          <li class="text--small side-nav__secondary-item {% if l.active %}side-nav__secondary-item--active{% endif %}">
+            <a href="{{ l.url}}">{{ l.title | escape }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+<div data-header-side-search class="side-nav--search side-nav only-mobile">
+	<div class="side-nav__container-relative side-nav__search">
+		  {% include 'search-bar' %}
+	</div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Burger menu",
+  "settings": [
+  {
+    "type": "header",
+    "content": "Announcement bar"
+  },
+  {
+    "type": "checkbox",
+    "id": "show_promo_banner",
+    "label": "Show top bar promo banner",
+    "default": true
+  },
+  {
+    "type": "richtext",
+    "id": "promo_text",
+    "label": "Promo banner text desktop",
+    "default": "<p>Livraison et retours gratuits !</p>"
+  },
+  {
+    "type": "color",
+    "id": "promo_color",
+    "label": "Promo banner color",
+    "default": "#ffffff"
+  },
+  {
+    "type": "color",
+    "id": "promo_color_text",
+    "label": "Promo banner text color",
+    "default": "#000000"
+  },
+  {
+    "type": "header",
+    "content": "Header"
+  },
+  {
+    "type": "link_list",
+    "id": "secondary_menu",
+    "label": "Menu secondaire"
+  }
+  ],
+  "blocks": [
+  {
+    "type": "carousel-element",
+    "name": "Element carousel",
+    "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Lien"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Produits"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sous titre",
+      "default": "Chien senior"
+    }
+    ]
+  },
+  {
+    "type":"main-link",
+    "name":"Lien principal",
+    "settings":[
+    {
+      "type": "url",
+      "id": "icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "L'abonnement"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    }
+    ]
+  }
+  ]
+}
+{% endschema %}

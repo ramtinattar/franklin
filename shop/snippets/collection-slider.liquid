@@ -1,0 +1,52 @@
+<section data-carousel-container class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="collection-slider">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div class="collection-slider">
+		<div class="collection-slider__header page-width--mobile align-center">
+			<h2 class="z-h3 heading">
+				{{ Settings.title }}
+			</h2>
+			{% if Settings.text != blank %}
+			<div class="text--xlarge--desktop text collection-slider__text only-desktop">
+				{{ Settings.text }}
+			</div>
+			{% endif %}
+			{% if Settings.cta_text != blank %}
+				{% assign cta_url = Settings.cta_url | default : sliderCollection.url %}
+				<div class="collection-slider__button-container">
+					{% include 'arrow-button' with classes:'secondary collection-slider__button', text : Settings.cta_text, href: cta_url %}
+				</div>
+			{% endif %}
+		</div>
+		<div class="collection-slider__container">
+			<div class="collection-slider__carousel carousel"  data-collection-slider='{ "groupCells" : true, "pageDots" : false, "prevNextButtons" : false, "wrapAround" : false}'>
+				{% for cardProduct in sliderCollection.products limit : Settings.product_max %}
+					<div class="carousel-cell collection-slider__cell">
+						{%- if template contains 'product' -%}
+							{% include 'product-card' with classes : 'collection-slider__product', cardProduct : cardProduct %}
+						{%- else -%}
+							{% include 'product-card' with _collection:sliderCollection, classes : 'collection-slider__product', cardProduct : cardProduct %}
+						{%- endif -%}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+	</div>
+	<div class="carousel__prev-next-container collection-slider__prev-next-container">
+		<div data-carousel-prev class="carousel__prev-button">
+			{% include 'icon-right-arrow' %}
+		</div>
+		<div data-carousel-next class="carousel__next-button">
+			{% include 'icon-right-arrow' %}
+		</div>
+	</div>
+	{% if Settings.border_bottom_all %}
+	<div class="page-width--mobile">
+		<div class="collection--bordered"></div>
+	</div>
+	 {% elsif Settings.border_bottom == true%}
+	<div class="page-width collection--bordered--desktop">
+
+	</div>
+	{% endif %}
+</section>

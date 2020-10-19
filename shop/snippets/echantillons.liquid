@@ -1,0 +1,193 @@
+<section class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="echantillons">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+  <div class="echantillons" data-event-category="{{ eventCategory }}">
+    <div class="echantillons__tabs">
+      <div class="echantillons__tab echantillons__tab_1 current passed" data-echantillons-tab-index="tab_echantillons_1">
+        <span class="echantillons__tab_index heading">1. </span>
+        <div class="">
+          <p class="echantillons__tab_title z-h7 uppercase">{{Settings.progress_bar_step_1_title}}</p>
+          <p class="echantillons__tab_subtitle z-h10 hide--pocket">{{Settings.progress_bar_step_1_subtitle}}</p>
+        </div>
+      </div>
+      <div class="echantillons__tab echantillons__tab_2" data-echantillons-tab-index="tab_echantillons_2">
+        <span class="echantillons__tab_index">2. </span>
+        <div class="">
+          <p class="echantillons__tab_title z-h7 uppercase">{{Settings.progress_bar_step_2_title}}</p>
+          <p class="echantillons__tab_subtitle z-h10 hide--pocket">{{Settings.progress_bar_step_2_subtitle}}</p>
+        </div>
+      </div>
+      <div class="echantillons__tab echantillons__tab_3" data-echantillons-tab-index="tab_echantillons_3">
+        <span class="echantillons__tab_index">3. </span>
+        <div class="">
+          <p class="echantillons__tab_title z-h7 uppercase">{{Settings.progress_bar_step_3_title}}</p>
+          <p class="echantillons__tab_subtitle z-h10 hide--pocket">{{Settings.progress_bar_step_3_subtitle}}</p>
+        </div>
+      </div>
+    </div>
+    <progress data-echantillons-progress-bar class="echantillons__tab_progress_bar" max="100" value="33"> 33% </progress>
+
+    <div id="tab_echantillons_1" class="echantillons__tabcontent current" data-echantillons-tab>
+      <div class="grid">
+        <div class="grid__cell 1/1 1/2--desk hide--pocket">
+          {%- if Settings.step_1_image != blank -%}
+            <img src="{{ Settings.step_1_image | img_url:'800x' }}" alt="image echantillons" class="echantillons__image">
+          {%- endif -%}
+        </div>
+        <div class="grid__cell 1/1 1/2--desk">
+          <div class="echantillons__tabcontent_step_1">
+            <h2 class="echantillons__tabcontent_title heading z-h3">{{Settings.step_1_title}}</h2>
+            <div class="echantillons__tabcontent_quizz">
+              {%- for block in section.blocks -%}
+
+                {% assign blockDescription = block.settings.statement %}
+
+                {%- if block.settings.question1_type == 'input' -%}
+                  {% capture question1 %}
+                    <input class="echantillons__tabcontent_quizz-input" type="text" name="" placeholder="{{block.settings.question1_placeholder}}" value="" data-echantillon-check-input data-echantillon-handle="{{block.settings.question1_handle}}">
+                  {% endcapture %}
+                {%- elsif block.settings.question1_type == 'dropdown' -%}
+                  {% assign values = block.settings.question1_values | split: "," %}
+                  {% capture question1 %}
+                    <select class="echantillons__tabcontent_quizz-select" name="" data-echantillon-check-input data-echantillon-handle="{{block.settings.question1_handle}}">
+											<option value="" disabled selected hidden>{{block.settings.question1_placeholder}}</option>
+											{%- for value in values -%}
+                        <option value="{{value}}">{{value}}</option>
+                      {%- endfor -%}
+                    </select>
+                  {% endcapture %}
+                {%- elsif block.settings.question1_type == 'number' -%}
+                  {% capture question1 %}
+                    <input class="echantillons__tabcontent_quizz-input echantillons__tabcontent_quizz-number" placeholder="{{block.settings.question1_placeholder}}"  type="number" name="" value="" min="0" max="50" data-echantillon-check-input data-echantillon-handle="{{block.settings.question1_handle}}">
+                  {% endcapture %}
+                {%- elsif block.settings.question1_type == 'checkbox' -%}
+                  {% assign values = block.settings.question1_values | split: "," %}
+                  {% capture question1 %}
+                    {%- for value in values -%}
+                      <input type="checkbox" id="{{value}}" name="" data-echantillon-handle="{{block.settings.question1_handle}}">
+                      <label for="{{value}}">{{value}}</label>
+                    {%- endfor -%}
+                  {% endcapture %}
+                {%- endif -%}
+
+                {% if blockDescription contains '##question1##' %}
+                  {% assign blockDescription = blockDescription | replace: '##question1##', question1 %}
+                {% endif %}
+
+                {%- if block.settings.question2_type == 'input' -%}
+                  {% capture question2 %}
+                    <input class="echantillons__tabcontent_quizz-input" type="text" name="" value="" placeholder="{{block.settings.question2_placeholder}}" data-echantillon-check-input data-echantillon-handle="{{block.settings.question2_handle}}">
+                  {% endcapture %}
+                {%- elsif block.settings.question2_type == 'dropdown' -%}
+                  {% assign values = block.settings.question2_values | split: "," %}
+                  {% capture question2 %}
+                    <select class="echantillons__tabcontent_quizz-select" name="" data-echantillon-check-input data-echantillon-handle="{{block.settings.question2_handle}}">
+											<option value="" disabled selected hidden>{{block.settings.question2_placeholder}}</option>
+											{%- for value in values -%}
+                        <option value="{{value}}">{{value}}</option>
+                      {%- endfor -%}
+                    </select>
+                  {% endcapture %}
+                {%- elsif block.settings.question2_type == 'number' -%}
+                  {% capture question2 %}
+                    <input class="echantillons__tabcontent_quizz-input echantillons__tabcontent_quizz-number" placeholder="{{block.settings.question2_placeholder}}" type="number" name="" value="" min="0" max="50" data-echantillon-check-input data-echantillon-handle="{{block.settings.question2_handle}}">
+                  {% endcapture %}
+                {%- elsif block.settings.question2_type == 'checkbox' -%}
+                  {% assign values = block.settings.question2_values | split: "," %}
+                  {% capture question2 %}
+                    {%- for value in values -%}
+                      <input type="checkbox" id="{{value}}" name="" data-echantillon-handle="{{block.settings.question2_handle}}">
+                      <label for="{{value}}">{{value}}</label>
+                    {%- endfor -%}
+                  {% endcapture %}
+                {%- endif -%}
+
+                {% if blockDescription contains '##question2##' %}
+                  {% assign blockDescription = blockDescription | replace: '##question2##', question2 %}
+                {% endif %}
+
+
+                {%- if block.settings.question3_type == 'input' -%}
+                  {% capture question3 %}
+                    <input class="echantillons__tabcontent_quizz-input" type="text" name="" value="" placeholder="{{block.settings.question3_placeholder}}" data-echantillon-check-input data-echantillon-handle="{{block.settings.question3_handle}}">
+                  {% endcapture %}
+                {%- elsif block.settings.question3_type == 'dropdown' -%}
+                  {% assign values = block.settings.question3_values | split: "," %}
+                  {% capture question3 %}
+                    <select class="echantillons__tabcontent_quizz-select" name="" data-echantillon-check-input data-echantillon-handle="{{block.settings.question3_handle}}">
+											<option value="" disabled selected hidden>{{block.settings.question3_placeholder}}</option>
+											{%- for value in values -%}
+                        <option value="{{value}}">{{value}}</option>
+                      {%- endfor -%}
+                    </select>
+                  {% endcapture %}
+                {%- elsif block.settings.question3_type == 'number' -%}
+                  {% capture question3 %}
+                    <input class="echantillons__tabcontent_quizz-input echantillons__tabcontent_quizz-number" placeholder="{{block.settings.question3_placeholder}}" type="number" name="" value="" min="0" max="50" data-echantillon-check-input data-echantillon-handle="{{block.settings.question3_handle}}">
+                  {% endcapture %}
+                {%- elsif block.settings.question3_type == 'checkbox' -%}
+                  {% assign values = block.settings.question3_values | split: "," %}
+                  {% capture question3 %}
+                    {%- for value in values -%}
+                      <input type="checkbox" id="{{value}}" name="" data-echantillon-handle="{{block.settings.question3_handle}}">
+                      <label for="{{value}}">{{value}}</label>
+                    {%- endfor -%}
+                  {% endcapture %}
+                {%- endif -%}
+
+                {% if blockDescription contains '##question3##' %}
+                  {% assign blockDescription = blockDescription | replace: '##question3##', question3 %}
+                {% endif %}
+
+
+
+                <div class="echantillons__description">{{ blockDescription }}</div></br><span class="echantillon_spacer"></span>
+
+              {%- endfor -%}
+
+            </div>
+
+            <div class="echantillon_button">
+              <button data-echantillons-step-1-button type="button" name="button" class="button button--secondary button--disabled" disabled="disabled">{{Settings.step_1_cta}}</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab_echantillons_2" class="echantillons__tabcontent echantillons__tabcontent-2 container--medium" data-echantillons-tab>
+      <div class="grid">
+        <div class="grid__cell 1/1 1/2--desk">
+          <div class="echantillons__tabcontent_step_2_info">
+            <p class="heading z-h7">{{Settings.step_2_title}}</p>
+            <div class="t-3">
+              {{Settings.step_2_subtitle}}
+            </div>
+            <img src="{{ Settings.step_2_image | img_url:'800x' }}" alt="image echantillons" class="hide--pocket">
+          </div>
+        </div>
+        <div class="grid__cell 1/1 1/2--desk">
+          <div class="echantillons__tabcontent_step_2">
+            <div class="echantillons__tabcontent_collection">
+              {%- assign collection = collections[Settings.step_2_collection] -%}
+              {% for collectionProduct in collection.products %}
+			  	{% if collectionProduct.available %}
+                {% include 'product-card__echantillons' with cardProduct : collectionProduct %}
+				{% endif %}
+              {% endfor %}
+            </div>
+
+            <div class="echantillon_button">
+
+							<div class="echantillons__tabcontent_quizz-email">
+								<input data-echantillons-email type="email" name="" value="" placeholder="Votre email">
+							</div>
+
+              <button data-echantillons-step-2-button type="button" name="button" class="button button--secondary button--disabled" disabled="disabled">{{Settings.step_2_cta}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

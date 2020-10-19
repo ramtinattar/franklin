@@ -1,0 +1,128 @@
+{% include 'featured-articles' with Settings:section.settings, id:section.id %}
+
+{% schema %}
+{
+  "name": "Featured articles",
+  "settings": [
+  {
+	"type": "text",
+	"id": "title",
+	"label": "Titre",
+	"default": "Le journal."
+  },
+  {
+	"type": "url",
+	"id": "cta_url",
+	"label": "CTA url"
+},
+  {
+	"type": "text",
+	"id": "cta_text",
+	"label": "Texte CTA",
+	"default": "Tous les articles"
+  },
+  {
+    "type": "blog",
+    "id": "blog",
+    "label": "Blog"
+},
+{
+  "type": "range",
+  "id": "article_number",
+  "label": "Maximum d'article à afficher",
+  "default": 5,
+  "min": 0,
+  "max": 10
+},
+
+  {
+  "type":"header",
+  "content" : "Section"
+},
+{
+  "type": "select",
+  "id": "section_spacing",
+  "label": "Section bottom spacing",
+  "options": [
+  {
+  "value" : "section--xl-spacing",
+  "label" : "XL Spacing"
+  },{
+  "value" : "section--l-spacing",
+  "label" : "L Spacing"
+  },{
+  "value" : "section--m-spacing",
+  "label" : "M Spacing"
+  },{
+  "value" : "section--s-spacing",
+  "label" : "S Spacing"
+  },{
+  "value" : "section--xs-spacing",
+  "label" : "XS Spacing"
+  },{
+  "value" : "section--no-spacing",
+  "label" : "No Spacing"
+  }
+  ]
+},
+{
+  "type": "select",
+  "id": "section_spacing_mobile",
+  "label": "Section bottom spacing mobile",
+  "options": [
+  {
+  "value":"",
+  "label":"Same value"
+  },
+  {
+  "value" : "mobile-section--xl-spacing",
+  "label" : "XL Spacing"
+  },{
+  "value" : "mobile-section--l-spacing",
+  "label" : "L Spacing"
+  },{
+  "value" : "mobile-section--m-spacing",
+  "label" : "M Spacing"
+  },{
+  "value" : "mobile-section--s-spacing",
+  "label" : "S Spacing"
+  },{
+  "value" : "mobile-section--xs-spacing",
+  "label" : "XS Spacing"
+  },{
+  "value" : "mobile-section--no-spacing",
+  "label" : "No Spacing"
+  }
+  ],
+  "default":""
+},
+{
+  "type": "select",
+  "id": "section_bg",
+  "label": "Couleur du fond",
+  "options": [
+  {
+    "value" : "bg--white",
+    "label" : "BG white"
+  },
+  {
+    "value" : "bg--color",
+    "label" : "BG Color"
+  },{
+    "value" : "bg--primary",
+    "label" : "BG Primary"
+  },{
+    "value" : "bg--secondary",
+    "label" : "BG secondary"
+  }
+  ]
+}
+],
+"presets": [
+{
+  "name": "Featured articles",
+  "category": "Studio Zerance"
+}
+]
+}
+{% endschema %}

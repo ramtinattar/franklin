@@ -1,0 +1,15 @@
+<div class="footer__linklist">
+  {% if linklists[linklist].links.size > 0 %}
+    <div class="linklist__title heading z-h9">
+      {{ title }}
+    </div>
+    <ul class="linklist__column secondary">
+      {% for link in linklists[linklist].links %}
+        <li class="linklist__link t-6 {% if link.active %}linklist__link--active{% endif %}">
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+</div>

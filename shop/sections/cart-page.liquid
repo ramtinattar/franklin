@@ -1,0 +1,128 @@
+<section id="section-{{ section.id }}" class="section section--cart" data-section-id="{{ section.id }}" data-section-type="cart">
+	<div class="page-width--desktop">
+		<div class="grid">
+			<div class="grid__cell 7/12--lap-and-up">
+				<h1 class="heading z-h2 cart-page__title">{{ settings.cart_title }}</h1>
+				<div class="cart-page__items-container page-width--mobile">
+					<h2 class="cart-page__subtitle text uppercase t-4">{{ settings.cart_subtitle }}</h2>
+					<form action="/cart" method="post">
+						<div class="cart">
+							<div class="relative">
+								<div data-cart-loader class="cart__loader-container">
+									<div class="lds-dual-ring"></div>
+								</div>
+								<div class="cart__items" data-cart-items>
+									{% for item in cart.items %}
+									{% if item.id == all_products[settings.gobelet_product].variants[0].id %}{% assign gobeletAdded = true %}{% endif %}
+									{% include 'cart-item' with item : item, count : forloop.index %}
+									{% endfor %}
+								</div>
+
+							</div>
+							<div class="cart-footer" data-cart-footer>
+
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+			<div class="grid__cell 5/12--lap-and-up">
+				<div class=" cart-page__column align-center">
+					<div data-progress-container class="cart-progress__container">
+						<div class="cart-progress">
+							{% if settings.cart_progress_icon != blank %}
+							<div class="cart-progress__image-container">
+								{% include 'image' with classes : 'cart-progress__image', img:settings.cart_progress_icon %}
+							</div>
+							{% endif %}
+							<div class="cart-progress__text text t-10">
+								<span class="cart-progress__plusque">{{ settings.cart_progress_prefix }}</span>
+								<span data-progress-price data-progress-goal="{{ settings.cart_progress_goal | remove : '.' | remove : ',' }}" class="cart-progress__price">{{ settings.cart_progress_goal }}</span><strong>€</strong>
+								<span class="cart-progress__plusque">{{ settings.cart_progress_sufix }}</span>
+							</div>
+							<div data-progress-bar-container class="cart-progress__bar-container">
+								<div data-progress-bar class="cart-progress__bar">
+
+								</div>
+							</div>
+						</div>
+						<div class="cart-progress--reached">
+							<div class="cart-progress__text text t-10">
+								{{ settings.cart_progress_offer }}
+							</div>
+						</div>
+					</div>
+					<div class="cart-page__payment-container">
+						<div class="cart__payment-container">
+							<div data-gobelet-container data-gobelet-id="{{ all_products[settings.gobelet_product].variants[0].id }}" data-gobelet-min="{{ settings.gobelet_min }}" class="cart__gobelet-container">
+								<div class="cart__gobelet-image-container">
+									{% include 'image' with img : settings.gobelet_image, classes : 'cart__gobelet-image' %}
+								</div>
+								<div class="cart__gobelet-text text t-10">
+									{{ settings.gobelet_text }}
+								</div>
+								<div class="cart__gobelet-switch-container">
+									<label class="switch">
+										<input class="switch-input" data-gobelet-switch type="checkbox" {% if gobeletAdded %}checked{% endif %}>
+										<span class="switch-round"></span>
+									</label>
+								</div>
+							</div>
+							<button data-checkout-button class="cart__payment-button button button--secondary button--full button--add-to-cart">{{ settings.cart_payment_button }}<span class="button__product-price" data-cart-price>{{ cart.total_price | money_without_currency }}</span>€</button>
+							<div class="cart__icons-container">
+								{% assign product_reinsurance_text_1 = settings.product_reinsurance_text_1 %}
+								{% assign product_reinsurance_logo_1 = settings.product_reinsurance_logo_1 %}
+								{% assign product_reinsurance_text_2 = settings.product_reinsurance_text_2 %}
+								{% assign product_reinsurance_logo_2 = settings.product_reinsurance_logo_2 %}
+								{% assign product_reinsurance_text_3 = settings.product_reinsurance_text_3 %}
+								{% assign product_reinsurance_logo_3 = settings.product_reinsurance_logo_3 %}
+								<div class="product__picto-container carousel-cell">
+									<div class="product__picto">
+										<img class="product__picto-image" alt="picto reassurance 1" src="{{ product_reinsurance_logo_1 }}" />
+										<div class="product__picto-title text t-10">
+											{{ product_reinsurance_text_1 }}
+										</div>
+									</div>
+								</div>
+								<div class="product__picto-container carousel-cell">
+									<div class="product__picto">
+										<img class="product__picto-image" alt="picto reassurance 2" src="{{ product_reinsurance_logo_2 }}" />
+										<div class="product__picto-title text t-10">
+											{{ product_reinsurance_text_2 }}
+										</div>
+									</div>
+
+								</div>
+								<div class="product__picto-container carousel-cell">
+									<div class="product__picto">
+										<img class="product__picto-image" alt="picto reassurance 3" src="{{ product_reinsurance_logo_3 }}" />
+										<div class="product__picto-title text t-10">
+											{{ product_reinsurance_text_3 }}
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+{% include 'cart-item-handlebar--subscribe-on' %}
+{% include 'cart-item-handlebar--subscribe-off' %}
+{% include 'cart-item-handlebar--no-subscribe' %}
+{% include 'cart-item-handlebar--echantillon' %}
+
+{% schema %}
+{
+	"name": "Cart",
+	"settings": [
+
+	]
+}
+{% endschema %}

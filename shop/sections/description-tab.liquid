@@ -1,0 +1,741 @@
+{% include 'description-tab' with Settings:section.settings, id : section.id %}
+
+{% schema %}
+{
+   "name": "Texts title CTA",
+   "settings": [
+   {
+      "type": "header",
+      "content": "Heading"
+   },
+   {
+     "type": "text",
+     "id": "title",
+     "label": "Titre section",
+     "default": "Tout savoir sur la recette"
+  },
+  {
+    "type": "richtext",
+    "id": "subtitle",
+    "label": "Sous titre section",
+    "default": "<p>Composition, garanties, conseils sur les rations journalières et la transition alimentaire, on vous dit tout, en toute transparence !</p>"
+  },
+  {
+    "type": "image_picker",
+    "id": "background_desktop",
+    "label": "Background image desktop"
+  },
+  {
+    "type": "image_picker",
+    "id": "character",
+    "label": "Personnage affiché sur mobile"
+  },
+  {
+     "type": "header",
+     "content": "Section 1"
+  },
+  {
+    "type": "text",
+    "id": "section_1_title",
+    "label": "Titre section 1",
+    "default": "Description"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_1_image_desktop",
+    "label": "Section 1 - Image full desktop",
+    "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_1_image_mobile",
+    "label": "Section 1 - Image full mobile"
+  },
+  {
+    "type": "richtext",
+    "id": "section_1_richtext",
+    "label": "Section 1 - Rich text",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_1_bullet_image_1",
+    "label": "Section_1 bullet image 1"
+  },
+  {
+    "type": "text",
+    "id": "section_1_bullet_title_1",
+    "label": "Section_1 bullet title 1",
+    "default": "Une recette à forte teneur en viande",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "richtext",
+    "id": "section_1_bullet_text_1",
+    "label": "Section_1 bullet text 1",
+    "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_1_bullet_image_2",
+    "label": "Section_1 bullet image 2"
+  },
+  {
+    "type": "text",
+    "id": "section_1_bullet_title_2",
+    "label": "Section_1 bullet title 2",
+    "default": "Une recette à forte teneur en viande"
+  },
+  {
+    "type": "richtext",
+    "id": "section_1_bullet_text_2",
+    "label": "Section_1 bullet text 2",
+    "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_1_bullet_image_3",
+    "label": "Section_1 bullet image 3"
+  },
+  {
+    "type": "text",
+    "id": "section_1_bullet_title_3",
+    "label": "Section_1 bullet title 3",
+    "default": "Une recette à forte teneur en viande"
+  },
+  {
+    "type": "richtext",
+    "id": "section_1_bullet_text_3",
+    "label": "Section_1 bullet text 3",
+    "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_1_bullet_image_4",
+    "label": "Section_1 bullet image 4"
+  },
+  {
+    "type": "text",
+    "id": "section_1_bullet_title_4",
+    "label": "Section_1 bullet title 4",
+    "default": "Une recette à forte teneur en viande"
+  },
+  {
+    "type": "richtext",
+    "id": "section_1_bullet_text_4",
+    "label": "Section_1 bullet text 4",
+    "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_1_bullet_image_5",
+    "label": "Section_1 bullet image 5"
+  },
+  {
+    "type": "text",
+    "id": "section_1_bullet_title_5",
+    "label": "Section_1 bullet title 5",
+    "default": "Une recette à forte teneur en viande"
+  },
+  {
+    "type": "richtext",
+    "id": "section_1_bullet_text_5",
+    "label": "Section_1 bullet text 5",
+    "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_1_bullet_image_6",
+    "label": "Section_1 bullet image 6"
+  },
+  {
+    "type": "text",
+    "id": "section_1_bullet_title_6",
+    "label": "Section_1 bullet title 6",
+    "default": "Une recette à forte teneur en viande"
+  },
+  {
+    "type": "richtext",
+    "id": "section_1_bullet_text_6",
+    "label": "Section_1 bullet text 6",
+    "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+  },
+  {
+    "type": "text",
+    "id": "section_2_title",
+    "label": "Titre section 2",
+    "default": "Nos garanties"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_2_image_desktop",
+    "label": "Section 2 - Image full desktop",
+    "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_2_image_mobile",
+    "label": "Section 2 - Image full mobile"
+  },
+  {
+    "type": "richtext",
+    "id": "section_2_richtext",
+    "label": "Section 2 - Rich text",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_2_bullet_image_1",
+    "label": "Section_2 bullet image 1"
+  },
+  {
+    "type": "text",
+    "id": "section_2_bullet_title_1",
+    "label": "Section_2 bullet title 1",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "richtext",
+    "id": "section_2_bullet_text_1",
+    "label": "Section_2 bullet text 1"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_2_bullet_image_2",
+    "label": "Section_2 bullet image 2"
+  },
+  {
+    "type": "text",
+    "id": "section_2_bullet_title_2",
+    "label": "Section_2 bullet title 2"
+  },
+  {
+    "type": "richtext",
+    "id": "section_2_bullet_text_2",
+    "label": "Section_2 bullet text 2"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_2_bullet_image_3",
+    "label": "Section_2 bullet image 3"
+  },
+  {
+    "type": "text",
+    "id": "section_2_bullet_title_3",
+    "label": "Section_2 bullet title 3"
+  },
+  {
+    "type": "richtext",
+    "id": "section_2_bullet_text_3",
+    "label": "Section_2 bullet text 3"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_2_bullet_image_4",
+    "label": "Section_2 bullet image 4"
+  },
+  {
+    "type": "text",
+    "id": "section_2_bullet_title_4",
+    "label": "Section_2 bullet title 4"
+  },
+  {
+    "type": "richtext",
+    "id": "section_2_bullet_text_4",
+    "label": "Section_2 bullet text 4"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_2_bullet_image_5",
+    "label": "Section_2 bullet image 5"
+  },
+  {
+    "type": "text",
+    "id": "section_2_bullet_title_5",
+    "label": "Section_2 bullet title 5"
+  },
+  {
+    "type": "richtext",
+    "id": "section_2_bullet_text_5",
+    "label": "Section_2 bullet text 5"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_2_bullet_image_6",
+    "label": "Section_2 bullet image 6"
+  },
+  {
+    "type": "text",
+    "id": "section_2_bullet_title_6",
+    "label": "Section_2 bullet title 6"
+  },
+  {
+    "type": "richtext",
+    "id": "section_2_bullet_text_6",
+    "label": "Section_2 bullet text 6"
+  },
+  {
+    "type": "text",
+    "id": "section_3_title",
+    "label": "Titre section 3",
+    "default": "Composition"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_3_image_desktop",
+    "label": "Section 3 - Image full desktop",
+    "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_3_image_mobile",
+    "label": "Section 3 - Image full mobile"
+  },
+  {
+    "type": "richtext",
+    "id": "section_3_richtext",
+    "label": "Section 3 - Rich text",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_3_bullet_image_1",
+    "label": "Section_3 bullet image 1"
+  },
+  {
+    "type": "text",
+    "id": "section_3_bullet_title_1",
+    "label": "Section_3 bullet title 1",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "richtext",
+    "id": "section_3_bullet_text_1",
+    "label": "Section_3 bullet text 1"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_3_bullet_image_2",
+    "label": "Section_3 bullet image 2"
+  },
+  {
+    "type": "text",
+    "id": "section_3_bullet_title_2",
+    "label": "Section_3 bullet title 2"
+  },
+  {
+    "type": "richtext",
+    "id": "section_3_bullet_text_2",
+    "label": "Section_3 bullet text 2"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_3_bullet_image_3",
+    "label": "Section_3 bullet image 3"
+  },
+  {
+    "type": "text",
+    "id": "section_3_bullet_title_3",
+    "label": "Section_3 bullet title 3"
+  },
+  {
+    "type": "richtext",
+    "id": "section_3_bullet_text_3",
+    "label": "Section_3 bullet text 3"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_3_bullet_image_4",
+    "label": "Section_3 bullet image 4"
+  },
+  {
+    "type": "text",
+    "id": "section_3_bullet_title_4",
+    "label": "Section_3 bullet title 4"
+  },
+  {
+    "type": "richtext",
+    "id": "section_3_bullet_text_4",
+    "label": "Section_3 bullet text 4"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_3_bullet_image_5",
+    "label": "Section_3 bullet image 5"
+  },
+  {
+    "type": "text",
+    "id": "section_3_bullet_title_5",
+    "label": "Section_3 bullet title 5"
+  },
+  {
+    "type": "richtext",
+    "id": "section_3_bullet_text_5",
+    "label": "Section_3 bullet text 5"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_3_bullet_image_6",
+    "label": "Section_3 bullet image 6"
+  },
+  {
+    "type": "text",
+    "id": "section_3_bullet_title_6",
+    "label": "Section_3 bullet title 6"
+  },
+  {
+    "type": "richtext",
+    "id": "section_3_bullet_text_6",
+    "label": "Section_3 bullet text 6"
+  },
+  {
+    "type": "text",
+    "id": "section_4_title",
+    "label": "Titre section 4",
+    "default": "Valeurs nutritives"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_4_image_desktop",
+    "label": "Section 4 - Image full desktop",
+    "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_4_image_mobile",
+    "label": "Section 4 - Image full mobile"
+  },
+  {
+    "type": "richtext",
+    "id": "section_4_richtext",
+    "label": "Section 4 - Rich text",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_4_bullet_image_1",
+    "label": "Section_4 bullet image 1"
+  },
+  {
+    "type": "text",
+    "id": "section_4_bullet_title_1",
+    "label": "Section_4 bullet title 1",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "richtext",
+    "id": "section_4_bullet_text_1",
+    "label": "Section_4 bullet text 1"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_4_bullet_image_2",
+    "label": "Section_4 bullet image 2"
+  },
+  {
+    "type": "text",
+    "id": "section_4_bullet_title_2",
+    "label": "Section_4 bullet title 2"
+  },
+  {
+    "type": "richtext",
+    "id": "section_4_bullet_text_2",
+    "label": "Section_4 bullet text 2"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_4_bullet_image_3",
+    "label": "Section_4 bullet image 3"
+  },
+  {
+    "type": "text",
+    "id": "section_4_bullet_title_3",
+    "label": "Section_4 bullet title 3"
+  },
+  {
+    "type": "richtext",
+    "id": "section_4_bullet_text_3",
+    "label": "Section_4 bullet text 3"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_4_bullet_image_4",
+    "label": "Section_4 bullet image 4"
+  },
+  {
+    "type": "text",
+    "id": "section_4_bullet_title_4",
+    "label": "Section_4 bullet title 4"
+  },
+  {
+    "type": "richtext",
+    "id": "section_4_bullet_text_4",
+    "label": "Section_4 bullet text 4"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_4_bullet_image_5",
+    "label": "Section_4 bullet image 5"
+  },
+  {
+    "type": "text",
+    "id": "section_4_bullet_title_5",
+    "label": "Section_4 bullet title 5"
+  },
+  {
+    "type": "richtext",
+    "id": "section_4_bullet_text_5",
+    "label": "Section_4 bullet text 5"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_4_bullet_image_6",
+    "label": "Section_4 bullet image 6"
+  },
+  {
+    "type": "text",
+    "id": "section_4_bullet_title_6",
+    "label": "Section_4 bullet title 6"
+  },
+  {
+    "type": "richtext",
+    "id": "section_4_bullet_text_6",
+    "label": "Section_4 bullet text 6"
+  },
+  {
+    "type": "text",
+    "id": "section_5_title",
+    "label": "Titre section 5",
+    "default": "Rations journalières"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_5_image_desktop",
+    "label": "Section 5 - Image full desktop",
+    "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_5_image_mobile",
+    "label": "Section 5 - Image full mobile"
+  },
+  {
+    "type": "richtext",
+    "id": "section_5_richtext",
+    "label": "Section 5 - Rich text",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_5_bullet_image_1",
+    "label": "Section_5 bullet image 1"
+  },
+  {
+    "type": "text",
+    "id": "section_5_bullet_title_1",
+    "label": "Section_5 bullet title 1",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "richtext",
+    "id": "section_5_bullet_text_1",
+    "label": "Section_5 bullet text 1"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_5_bullet_image_2",
+    "label": "Section_5 bullet image 2"
+  },
+  {
+    "type": "text",
+    "id": "section_5_bullet_title_2",
+    "label": "Section_5 bullet title 2"
+  },
+  {
+    "type": "richtext",
+    "id": "section_5_bullet_text_2",
+    "label": "Section_5 bullet text 2"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_5_bullet_image_3",
+    "label": "Section_5 bullet image 3"
+  },
+  {
+    "type": "text",
+    "id": "section_5_bullet_title_3",
+    "label": "Section_5 bullet title 3"
+  },
+  {
+    "type": "richtext",
+    "id": "section_5_bullet_text_3",
+    "label": "Section_5 bullet text 3"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_5_bullet_image_4",
+    "label": "Section_5 bullet image 4"
+  },
+  {
+    "type": "text",
+    "id": "section_5_bullet_title_4",
+    "label": "Section_5 bullet title 4"
+  },
+  {
+    "type": "richtext",
+    "id": "section_5_bullet_text_4",
+    "label": "Section_5 bullet text 4"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_5_bullet_image_5",
+    "label": "Section_5 bullet image 5"
+  },
+  {
+    "type": "text",
+    "id": "section_5_bullet_title_5",
+    "label": "Section_5 bullet title 5"
+  },
+  {
+    "type": "richtext",
+    "id": "section_5_bullet_text_5",
+    "label": "Section_5 bullet text 5"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_5_bullet_image_6",
+    "label": "Section_5 bullet image 6"
+  },
+  {
+    "type": "text",
+    "id": "section_5_bullet_title_6",
+    "label": "Section_5 bullet title 6"
+  },
+  {
+    "type": "richtext",
+    "id": "section_5_bullet_text_6",
+    "label": "Section_5 bullet text 6"
+  },
+  {
+    "type": "text",
+    "id": "section_6_title",
+    "label": "Titre section 6",
+    "default": "Guide de transition"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_6_image_desktop",
+    "label": "Section 6 - Image full desktop",
+    "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_6_image_mobile",
+    "label": "Section 6 - Image full mobile"
+  },
+  {
+    "type": "richtext",
+    "id": "section_6_richtext",
+    "label": "Section 6 - Rich text",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_6_bullet_image_1",
+    "label": "Section_6 bullet image 1"
+  },
+  {
+    "type": "text",
+    "id": "section_6_bullet_title_1",
+    "label": "Section_6 bullet title 1",
+    "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+  },
+  {
+    "type": "richtext",
+    "id": "section_6_bullet_text_1",
+    "label": "Section_6 bullet text 1"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_6_bullet_image_2",
+    "label": "Section_6 bullet image 2"
+  },
+  {
+    "type": "text",
+    "id": "section_6_bullet_title_2",
+    "label": "Section_6 bullet title 2"
+  },
+  {
+    "type": "richtext",
+    "id": "section_6_bullet_text_2",
+    "label": "Section_6 bullet text 2"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_6_bullet_image_3",
+    "label": "Section_6 bullet image 3"
+  },
+  {
+    "type": "text",
+    "id": "section_6_bullet_title_3",
+    "label": "Section_6 bullet title 3"
+  },
+  {
+    "type": "richtext",
+    "id": "section_6_bullet_text_3",
+    "label": "Section_6 bullet text 3"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_6_bullet_image_4",
+    "label": "Section_6 bullet image 4"
+  },
+  {
+    "type": "text",
+    "id": "section_6_bullet_title_4",
+    "label": "Section_6 bullet title 4"
+  },
+  {
+    "type": "richtext",
+    "id": "section_6_bullet_text_4",
+    "label": "Section_6 bullet text 4"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_6_bullet_image_5",
+    "label": "Section_6 bullet image 5"
+  },
+  {
+    "type": "text",
+    "id": "section_6_bullet_title_5",
+    "label": "Section_6 bullet title 5"
+  },
+  {
+    "type": "richtext",
+    "id": "section_6_bullet_text_5",
+    "label": "Section_6 bullet text 5"
+  },
+  {
+    "type": "image_picker",
+    "id": "section_6_bullet_image_6",
+    "label": "Section_6 bullet image 6"
+  },
+  {
+    "type": "text",
+    "id": "section_6_bullet_title_6",
+    "label": "Section_6 bullet title 6"
+  },
+  {
+    "type": "richtext",
+    "id": "section_6_bullet_text_6",
+    "label": "Section_6 bullet text 6"
+  }
+   ],
+   "presets": [
+   {
+      "name": "Description tabs",
+      "category": "Studio Zerance"
+   }
+   ]
+}
+{% endschema %}

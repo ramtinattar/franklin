@@ -1,0 +1,23 @@
+{% comment %}
+   {% include 'button'
+      , adaptive_width     : true
+      , price     : '10.00'
+      , classes            : ""
+	  , href 			   : ''
+	  , attribute : data-do-something
+      , target             : "_blank"
+      , button_tag            : false
+	  , text : ''
+   %}
+    // A ajouter pour avoir button primary automatique
+   {% unless classes %}{% assign classes = 'button--primary' %}{% endunless %}
+{% endcomment %}
+{% if button_tag %}<button{% else %}<a{% endif %}
+	{% if href %}href="{{ href}} "{% endif %}
+	{% if target %}target="{{ target}}"{% endif %}
+	{% if attribute %}{{ attribute }}{% endif %}
+	class="button {{ classes }} {% if adaptive_width %}button--adaptive{% endif %}"
+>
+{{ text }}
+{% if price %} -- <span data-button-price>{{ price | money_without_trailing_zeros }}</span>{% endif %}
+{% if button_tag %}</button>{% else %}</a>{% endif %}

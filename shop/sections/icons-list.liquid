@@ -1,0 +1,217 @@
+{% include 'icons-list' with Settings:section.settings, id:section.id %}
+
+{% schema %}
+{
+  "name": "icons list",
+  "settings": [
+      {
+        "type":"header",
+        "content" : "Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "range",
+        "id": "icon_per_line",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "label": "Images per line Desktop",
+        "default": 3
+      },
+      {
+        "type":"header",
+        "content" : "Icons"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_1",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_1",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_2",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_2",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_3",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_3",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_3",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_4",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_4",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_4",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_5",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_5",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_5",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_6",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_6",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_6",
+        "label": "Subtitle"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ],
+      "presets": [
+      {
+        "name": "icons list",
+        "category": "Studio Zerance"
+      }
+      ]
+    }
+    {% endschema %}

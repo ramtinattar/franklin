@@ -1,0 +1,161 @@
+{% include 'press' with Settings:section.settings, id:section.id %}
+{% schema %}
+{
+  "name": "Press",
+  "settings": [
+  {
+    "type": "text",
+    "id": "title",
+    "label": "Titre",
+    "default": "La presse parle de Franklin."
+  },
+  {
+    "type": "image_picker",
+    "id": "image_1",
+    "label": "Image 1"
+  },
+  {
+    "type": "url",
+    "id": "link_1",
+    "label": "Lien 1"
+  },
+  {
+    "type": "image_picker",
+    "id": "image_2",
+    "label": "Image 2"
+  },
+  {
+    "type": "url",
+    "id": "link_2",
+    "label": "Lien 2"
+  },
+  {
+    "type": "image_picker",
+    "id": "image_3",
+    "label": "Image 3"
+  },
+  {
+    "type": "url",
+    "id": "link_3",
+    "label": "Lien 3"
+  },
+  {
+    "type": "image_picker",
+    "id": "image_4",
+    "label": "Image 4"
+  },
+  {
+    "type": "url",
+    "id": "link_4",
+    "label": "Lien 4"
+  },
+  {
+    "type": "image_picker",
+    "id": "image_5",
+    "label": "Image 5"
+  },
+  {
+    "type": "url",
+    "id": "link_5",
+    "label": "Lien 5"
+  },
+  {
+    "type": "image_picker",
+    "id": "image_6",
+    "label": "Image 6"
+  },
+  {
+    "type": "url",
+    "id": "link_6",
+    "label": "Lien 6"
+  },
+  {
+    "type": "image_picker",
+    "id": "image_7",
+    "label": "Image 7"
+  },
+  {
+    "type": "url",
+    "id": "link_7",
+    "label": "Lien 7"
+  },
+  {
+    "type": "image_picker",
+    "id": "image_8",
+    "label": "Image 8"
+  },
+  {
+    "type": "url",
+    "id": "link_8",
+    "label": "Lien 8"
+  },
+  {
+    "type":"header",
+    "content" : "Section"
+  },
+  {
+    "type": "select",
+    "id": "section_spacing",
+    "label": "Section bottom spacing",
+    "options": [
+    {
+      "value" : "section--xl-spacing",
+      "label" : "XL Spacing"
+    },{
+      "value" : "section--l-spacing",
+      "label" : "L Spacing"
+    },{
+      "value" : "section--m-spacing",
+      "label" : "M Spacing"
+    },{
+      "value" : "section--s-spacing",
+      "label" : "S Spacing"
+    },{
+      "value" : "section--xs-spacing",
+      "label" : "XS Spacing"
+    },{
+      "value" : "section--no-spacing",
+      "label" : "No Spacing"
+    }
+    ]
+  },
+  {
+    "type": "select",
+    "id": "section_spacing_mobile",
+    "label": "Section bottom spacing mobile",
+    "options": [
+    {
+      "value":"",
+      "label":"Same value"
+    },
+    {
+      "value" : "mobile-section--xl-spacing",
+      "label" : "XL Spacing"
+    },{
+      "value" : "mobile-section--l-spacing",
+      "label" : "L Spacing"
+    },{
+      "value" : "mobile-section--m-spacing",
+      "label" : "M Spacing"
+    },{
+      "value" : "mobile-section--s-spacing",
+      "label" : "S Spacing"
+    },{
+      "value" : "mobile-section--xs-spacing",
+      "label" : "XS Spacing"
+    },{
+      "value" : "mobile-section--no-spacing",
+      "label" : "No Spacing"
+    }
+    ],
+    "default":""
+  }
+  ],
+  "presets": [
+  {
+    "name": "Press",
+    "category": "Studio Zerance"
+  }
+  ]
+}
+{% endschema %}

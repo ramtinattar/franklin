@@ -1,0 +1,199 @@
+{% if Settings.background_mobile != blank %}
+	<style>
+		@media all and (max-width : 800px){
+			.description-tabs#section-{{ section.id }}{
+				background-image:url('{{ Settings.background_mobile | img_url : 'master'}}') !important;
+			}
+		}
+
+	</style>
+{% endif %}
+<section data-bg="{{ Settings.background_desktop | img_url : 'master' }}" class="lazyload section description-tabs bg--color relative" id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="description-tab">
+	<div class="description-tab__heading container--small align-center">
+		<h2 class="heading z-h3 description-tab__title mobile-container--small">{{ Settings.title }}</h2>
+		{% if Settings.subtitle != blank %}<h3 class="text t-1 description-tab__subtitle mobile-container--medium">{{ Settings.subtitle}}</h3>{% endif %}
+	</div>
+	<div data-desctab class="description-tab__desktop-container only-desktop container--medium">
+		<div class="desctab__heading-container">
+			{% for i in (1..10) %}
+			{% assign sectionKey = 'section_' | append : i %}
+			{% assign titleKey = sectionKey | append : '_title' %}
+			{% if Settings[titleKey] != blank %}
+			<div data-desctab-heading="{{ i }}" class="desctab__heading bg--white {% if i == 1 %}desctab__heading--active{% endif %}">
+				{{ Settings[titleKey] }}
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+		<div class="desctab__content-container bg--white">
+			{% for i in (1..10) %}
+			{% assign sectionKey = 'section_' | append : i %}
+			{% assign titleKey = sectionKey | append : '_title' %}
+			{% if Settings[titleKey] != blank %}
+			{% assign answerImageDesktop = sectionKey | append : '_image_desktop' %}
+			<div data-desctab-content="{{ i }}" class="desctab__content {% if Settings[answerImageDesktop] != blank %}desctab__content--image{% endif %} {% if i == 1 %}desctab__content--active{% endif %}">
+				{% assign answerBulletTitle = sectionKey | append : '_bullet_title_1' %}
+				{% assign answerBulletText = sectionKey | append : '_bullet_text_1' %}
+				{% assign answerBulletImage = sectionKey | append : '_bullet_image_1' %}
+				{% assign answerImageMobile = sectionKey | append : '_image_mobile' %}
+				{% assign answerRichText = sectionKey | append : '_richtext' %}
+				{% if Settings[answerImageDesktop] != blank %}
+				<div class="desctab__answer-full-image--container">
+					<div class="desctab__answer-full-image">
+						{% if Settings[answerImageMobile] != blank %}
+						{% include 'image' with img:Settings[answerImageMobile], classes : 'description-tab__answer-full-image only-mobile' %}
+						{% include 'image' with img:Settings[answerImageDesktop], classes : 'description-tab__answer-full-image only-desktop' %}
+						{% elsif Settings[answerImageDesktop]%}
+						{% include 'image' with img:Settings[answerImageDesktop], classes : 'description-tab__answer-full-image' %}
+						{% endif %}
+					</div>
+					<div class="desctab__answer-image-text">
+						{% if Settings[titleKey] contains 'Rations' %}
+							{% if product.tags contains 'chien' %}
+								{{ settings.text_ration_chien }}
+							{% elsif product.vendor contains 'chat' %}
+								{{ settings.text_ration_chat }}
+							{% endif %}
+						{% elsif Settings[titleKey] contains 'transition' %}
+							{% if product.tags contains 'chien' %}
+								{{ settings.text_transition_chien }}
+							{% elsif product.vendor contains 'chat' %}
+								{{ settings.text_transition_chat }}
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+
+				{% elsif Settings[answerRichText] != blank %}
+				<div class="desctab__answer-rich-text {% if Settings[titleKey] contains 'nutritives' %}desctab__column{% endif %}">
+					{{ Settings[answerRichText] }}
+				</div>
+				{% elsif Settings[answerBulletImage] != blank or Settings[answerBulletTitle] != blank or Settings[answerBulletText] != blank %}
+				<div class="desctab__answer-bullets">
+					{% for j in (1..10) %}
+					{% assign answerBulletImage = sectionKey | append : '_bullet_image_' | append : j %}
+					{% assign answerBulletTitle = sectionKey | append : '_bullet_title_' | append : j %}
+					{% assign answerBulletText = sectionKey | append : '_bullet_text_' | append : j %}
+					{% if Settings[answerBulletTitle] != blank or Settings[answerBulletText] != blank  or Settings[answerBulletImage] != blank %}
+					<div class="description-tab__answer-bullet">
+						{% if Settings[answerBulletImage] != blank %}
+						{% include 'image' with img : Settings[answerBulletImage], classes : 'description-tab__answer-bullet-picto' %}
+						{% endif %}
+						{% if Settings[answerBulletTitle] != blank or Settings[answerBulletText] != blank %}
+						<div class="description-tab__answer-bullet-text">
+							{% if Settings[answerBulletTitle] %}
+							<h4 class="text bold t-3 description-tab__answer-bullet-title">{{ Settings[answerBulletTitle] }}</h4>
+							{% endif %}
+							{% if Settings[answerBulletText] %}
+							<div class="text t-5">
+								{{ Settings[answerBulletText] }}
+							</div>
+							{% endif %}
+						</div>
+						{% endif %}
+					</div>
+					{% endif %}
+					{% endfor %}
+				</div>
+				{% endif %}
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="description-tab__mobile-container only-mobile page-width accordions" data-accordion data-allow-toggle>
+		{% for i in (1..10) %}
+		{% assign sectionKey = 'section_' | append : i %}
+		{% assign titleKey = sectionKey | append : '_title' %}
+		{% if Settings[titleKey] != blank %}
+		<div class="description-tab__mobile accordion bg--white">
+			<h4 class="text t-3 description-tab__question relative"
+			data-accordion-trigger
+			aria-expanded="false"
+			aria-controls="#description-tab-{{ i }}"
+			>{{ Settings[titleKey] }}
+			<img src="{{ settings.bottom_arrow_green_faq }}" alt="arrow faq" class="accordion--icon" />
+		</h4>
+		<div id="description-tab-{{ i }}"
+		class="description-tab__answer"
+		data-accordion-panel>
+		{% assign answerBulletTitle = sectionKey | append : '_bullet_title_1' %}
+		{% assign answerImageDesktop = sectionKey | append : '_image_desktop' %}
+		{% assign answerBulletText = sectionKey | append : '_bullet_text_1' %}
+		{% assign answerBulletImage = sectionKey | append : '_bullet_image_1' %}
+		{% assign answerImageMobile = sectionKey | append : '_image_mobile' %}
+		{% assign answerRichText = sectionKey | append : '_richtext' %}
+		{% if Settings[answerImageDesktop] != blank %}
+		<div class="description-tab__answer-full-image-container">
+			{% if Settings[answerImageMobile] != blank %}
+			{% include 'image' with img:Settings[answerImageMobile], classes : 'description-tab__answer-full-image only-mobile' %}
+			{% include 'image' with img:Settings[answerImageDesktop], classes : 'description-tab__answer-full-image only-desktop' %}
+			{% else %}
+			{% include 'image' with img:Settings[answerImageDesktop], classes : 'description-tab__answer-full-image' %}
+			{% endif %}
+			<div class="desctab__answer-image-text">
+				{% if Settings[titleKey] contains 'Rations' %}
+					{% if product.tags contains 'chien' %}
+						<p>
+							Indications à adapter selon la race, l’âge, la personnalité et le niveau d’activité de votre compagnon de jeu. Et pour sa gamelle d’eau, bien sûr, c’est à volonté et à renouveler tous les jours !
+						</p>
+					{% elsif product.vendor contains 'chat' %}
+						<p>
+							Indications à adapter selon la race, l’âge, la personnalité et le niveau d’activité de votre compagnon de jeu. Et pour sa gamelle d’eau, bien sûr, c’est à volonté et à renouveler tous les jours !
+						</p>
+					{% endif %}
+				{% elsif Settings[titleKey] contains 'Transition' %}
+					{% if product.tags contains 'chien' %}
+						<p>
+							Quand vous changez le régime alimentaire de votre chien, il est préférable de le faire progressivement, sur une période de 5 à 7 jours. Son système digestif peut ainsi s'habituer en douceur. Nous vous conseillons de commencer par mélanger la nourriture de votre compagnon avec une petite quantité de croquettes Franklin et d'augmenter progressivement la dose jusqu'à ce que sa gamelle soit 100% Franklin ! Juste du bon et rien d'autre !
+						</p>
+					{% elsif product.vendor contains 'chat' %}
+						<p>
+							Quand vous changez le régime alimentaire de votre chat, il est préférable de le faire progressivement, sur une période de 5 à 7 jours. Son système digestif peut ainsi s'habituer en douceur. Nous vous conseillons de commencer par mélanger la nourriture de votre compagnon avec une petite quantité de croquettes Franklin et d'augmenter progressivement la dose jusqu'à ce que sa gamelle soit 100% Franklin ! Juste du bon et rien d'autre !
+						</p>
+					{% endif %}
+				{% endif %}
+			</div>
+		</div>
+		{% elsif Settings[answerRichText] != blank %}
+		<div class="description-tab__answer-rich-text">
+			{{ Settings[answerRichText] }}
+		</div>
+		{% elsif Settings[answerBulletImage] != blank or Settings[answerBulletTitle] != blank or Settings[answerBulletText] != blank %}
+		<div class="description-tab__answer-bullets">
+			{% for j in (1..10) %}
+			{% assign answerBulletImage = sectionKey | append : '_bullet_image_' | append : j %}
+			{% assign answerBulletTitle = sectionKey | append : '_bullet_title_' | append : j %}
+			{% assign answerBulletText = sectionKey | append : '_bullet_text_' | append : j %}
+			{% if Settings[answerBulletTitle] != blank or Settings[answerBulletText] != blank  or Settings[answerBulletImage] != blank %}
+			<div class="description-tab__answer-bullet">
+				{% if Settings[answerBulletImage] != blank %}
+				{% include 'image' with img : Settings[answerBulletImage], classes : 'description-tab__answer-bullet-picto' %}
+				{% endif %}
+				{% if Settings[answerBulletTitle] != blank or Settings[answerBulletText] != blank %}
+				<div class="description-tab__answer-bullet-text">
+					{% if Settings[answerBulletTitle] != blank %}
+					<h4 class="text bold t-3 description-tab__answer-bullet-title">{{ Settings[answerBulletTitle] }}</h4>
+					{% endif %}
+					{% if Settings[answerBulletText] %}
+					<div class="text t-5">
+						{{ Settings[answerBulletText] }}
+					</div>
+					{% endif %}
+				</div>
+				{% endif %}
+			</div>
+
+			{% endif %}
+			{% endfor %}
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+{% if Settings.character != blank %}
+{% include 'image' with classes : 'description-tab__character only-mobile', img : Settings.character %}
+{% endif %}
+</section>

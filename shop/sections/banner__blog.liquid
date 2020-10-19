@@ -1,0 +1,403 @@
+{% include 'banner' with Settings:section.settings, id : section.id %}
+
+{% schema %}
+{
+  "name": "Banner",
+  "settings": [
+  {
+    "type": "checkbox",
+    "id": "active_lazyload",
+    "label": "Use lazyload for better speed (but low quality first second)",
+    "default": false
+  },
+  {
+    "type": "select",
+    "id": "banner_desktop_object_fit",
+    "label": "Slider Object fit on desktop",
+    "options": [
+    {
+      "value": "banner__image--contain",
+      "label": "Contain"
+    },
+    {
+      "value": "banner__image--cover",
+      "label": "Cover"
+    }
+    ],
+    "default": "banner__image--cover"
+  },
+  {
+    "type": "select",
+    "id": "banner_mobile_object_fit",
+    "label": "Slider Object fit on mobile",
+    "options": [
+    {
+      "value": "banner__image--contain",
+      "label": "Contain"
+    },
+    {
+      "value": "banner__image--cover",
+      "label": "Cover"
+    }
+    ],
+    "default": "banner__image--cover"
+  },
+  {
+    "type": "select",
+    "id": "banner_desktop_height",
+    "label": "Slider height on desktop",
+    "options": [
+    {
+      "value": "height--50vh",
+      "label": "50%"
+    },
+    {
+      "value": "height--60vh",
+      "label": "60%"
+    },
+    {
+      "value": "height--70vh",
+      "label": "70%"
+    },
+    {
+      "value": "height--80vh",
+      "label": "80%"
+    },
+    {
+      "value": "height--90vh",
+      "label": "90%"
+    },
+    {
+      "value": "banner__image--full-screen",
+      "label": "Full screen"
+    }
+    ],
+    "default": "banner__image--full-screen"
+  },
+  {
+    "type": "select",
+    "id": "banner_mobile_height",
+    "label": "Slider height on mobile",
+    "options": [
+    {
+      "value": "height--50vh",
+      "label": "50%"
+    },
+    {
+      "value": "height--60vh",
+      "label": "60%"
+    },
+    {
+      "value": "height--70vh",
+      "label": "70%"
+    },
+    {
+      "value": "height--80vh",
+      "label": "80%"
+    },
+    {
+      "value": "height--90vh",
+      "label": "90%"
+    },
+    {
+      "value": "banner__image--full-screen",
+      "label": "Full screen"
+    }
+    ],
+    "default": "banner__image--full-screen"
+  },
+  {
+    "type":"header",
+    "content":"Banner"
+  },
+  {
+    "type": "image_picker",
+    "id": "image",
+    "label": "Banner image"
+  },
+  {
+    "type": "image_picker",
+    "id": "image_mobile",
+    "label": "Banner image mobile"
+  },
+  {
+    "type": "text",
+    "id": "title",
+    "label": "Title",
+    "default": "Titre Zerance"
+  },
+  {
+    "type": "select",
+    "id": "heading_tag",
+    "label": "Tag du heading",
+    "options": [
+    {
+      "value" : "h1",
+      "label" : "H1"
+    },
+    {
+      "value" : "h2",
+      "label" : "H2"
+    },
+    {
+      "value" : "h3",
+      "label" : "H3"
+    },
+    {
+      "value" : "h4",
+      "label" : "H4"
+    },
+    {
+      "value" : "h5",
+      "label" : "H5"
+    }
+    ]
+  },
+  {
+    "type": "select",
+    "id": "heading_class",
+    "label": "Classe du heading",
+    "options": [
+    {
+      "value" : "z-h1",
+      "label" : "z-H1"
+    },
+    {
+      "value" : "z-h2",
+      "label" : "z-H2"
+    },
+    {
+      "value" : "z-h3",
+      "label" : "z-H3"
+    },
+    {
+      "value" : "z-h4",
+      "label" : "z-H4"
+    },
+    {
+      "value" : "z-h5",
+      "label" : "z-H5"},{
+        "value" : "z-h6",
+        "label" : "z-H6"
+      },{
+        "value" : "z-h7",
+        "label" : "z-H7"
+      },{
+        "value" : "z-h8",
+        "label" : "z-H8"
+      },{
+        "value" : "z-h9",
+        "label" : "z-H9"
+      },{
+        "value" : "z-h10",
+        "label" : "z-H10"
+      },{
+        "value" : "z-h11",
+        "label" : "z-H11"
+      }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_invert",
+      "label": "Invert text color",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Slide position desktop",
+      "options": [
+      {
+        "group": "Position",
+        "value": "image--position-center-top",
+        "label": "Position center top"
+      },
+      {
+        "group": "Position",
+        "value": "image--position-center-middle",
+        "label": "Position center middle"
+      },
+      {
+        "group": "Position",
+        "value": "image--position-center-bottom",
+        "label": "Position center bottom"
+      },
+      {
+        "group": "Position",
+        "value": "image--position-left-top",
+        "label": "Position left top"
+      },
+      {
+        "group": "Position",
+        "value": "image--position-left-center",
+        "label": "Position left center"
+      },
+      {
+        "group": "Position",
+        "value": "image--position-left-bottom",
+        "label": "Position left bottom"
+      },
+      {
+        "group": "Position",
+        "value": "image--position-right-top",
+        "label": "Position right top"
+      },
+      {
+        "group": "Position",
+        "value": "image--position-right-center",
+        "label": "Position right center"
+      },
+      {
+        "group": "Position",
+        "value": "image--position-right-bottom",
+        "label": "Position right bottom"
+      }
+      ],
+      "default": "image--position-center-middle"
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position desktop",
+      "options": [
+      {
+        "group": "Position",
+        "value": "position--left-center",
+        "label": "Position left center"
+      },
+      {
+        "group": "Position",
+        "value": "position--middle-center",
+        "label": "Position middle center"
+      },
+      {
+        "group": "Position",
+        "value": "position--right-center",
+        "label": "Position right center"
+      },
+      {
+        "group": "Position",
+        "value": "position--left-bottom",
+        "label": "Position left bottom"
+      },
+      {
+        "group": "Position",
+        "value": "position--center-bottom",
+        "label": "Position center bottom"
+      },
+      {
+        "group": "Position",
+        "value": "position--right-bottom",
+        "label": "Position right bottom"
+      }
+      ],
+      "default": "position--middle-center"
+    },
+    {
+      "type": "text",
+      "id": "link_1",
+      "label": "Link text 1",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "url_1",
+      "label": "Link url 1"
+    },
+    {
+      "type": "text",
+      "id": "link_2",
+      "label": "Link text 2",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "url_2",
+      "label": "Link url 2"
+    },
+    {
+      "type": "url",
+      "id": "google_link",
+      "label": "Lien vers Google"
+    },
+    {
+      "type": "image_picker",
+      "id": "google_image",
+      "label": "Image google"
+    },
+    {
+      "type":"header",
+      "content" : "Section"
+    },
+    {
+      "type": "select",
+      "id": "section_spacing",
+      "label": "Section bottom spacing",
+      "options": [
+      {
+        "value" : "section--xl-spacing",
+        "label" : "XL Spacing"
+      },{
+        "value" : "section--l-spacing",
+        "label" : "L Spacing"
+      },{
+        "value" : "section--m-spacing",
+        "label" : "M Spacing"
+      },{
+        "value" : "section--s-spacing",
+        "label" : "S Spacing"
+      },{
+        "value" : "section--xs-spacing",
+        "label" : "XS Spacing"
+      },{
+        "value" : "section--no-spacing",
+        "label" : "No Spacing"
+      }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "section_spacing_mobile",
+      "label": "Section bottom spacing mobile",
+      "options": [
+      {
+        "value":"",
+        "label":"Same value"
+      },
+      {
+        "value" : "mobile-section--xl-spacing",
+        "label" : "XL Spacing"
+      },{
+        "value" : "mobile-section--l-spacing",
+        "label" : "L Spacing"
+      },{
+        "value" : "mobile-section--m-spacing",
+        "label" : "M Spacing"
+      },{
+        "value" : "mobile-section--s-spacing",
+        "label" : "S Spacing"
+      },{
+        "value" : "mobile-section--xs-spacing",
+        "label" : "XS Spacing"
+      },{
+        "value" : "mobile-section--no-spacing",
+        "label" : "No Spacing"
+      }
+      ],
+      "default":""
+    }
+    ],
+    "presets": [
+    {
+      "name": "Banner",
+      "category": "Studio Zerance"
+    }
+    ]
+  }
+  {% endschema %}

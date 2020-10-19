@@ -1,0 +1,127 @@
+{% include 'collection-slider' with Settings:section.settings, id:section.id, sliderCollection : collections[section.settings.collection] %}
+
+{% schema %}
+{
+	"name": "Collection slider",
+	"settings": [
+	{
+		"type": "text",
+		"id": "title",
+		"label": "Title",
+		"default": "Les chiots adorent aussi."
+	},
+	{
+		"type": "richtext",
+		"id": "text",
+		"label": "texte",
+		"default": "<p>Varier les plaisirs avec ces pâtées et friandises hypoallergéniques adaptées pour chiot </p>"
+	},
+	{
+		"type": "url",
+		"id": "cta_url",
+		"label": "CTA url",
+		"info": "info"
+	},
+	{
+		"type": "text",
+		"id": "cta_text",
+		"label": "CTA Text",
+		"default": "Découvrez les produits"
+	},
+	{
+		"type": "collection",
+		"id": "collection",
+		"label": "Collection"
+	},
+	{
+		"type": "range",
+		"id": "product_max",
+		"label": "Maximum displayed product",
+		"default": 4,
+		"min": 0,
+		"max": 10,
+		"step": 1,
+		"unit": "p"
+	},
+	{
+		"type":"header",
+		"content" : "Section"
+	},
+	{
+		"type": "checkbox",
+		"id": "border_bottom",
+		"label": "Border bottom desktop",
+		"default": true
+	},
+	{
+		"type": "checkbox",
+		"id": "border_bottom_all",
+		"label": "Border bottom ALL SIZES",
+		"default": false
+	},
+	{
+		"type": "select",
+		"id": "section_spacing",
+		"label": "Section bottom spacing",
+		"options": [
+		{
+			"value" : "section--xl-spacing",
+			"label" : "XL Spacing"
+		},{
+			"value" : "section--l-spacing",
+			"label" : "L Spacing"
+		},{
+			"value" : "section--m-spacing",
+			"label" : "M Spacing"
+		},{
+			"value" : "section--s-spacing",
+			"label" : "S Spacing"
+		},{
+			"value" : "section--xs-spacing",
+			"label" : "XS Spacing"
+		},{
+			"value" : "section--no-spacing",
+			"label" : "No Spacing"
+		}
+		]
+	},
+	{
+		"type": "select",
+		"id": "section_spacing_mobile",
+		"label": "Section bottom spacing mobile",
+		"options": [
+		{
+			"value":"",
+			"label":"Same value"
+		},
+		{
+			"value" : "mobile-section--xl-spacing",
+			"label" : "XL Spacing"
+		},{
+			"value" : "mobile-section--l-spacing",
+			"label" : "L Spacing"
+		},{
+			"value" : "mobile-section--m-spacing",
+			"label" : "M Spacing"
+		},{
+			"value" : "mobile-section--s-spacing",
+			"label" : "S Spacing"
+		},{
+			"value" : "mobile-section--xs-spacing",
+			"label" : "XS Spacing"
+		},{
+			"value" : "mobile-section--no-spacing",
+			"label" : "No Spacing"
+		}
+		],
+		"default":""
+	}
+	],
+	"presets": [
+	{
+		"name": "Collection slider",
+		"category": "Studio Zerance"
+	}
+	]
+}
+{% endschema %}

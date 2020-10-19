@@ -1,0 +1,35 @@
+{%- assign collection = collections[Settings.collection] -%}
+
+<section id="section-{{ id }}" {% if Settings.section_spacing %} class="{{ Settings.section_spacing }}  {{ Settings.section_spacing_mobile }}" {% endif %} data-section-id="{{ id }}" data-section-type="featured-collection">
+	<div class="featured-collection page-width">
+		<div class="grid">
+			{% if Settings.image_left == true %}
+			<div class="only-desktop grid__cell 1/2 featured-collection__image-container">
+				{% if Settings.video != blank %}
+					{% include 'video' with video_url : Settings.video.url %}
+				{% else %}
+				{% include 'image' with classes:'featured-collection__image border--desktop', img:Settings.image %}
+				{% endif %}
+			</div>
+			{% endif %}
+			<div class="featured-collection__container grid__cell 1/2--desk">
+				<div class="grid grid--collection">
+					{% for collectionProduct in collection.products limit : Settings.product_max %}
+					<div class="grid__cell 1/2">
+						{% include 'product-card' with _collection:collection, classes : 'featured-collection__product', cardProduct : collectionProduct %}
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			{% unless Settings.image_left == true %}
+				<div class="only-desktop grid__cell 1/2 featured-collection__image-container featured-collection__image-container--right">
+					{% if Settings.video != blank %}
+						{% include 'video' with video_url : Settings.video.url %}
+					{% else %}
+					{% include 'image' with classes:'featured-collection__image border--desktop', img:Settings.image %}
+					{% endif %}
+				</div>
+			{% endunless %}
+		</div>
+	</div>
+</section>

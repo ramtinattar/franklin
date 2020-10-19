@@ -1,0 +1,32 @@
+<section class="bg--color {% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section text-cta" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="press">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div data-carousel-container class="press align-center">
+		<h2 class="z-h5 heading page-width mobile-container--small">{{ Settings.title }}</h2>
+		<div class="page-width--desktop carousel--show-several carousel press-logos" data-flickity='{ "groupCells" : 2, "pageDots" : false, "watchCSS" : true, "prevNextButtons" : false, "wrapAround" : false, "freeScroll" : true, "cellAlign" : "left"}'>
+			{% for i in (1..7) %}
+			{% capture current %}{% cycle 1, 2, 3, 4, 5, 6, 7 %}{% endcapture %}
+			{% assign imageKey = 'image_' | append : current %}
+			{% assign linkKey = 'link_' | append : current %}
+			{% if Settings[imageKey] == blank %}{% continue %}{% endif %}
+			<div class="carousel-cell">
+				<div class="press-logo">
+					<a href="{{ Settings[linkKey] }}" target="_blank">
+						{% include 'image' with img : Settings[imageKey], dimensions : '250x', classes : 'press-logo__image' %}
+					</a>
+				</div>
+			</div>
+
+			{% endfor %}
+		</div>
+		{% comment %}
+		<div class="only-mobile carousel__prev-next-container press__prev-next-container">
+			<div data-carousel-prev class="carousel__prev-button">
+				{% include 'icon-right-arrow' %}
+			</div>
+			<div data-carousel-next class="carousel__next-button">
+				{% include 'icon-right-arrow' %}
+			</div>
+		</div>
+		{% endcomment %}
+	</div>
+</section>

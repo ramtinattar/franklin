@@ -1,0 +1,31 @@
+<style>
+
+</style>
+<div class="myaccount delivery-update">
+	<div class="section-header account__header text-center cart__title page-width">
+
+		<h1>
+			Mon compte
+		</h1>
+		<div class="myaccount__logout underline">
+			{{ 'layout.customer.log_out' | t | customer_logout_link }}
+		</div>
+	</div>
+	<div class="page-width">
+		{% if customer.metafields.subscriptions.customer_string%}
+		<p class="myaccount__backlink"><a href="/tools/recurring/customer_portal/{{ customer.metafields.subscriptions.customer_string }}/subscriptions/" style="color:white" ><< Retour aux détails de l'abonnement</a></p>
+		{% endif %}
+	</div>
+	<div class="grid">
+		<div class="grid__item medium-up--one-third medium-up--push-one-third account__panel">
+		  <div class="account__panel-content">
+			  <div class="center">
+				  <img style="margin-bottom : 30px; width:150px;" src="https://cdn.shopify.com/s/files/1/2598/9270/files/enlivraison.png?3556" alt="livraison modifiée" />
+			  </div>
+				<h4>Le changement de mode de livraison a bien été pris compte par nos équipes.</h4>
+			</div>
+		</div>
+	</div>
+
+
+</div>

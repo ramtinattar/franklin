@@ -1,0 +1,47 @@
+{% comment %}
+   {% include 'article-card'
+      , cardArticle     : article
+      , classes         : ""
+	  , excerpt_length : X
+   %}
+{% endcomment %}
+
+{% assign articleTag = false %}
+{% for tag in cardArticle.tags %}
+	{% if tag contains 'tag__' %}
+		{% assign articleTag = tag | remove : 'tag__' %}
+	{% endif %}
+{% endfor %}
+
+{% assign excerpt_length = excerpt_length | default : 20 %}
+
+{% if cardArticle != blank %}
+<a href="{{ cardArticle.url }}">
+	<div class="{{ classes }} article-card">
+			<div class="article-card__image-container">
+				{% include 'image' with img: cardArticle.image, classes:"article-card__image", __with_effect : true, responsiveSizes : false %}
+				{%- if show_hover -%}
+					<div class="article-card__text_hover">
+						<span class="article-card__text_read t-8" >{{ text_read }}</span> {% include 'icon-right-arrow' %}
+					</div>
+				{%- endif -%}
+			</div>
+			<div class="article-card__content">
+				{% if articleTag %}<div class="article-card__suptitle text t-6 uppercase">{{ articleTag}}</div>{% endif %}
+				<h3 class="article-card__title z-h9 heading">{{ cardArticle.title }}</h3>
+				{% unless cardDescription == false %}
+				<div class="article-card__text text text--large">
+					{% if cardArticle.excerpt.size > 0 %}
+					  {{ cardArticle.excerpt }}
+					{% else %}
+					  <p>
+					 {{ cardArticle.content | strip_html | truncatewords: excerpt_length }}
+					  </p>
+					{% endif %}
+				</div>
+				{% endunless %}
+			</div>
+
+	</div>
+</a>
+{% endif %}

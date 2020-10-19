@@ -1,0 +1,6075 @@
+{% include 'mega-section' %}
+
+{% schema %}
+{
+  "name": "Mega-section",
+  "settings": [
+
+  ],
+  "blocks": [
+  {
+    "type": "anchor-menu",
+    "name": "Anchor menu",
+    "settings": [
+    {
+      "type": "text",
+      "id": "anchor_text_1",
+      "label": "Anchor text 1"
+    },
+    {
+      "type": "url",
+      "id": "anchor_url_1",
+      "label": "Anchor URL 1",
+      "info": "Laisser vide pour ajouter une ancre"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id_1",
+      "label": "Anchor ID 1",
+      "info": "À renseigner également sur la section cible"
+    },
+    {
+      "type": "text",
+      "id": "anchor_text_2",
+      "label": "Anchor text 2"
+    },
+    {
+      "type": "url",
+      "id": "anchor_url_2",
+      "label": "Anchor URL 2",
+      "info": "Laisser vide pour ajouter une ancre"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id_2",
+      "label": "Anchor ID 2",
+      "info": "À renseigner également sur la section cible"
+    },
+    {
+      "type": "text",
+      "id": "anchor_text_3",
+      "label": "Anchor text 3"
+    },
+    {
+      "type": "url",
+      "id": "anchor_url_3",
+      "label": "Anchor URL 3",
+      "info": "Laisser vide pour ajouter une ancre"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id_3",
+      "label": "Anchor ID 3",
+      "info": "À renseigner également sur la section cible"
+    },
+    {
+      "type": "text",
+      "id": "anchor_text_4",
+      "label": "Anchor text 4"
+    },
+    {
+      "type": "url",
+      "id": "anchor_url_4",
+      "label": "Anchor URL 4",
+      "info": "Laisser vide pour ajouter une ancre"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id_4",
+      "label": "Anchor ID 4",
+      "info": "À renseigner également sur la section cible"
+    },
+    {
+      "type": "text",
+      "id": "anchor_text_5",
+      "label": "Anchor text 5"
+    },
+    {
+      "type": "url",
+      "id": "anchor_url_5",
+      "label": "Anchor URL 5",
+      "info": "Laisser vide pour ajouter une ancre"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id_5",
+      "label": "Anchor ID 5",
+      "info": "À renseigner également sur la section cible"
+    }
+    ]
+  },
+  {
+    "type": "banner",
+    "name": "Banner",
+    "settings": [
+    {
+      "type": "checkbox",
+      "id": "active_lazyload",
+      "label": "Use lazyload for better speed (but low quality first second)",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "banner_desktop_height",
+      "label": "Slider height on desktop",
+      "options": [
+      {
+        "value": "height--50vh",
+        "label": "50%"
+      },
+      {
+        "value": "height--60vh",
+        "label": "60%"
+      },
+      {
+        "value": "height--70vh",
+        "label": "70%"
+      },
+      {
+        "value": "height--80vh",
+        "label": "80%"
+      },
+      {
+        "value": "height--90vh",
+        "label": "90%"
+      },
+      {
+        "value": "banner__image--full-screen",
+        "label": "Full screen"
+      }
+      ],
+      "default": "banner__image--full-screen"
+    },
+    {
+      "type": "select",
+      "id": "banner_mobile_height",
+      "label": "Slider height on mobile",
+      "options": [
+      {
+        "value": "height--50vh",
+        "label": "50%"
+      },
+      {
+        "value": "height--60vh",
+        "label": "60%"
+      },
+      {
+        "value": "height--70vh",
+        "label": "70%"
+      },
+      {
+        "value": "height--80vh",
+        "label": "80%"
+      },
+      {
+        "value": "height--90vh",
+        "label": "90%"
+      },
+      {
+        "value": "banner__image--full-screen",
+        "label": "Full screen"
+      }
+      ],
+      "default": "banner__image--full-screen"
+    },
+    {
+      "type":"header",
+      "content":"Banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Banner image mobile"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "If you can't handle it, candle it"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Tag du heading",
+      "options": [
+      {
+        "value" : "h1",
+        "label" : "H1"
+      },
+      {
+        "value" : "h2",
+        "label" : "H2"
+      },
+      {
+        "value" : "h3",
+        "label" : "H3"
+      },
+      {
+        "value" : "h4",
+        "label" : "H4"
+      },
+      {
+        "value" : "h5",
+        "label" : "H5"
+      }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_class",
+      "label": "Classe du heading",
+      "options": [
+      {
+        "value" : "z-h1",
+        "label" : "z-H1"
+      },
+      {
+        "value" : "z-h2",
+        "label" : "z-H2"
+      },
+      {
+        "value" : "z-h3",
+        "label" : "z-H3"
+      },
+      {
+        "value" : "z-h4",
+        "label" : "z-H4"
+      },
+      {
+        "value" : "z-h5",
+        "label" : "z-H5"
+      },
+        {
+          "value" : "z-h6",
+          "label" : "z-H6"
+        },
+        {
+          "value" : "z-h7",
+          "label" : "z-H7"
+        },
+        {
+          "value" : "z-h8",
+          "label" : "z-H8"
+        },
+        {
+          "value" : "z-h9",
+          "label" : "z-H9"
+        },
+        {
+          "value" : "z-h10",
+          "label" : "z-H10"
+        },
+        {
+          "value" : "z-h11",
+          "label" : "z-H11"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text"
+      },
+      {
+        "type": "checkbox",
+        "id": "text_invert",
+        "label": "Invert text color",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "label": "Slide position desktop",
+        "options": [
+        {
+          "group": "Position",
+          "value": "image--position-center-top",
+          "label": "Position center top"
+        },
+        {
+          "group": "Position",
+          "value": "image--position-center-middle",
+          "label": "Position center middle"
+        },
+        {
+          "group": "Position",
+          "value": "image--position-center-bottom",
+          "label": "Position center bottom"
+        },
+        {
+          "group": "Position",
+          "value": "image--position-left-top",
+          "label": "Position left top"
+        },
+        {
+          "group": "Position",
+          "value": "image--position-left-center",
+          "label": "Position left center"
+        },
+        {
+          "group": "Position",
+          "value": "image--position-left-bottom",
+          "label": "Position left bottom"
+        },
+        {
+          "group": "Position",
+          "value": "image--position-right-top",
+          "label": "Position right top"
+        },
+        {
+          "group": "Position",
+          "value": "image--position-right-center",
+          "label": "Position right center"
+        },
+        {
+          "group": "Position",
+          "value": "image--position-right-bottom",
+          "label": "Position right bottom"
+        }
+        ],
+        "default": "image--position-center-middle"
+      },
+      {
+        "type": "select",
+        "id": "text_position",
+        "label": "Text position desktop",
+        "options": [
+        {
+          "group": "Position",
+          "value": "position--left-center",
+          "label": "Position left center"
+        },
+        {
+          "group": "Position",
+          "value": "position--middle-center",
+          "label": "Position middle center"
+        },
+        {
+          "group": "Position",
+          "value": "position--right-center",
+          "label": "Position right center"
+        },
+        {
+          "group": "Position",
+          "value": "position--left-bottom",
+          "label": "Position left bottom"
+        },
+        {
+          "group": "Position",
+          "value": "position--center-bottom",
+          "label": "Position center bottom"
+        },
+        {
+          "group": "Position",
+          "value": "position--right-bottom",
+          "label": "Position right bottom"
+        }
+        ],
+        "default": "position--middle-center"
+      },
+      {
+        "type": "text",
+        "id": "link_1",
+        "label": "Link text 1",
+        "default": "Shop now"
+      },
+      {
+        "type": "url",
+        "id": "url_1",
+        "label": "Link url 1"
+      },
+      {
+        "type": "text",
+        "id": "link_2",
+        "label": "Link text 2",
+        "default": "Shop now"
+      },
+      {
+        "type": "url",
+        "id": "url_2",
+        "label": "Link url 2"
+      },
+      {
+        "type": "url",
+        "id": "google_link",
+        "label": "Lien vers Google"
+      },
+      {
+        "type": "image_picker",
+        "id": "google_image",
+        "label": "Image google"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":"section--no-spacing"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":"mobile-section--m-spacing"
+      }
+      ]
+    },
+    {
+      "type": "breadcrumb",
+      "name": "Breadcrumb",
+      "settings": [
+
+      ]
+    },
+	{
+		"type":"reviews-product",
+		"name":"Reviews product",
+		"settings":[
+
+		]
+	},
+  {
+      "type": "text-background-image",
+      "name": "Text background image",
+      "settings": [
+      {
+        "type":"header",
+        "content" : "Content"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_desktop",
+        "label": "Background desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_mobile",
+        "label": "Background mobile"
+      },
+      {
+        "type": "range",
+        "id": "background_height",
+        "min": 500,
+        "max": 1500,
+        "step": 25,
+        "unit": "px",
+        "label": "Background height (500 => auto height)",
+        "default": 500
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 150,
+        "step": 10,
+        "unit": "px",
+        "label": "Spacing top",
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 150,
+        "step": 10,
+        "unit": "px",
+        "label": "Spacing bottom",
+        "default": 60
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "title",
+        "default": "Franklin, c’est une alimentation équilibrée, simple et saine qui s’adresse à tous les chiens et à tous les chats."
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "text"
+      },
+      {
+        "type":"header",
+        "content" : "Icons"
+      },
+      {
+        "type": "range",
+        "id": "icon_per_line",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "label": "Images per line Desktop",
+        "default": 3
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_1",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_1",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_2",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_2",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_3",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_3",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_3",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_4",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_4",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_4",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_5",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_5",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_5",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_6",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_6",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_6",
+        "label": "Subtitle"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "cta_text",
+        "default": "NOS ACTIONS"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "cta_url"
+      },
+      {
+        "type": "select",
+        "id": "cta_type",
+        "label": "cta_type",
+        "options": [
+        {
+          "value" : "button--primary",
+          "label" : "button--primary"
+        },
+        {
+          "value" : "button--secondary",
+          "label" : "button--secondary"
+        },{
+          "value" : "button--invert",
+          "label" : "button--invert"
+        }
+        ]
+      },
+	  {
+	  "type": "text",
+	  "id": "cta_text_2",
+	  "label": "cta_text_2",
+	  "default": "NOS RECETTES CHAT"
+	},
+	{
+	  "type": "url",
+	  "id": "cta_url_2",
+	  "label": "cta_url_2"
+	},
+	{
+	  "type": "select",
+	  "id": "cta_type_2",
+	  "label": "cta_type_2",
+	  "options": [
+	  {
+		"value" : "button--primary",
+		"label" : "button--primary"
+	  },
+	  {
+		"value" : "button--secondary",
+		"label" : "button--secondary"
+	  },{
+		"value" : "button--invert",
+		"label" : "button--invert"
+	  }
+	  ]
+	},
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ]
+    },
+    {
+      "type": "collection-slider",
+      "name": "Collection slider",
+      "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Les chiots adorent aussi."
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "texte",
+        "default": "<p>Varier les plaisirs avec ces pâtées et friandises hypoallergéniques adaptées pour chiot </p>"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA url",
+        "info": "info"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text",
+        "default": "Découvrez les produits"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "product_max",
+        "label": "Maximum displayed product",
+        "default": 4,
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "p"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "checkbox",
+        "id": "border_bottom",
+        "label": "Border bottom",
+        "default": true
+      },
+	  {
+		  "type": "checkbox",
+		  "id": "border_bottom_all",
+		  "label": "Border bottom ALL SIZES",
+		  "default": false
+	  },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      }
+      ]
+    },
+    {
+      "type": "collection",
+      "name": "Collection(page col only)",
+      "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection",
+        "info": "Si on souhaite définir une collection spécifique. Laisser vide pour choisir celle de la page."
+      },
+      {
+         "type":"header",
+         "content":"Encart image"
+      },
+      {
+        "type": "image_picker",
+        "id": "encart_image",
+        "label": "Encart d'image",
+        "info":"164x325px"
+    },
+      {
+        "type":"header",
+        "content":"Encart text"
+      },
+      {
+        "type": "text",
+        "id": "encart_title",
+        "label": "Encart title",
+        "default": "Toutes nos croquettes pour chien"
+      },
+      {
+        "type": "richtext",
+        "id": "encart_text",
+        "label": "Encart texte",
+        "default": "<p>Des croquettes sans céréales et hypo-allergéniques pensées pour les estomacs les plus sensibles.</p>"
+      },
+      {
+        "type": "image_picker",
+        "id": "encart_picto",
+        "label": "Picto",
+       	"info":"300x300px"
+      },
+      {
+        "type": "select",
+        "id": "encart_color",
+        "label": "Couleur",
+        "options": [
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "text",
+        "id": "anchor_id",
+        "label": "ID de l'ancre"
+      },
+      {
+        "type": "checkbox",
+        "id": "border_bottom",
+        "label": "Border bottom",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "border_bottom_all",
+        "label": "Border bottom ALL SIZES",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":"section--m-spacing"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":"mobile-section--no-spacing"
+      }
+      ]
+    },
+    {
+      "type":"description-tab",
+      "name":"Description tabs",
+      "settings":[
+      {
+         "type": "header",
+         "content": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Titre section",
+        "default": "Tout savoir sur la recette"
+     },
+     {
+       "type": "richtext",
+       "id": "subtitle",
+       "label": "Sous titre section",
+       "default": "<p>Composition, garanties, conseils sur les rations journalières et la transition alimentaire, on vous dit tout, en toute transparence !</p>"
+     },
+     {
+       "type": "image_picker",
+       "id": "background_desktop",
+       "label": "Background image desktop"
+     },
+     {
+       "type": "image_picker",
+       "id": "character",
+       "label": "Personnage affiché sur mobile"
+     },
+     {
+        "type": "header",
+        "content": "Section 1"
+     },
+     {
+       "type": "text",
+       "id": "section_1_title",
+       "label": "Titre section 1",
+       "default": "Description"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_1_image_desktop",
+       "label": "Section 1 - Image full desktop",
+       "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_1_image_mobile",
+       "label": "Section 1 - Image full mobile"
+     },
+     {
+       "type": "richtext",
+       "id": "section_1_richtext",
+       "label": "Section 1 - Rich text",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_1_bullet_image_1",
+       "label": "Section_1 bullet image 1"
+     },
+     {
+       "type": "text",
+       "id": "section_1_bullet_title_1",
+       "label": "Section_1 bullet title 1",
+       "default": "Une recette à forte teneur en viande",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "richtext",
+       "id": "section_1_bullet_text_1",
+       "label": "Section_1 bullet text 1",
+       "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_1_bullet_image_2",
+       "label": "Section_1 bullet image 2"
+     },
+     {
+       "type": "text",
+       "id": "section_1_bullet_title_2",
+       "label": "Section_1 bullet title 2",
+       "default": "Une recette à forte teneur en viande"
+     },
+     {
+       "type": "richtext",
+       "id": "section_1_bullet_text_2",
+       "label": "Section_1 bullet text 2",
+       "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_1_bullet_image_3",
+       "label": "Section_1 bullet image 3"
+     },
+     {
+       "type": "text",
+       "id": "section_1_bullet_title_3",
+       "label": "Section_1 bullet title 3",
+       "default": "Une recette à forte teneur en viande"
+     },
+     {
+       "type": "richtext",
+       "id": "section_1_bullet_text_3",
+       "label": "Section_1 bullet text 3",
+       "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_1_bullet_image_4",
+       "label": "Section_1 bullet image 4"
+     },
+     {
+       "type": "text",
+       "id": "section_1_bullet_title_4",
+       "label": "Section_1 bullet title 4",
+       "default": "Une recette à forte teneur en viande"
+     },
+     {
+       "type": "richtext",
+       "id": "section_1_bullet_text_4",
+       "label": "Section_1 bullet text 4",
+       "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_1_bullet_image_5",
+       "label": "Section_1 bullet image 5"
+     },
+     {
+       "type": "text",
+       "id": "section_1_bullet_title_5",
+       "label": "Section_1 bullet title 5",
+       "default": "Une recette à forte teneur en viande"
+     },
+     {
+       "type": "richtext",
+       "id": "section_1_bullet_text_5",
+       "label": "Section_1 bullet text 5",
+       "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_1_bullet_image_6",
+       "label": "Section_1 bullet image 6"
+     },
+     {
+       "type": "text",
+       "id": "section_1_bullet_title_6",
+       "label": "Section_1 bullet title 6",
+       "default": "Une recette à forte teneur en viande"
+     },
+     {
+       "type": "richtext",
+       "id": "section_1_bullet_text_6",
+       "label": "Section_1 bullet text 6",
+       "default": "<p>Contient 61% de dinde et 39% de légumes, des vitamines et minéraux... Et rien d’autre ! Lorem ipsum dolor sit amet.</p>"
+     },
+     {
+       "type": "text",
+       "id": "section_2_title",
+       "label": "Titre section 2",
+       "default": "Nos garanties"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_2_image_desktop",
+       "label": "Section 2 - Image full desktop",
+       "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_2_image_mobile",
+       "label": "Section 2 - Image full mobile"
+     },
+     {
+       "type": "richtext",
+       "id": "section_2_richtext",
+       "label": "Section 2 - Rich text",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_2_bullet_image_1",
+       "label": "Section_2 bullet image 1"
+     },
+     {
+       "type": "text",
+       "id": "section_2_bullet_title_1",
+       "label": "Section_2 bullet title 1",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "richtext",
+       "id": "section_2_bullet_text_1",
+       "label": "Section_2 bullet text 1"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_2_bullet_image_2",
+       "label": "Section_2 bullet image 2"
+     },
+     {
+       "type": "text",
+       "id": "section_2_bullet_title_2",
+       "label": "Section_2 bullet title 2"
+     },
+     {
+       "type": "richtext",
+       "id": "section_2_bullet_text_2",
+       "label": "Section_2 bullet text 2"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_2_bullet_image_3",
+       "label": "Section_2 bullet image 3"
+     },
+     {
+       "type": "text",
+       "id": "section_2_bullet_title_3",
+       "label": "Section_2 bullet title 3"
+     },
+     {
+       "type": "richtext",
+       "id": "section_2_bullet_text_3",
+       "label": "Section_2 bullet text 3"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_2_bullet_image_4",
+       "label": "Section_2 bullet image 4"
+     },
+     {
+       "type": "text",
+       "id": "section_2_bullet_title_4",
+       "label": "Section_2 bullet title 4"
+     },
+     {
+       "type": "richtext",
+       "id": "section_2_bullet_text_4",
+       "label": "Section_2 bullet text 4"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_2_bullet_image_5",
+       "label": "Section_2 bullet image 5"
+     },
+     {
+       "type": "text",
+       "id": "section_2_bullet_title_5",
+       "label": "Section_2 bullet title 5"
+     },
+     {
+       "type": "richtext",
+       "id": "section_2_bullet_text_5",
+       "label": "Section_2 bullet text 5"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_2_bullet_image_6",
+       "label": "Section_2 bullet image 6"
+     },
+     {
+       "type": "text",
+       "id": "section_2_bullet_title_6",
+       "label": "Section_2 bullet title 6"
+     },
+     {
+       "type": "richtext",
+       "id": "section_2_bullet_text_6",
+       "label": "Section_2 bullet text 6"
+     },
+     {
+       "type": "text",
+       "id": "section_3_title",
+       "label": "Titre section 3",
+       "default": "Composition"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_3_image_desktop",
+       "label": "Section 3 - Image full desktop",
+       "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_3_image_mobile",
+       "label": "Section 3 - Image full mobile"
+     },
+     {
+       "type": "richtext",
+       "id": "section_3_richtext",
+       "label": "Section 3 - Rich text",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_3_bullet_image_1",
+       "label": "Section_3 bullet image 1"
+     },
+     {
+       "type": "text",
+       "id": "section_3_bullet_title_1",
+       "label": "Section_3 bullet title 1",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "richtext",
+       "id": "section_3_bullet_text_1",
+       "label": "Section_3 bullet text 1"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_3_bullet_image_2",
+       "label": "Section_3 bullet image 2"
+     },
+     {
+       "type": "text",
+       "id": "section_3_bullet_title_2",
+       "label": "Section_3 bullet title 2"
+     },
+     {
+       "type": "richtext",
+       "id": "section_3_bullet_text_2",
+       "label": "Section_3 bullet text 2"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_3_bullet_image_3",
+       "label": "Section_3 bullet image 3"
+     },
+     {
+       "type": "text",
+       "id": "section_3_bullet_title_3",
+       "label": "Section_3 bullet title 3"
+     },
+     {
+       "type": "richtext",
+       "id": "section_3_bullet_text_3",
+       "label": "Section_3 bullet text 3"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_3_bullet_image_4",
+       "label": "Section_3 bullet image 4"
+     },
+     {
+       "type": "text",
+       "id": "section_3_bullet_title_4",
+       "label": "Section_3 bullet title 4"
+     },
+     {
+       "type": "richtext",
+       "id": "section_3_bullet_text_4",
+       "label": "Section_3 bullet text 4"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_3_bullet_image_5",
+       "label": "Section_3 bullet image 5"
+     },
+     {
+       "type": "text",
+       "id": "section_3_bullet_title_5",
+       "label": "Section_3 bullet title 5"
+     },
+     {
+       "type": "richtext",
+       "id": "section_3_bullet_text_5",
+       "label": "Section_3 bullet text 5"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_3_bullet_image_6",
+       "label": "Section_3 bullet image 6"
+     },
+     {
+       "type": "text",
+       "id": "section_3_bullet_title_6",
+       "label": "Section_3 bullet title 6"
+     },
+     {
+       "type": "richtext",
+       "id": "section_3_bullet_text_6",
+       "label": "Section_3 bullet text 6"
+     },
+     {
+       "type": "text",
+       "id": "section_4_title",
+       "label": "Titre section 4",
+       "default": "Valeurs nutritives"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_4_image_desktop",
+       "label": "Section 4 - Image full desktop",
+       "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_4_image_mobile",
+       "label": "Section 4 - Image full mobile"
+     },
+     {
+       "type": "richtext",
+       "id": "section_4_richtext",
+       "label": "Section 4 - Rich text",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_4_bullet_image_1",
+       "label": "Section_4 bullet image 1"
+     },
+     {
+       "type": "text",
+       "id": "section_4_bullet_title_1",
+       "label": "Section_4 bullet title 1",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "richtext",
+       "id": "section_4_bullet_text_1",
+       "label": "Section_4 bullet text 1"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_4_bullet_image_2",
+       "label": "Section_4 bullet image 2"
+     },
+     {
+       "type": "text",
+       "id": "section_4_bullet_title_2",
+       "label": "Section_4 bullet title 2"
+     },
+     {
+       "type": "richtext",
+       "id": "section_4_bullet_text_2",
+       "label": "Section_4 bullet text 2"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_4_bullet_image_3",
+       "label": "Section_4 bullet image 3"
+     },
+     {
+       "type": "text",
+       "id": "section_4_bullet_title_3",
+       "label": "Section_4 bullet title 3"
+     },
+     {
+       "type": "richtext",
+       "id": "section_4_bullet_text_3",
+       "label": "Section_4 bullet text 3"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_4_bullet_image_4",
+       "label": "Section_4 bullet image 4"
+     },
+     {
+       "type": "text",
+       "id": "section_4_bullet_title_4",
+       "label": "Section_4 bullet title 4"
+     },
+     {
+       "type": "richtext",
+       "id": "section_4_bullet_text_4",
+       "label": "Section_4 bullet text 4"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_4_bullet_image_5",
+       "label": "Section_4 bullet image 5"
+     },
+     {
+       "type": "text",
+       "id": "section_4_bullet_title_5",
+       "label": "Section_4 bullet title 5"
+     },
+     {
+       "type": "richtext",
+       "id": "section_4_bullet_text_5",
+       "label": "Section_4 bullet text 5"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_4_bullet_image_6",
+       "label": "Section_4 bullet image 6"
+     },
+     {
+       "type": "text",
+       "id": "section_4_bullet_title_6",
+       "label": "Section_4 bullet title 6"
+     },
+     {
+       "type": "richtext",
+       "id": "section_4_bullet_text_6",
+       "label": "Section_4 bullet text 6"
+     },
+     {
+       "type": "text",
+       "id": "section_5_title",
+       "label": "Titre section 5",
+       "default": "Rations journalières"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_5_image_desktop",
+       "label": "Section 5 - Image full desktop",
+       "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_5_image_mobile",
+       "label": "Section 5 - Image full mobile"
+     },
+     {
+       "type": "richtext",
+       "id": "section_5_richtext",
+       "label": "Section 5 - Rich text",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_5_bullet_image_1",
+       "label": "Section_5 bullet image 1"
+     },
+     {
+       "type": "text",
+       "id": "section_5_bullet_title_1",
+       "label": "Section_5 bullet title 1",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "richtext",
+       "id": "section_5_bullet_text_1",
+       "label": "Section_5 bullet text 1"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_5_bullet_image_2",
+       "label": "Section_5 bullet image 2"
+     },
+     {
+       "type": "text",
+       "id": "section_5_bullet_title_2",
+       "label": "Section_5 bullet title 2"
+     },
+     {
+       "type": "richtext",
+       "id": "section_5_bullet_text_2",
+       "label": "Section_5 bullet text 2"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_5_bullet_image_3",
+       "label": "Section_5 bullet image 3"
+     },
+     {
+       "type": "text",
+       "id": "section_5_bullet_title_3",
+       "label": "Section_5 bullet title 3"
+     },
+     {
+       "type": "richtext",
+       "id": "section_5_bullet_text_3",
+       "label": "Section_5 bullet text 3"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_5_bullet_image_4",
+       "label": "Section_5 bullet image 4"
+     },
+     {
+       "type": "text",
+       "id": "section_5_bullet_title_4",
+       "label": "Section_5 bullet title 4"
+     },
+     {
+       "type": "richtext",
+       "id": "section_5_bullet_text_4",
+       "label": "Section_5 bullet text 4"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_5_bullet_image_5",
+       "label": "Section_5 bullet image 5"
+     },
+     {
+       "type": "text",
+       "id": "section_5_bullet_title_5",
+       "label": "Section_5 bullet title 5"
+     },
+     {
+       "type": "richtext",
+       "id": "section_5_bullet_text_5",
+       "label": "Section_5 bullet text 5"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_5_bullet_image_6",
+       "label": "Section_5 bullet image 6"
+     },
+     {
+       "type": "text",
+       "id": "section_5_bullet_title_6",
+       "label": "Section_5 bullet title 6"
+     },
+     {
+       "type": "richtext",
+       "id": "section_5_bullet_text_6",
+       "label": "Section_5 bullet text 6"
+     },
+     {
+       "type": "text",
+       "id": "section_6_title",
+       "label": "Titre section 6",
+       "default": "Guide de transition"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_6_image_desktop",
+       "label": "Section 6 - Image full desktop",
+       "info":"Laisser cet image blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_6_image_mobile",
+       "label": "Section 6 - Image full mobile"
+     },
+     {
+       "type": "richtext",
+       "id": "section_6_richtext",
+       "label": "Section 6 - Rich text",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_6_bullet_image_1",
+       "label": "Section_6 bullet image 1"
+     },
+     {
+       "type": "text",
+       "id": "section_6_bullet_title_1",
+       "label": "Section_6 bullet title 1",
+       "info":"Laisser ce titre blanc pour utiliser un autre type de tabulation (IMAGE / RICH TEXT / BULLETS)"
+     },
+     {
+       "type": "richtext",
+       "id": "section_6_bullet_text_1",
+       "label": "Section_6 bullet text 1"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_6_bullet_image_2",
+       "label": "Section_6 bullet image 2"
+     },
+     {
+       "type": "text",
+       "id": "section_6_bullet_title_2",
+       "label": "Section_6 bullet title 2"
+     },
+     {
+       "type": "richtext",
+       "id": "section_6_bullet_text_2",
+       "label": "Section_6 bullet text 2"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_6_bullet_image_3",
+       "label": "Section_6 bullet image 3"
+     },
+     {
+       "type": "text",
+       "id": "section_6_bullet_title_3",
+       "label": "Section_6 bullet title 3"
+     },
+     {
+       "type": "richtext",
+       "id": "section_6_bullet_text_3",
+       "label": "Section_6 bullet text 3"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_6_bullet_image_4",
+       "label": "Section_6 bullet image 4"
+     },
+     {
+       "type": "text",
+       "id": "section_6_bullet_title_4",
+       "label": "Section_6 bullet title 4"
+     },
+     {
+       "type": "richtext",
+       "id": "section_6_bullet_text_4",
+       "label": "Section_6 bullet text 4"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_6_bullet_image_5",
+       "label": "Section_6 bullet image 5"
+     },
+     {
+       "type": "text",
+       "id": "section_6_bullet_title_5",
+       "label": "Section_6 bullet title 5"
+     },
+     {
+       "type": "richtext",
+       "id": "section_6_bullet_text_5",
+       "label": "Section_6 bullet text 5"
+     },
+     {
+       "type": "image_picker",
+       "id": "section_6_bullet_image_6",
+       "label": "Section_6 bullet image 6"
+     },
+     {
+       "type": "text",
+       "id": "section_6_bullet_title_6",
+       "label": "Section_6 bullet title 6"
+     },
+     {
+       "type": "richtext",
+       "id": "section_6_bullet_text_6",
+       "label": "Section_6 bullet text 6"
+     }
+      ]
+    },
+    {
+      "type":"search-faq",
+      "name":"Search FAQ",
+      "settings":[
+      {
+        "type":"header",
+        "content" : "Content"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image left desktop",
+        "info":"319x383px"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text before search"
+      },
+      {
+        "type": "text",
+        "id": "placeholder",
+        "label": "Placeholder search"
+      },
+      {
+        "type": "text",
+        "id": "message_no_result",
+        "label": "Message no result"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ]
+    },
+	{
+		"type":"faq",
+		"name":"FAQ",
+		"settings":[
+		{
+	    "type": "text",
+	    "id": "title",
+	    "label": "Title",
+	    "default": "Allô véto ? Questions-réponses sur l'alimentation de votre chien."
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "text",
+	    "label": "Sous titre",
+	    "default": "<p>Questions-réponses sur l'alimentation de votre chat</p>"
+	  },
+	  {
+	    "type": "image_picker",
+	    "id": "image",
+	    "label": "Image personnage",
+  "info":"164x325px"
+	  },
+	  {
+	    "type": "text",
+	    "id": "cta_text",
+	    "label": "CTA text",
+	    "default": "Poser une question"
+	  },
+	  {
+	    "type": "url",
+	    "id": "cta_url",
+	    "label": "CTA url"
+	  },
+	  {
+	    "type":"header",
+	    "content" : "Questions"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_1",
+	    "label": "Question 1",
+	    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "answer_1",
+	    "label": "Answer 1",
+	    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_2",
+	    "label": "Question 2",
+	    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "answer_2",
+	    "label": "Answer 2",
+	    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_3",
+	    "label": "Question 3",
+	    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "answer_3",
+	    "label": "Answer 3",
+	    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_4",
+	    "label": "Question 4",
+	    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "answer_4",
+	    "label": "Answer 4",
+	    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_5",
+	    "label": "Question 5",
+	    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "answer_5",
+	    "label": "Answer 5",
+	    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_6",
+	    "label": "Question 6"
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "answer_6",
+	    "label": "Answer 6"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_7",
+	    "label": "Question 7"
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "answer_7",
+	    "label": "Answer 7"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_8",
+	    "label": "Question 8"
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "answer_8",
+	    "label": "Answer 8"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_9",
+	    "label": "Question 9"
+	  },
+	  {
+	    "type": "richtext",
+	    "id": "answer_9",
+	    "label": "Answer 9"
+	  },
+	  {
+	    "type": "text",
+	    "id": "question_10",
+	    "label": "Question 10"
+	  },
+	    {
+	      "type": "richtext",
+	      "id": "answer_10",
+	      "label": "Answer 10"
+	    },
+	    {
+	      "type": "text",
+	      "id": "question_11",
+	      "label": "Question 11"
+	    },
+	      {
+	        "type": "richtext",
+	        "id": "answer_11",
+	        "label": "Answer 11"
+	      },
+	      {
+	        "type": "text",
+	        "id": "question_12",
+	        "label": "Question 12"
+	      },
+	      {
+	        "type": "richtext",
+	        "id": "answer_12",
+	        "label": "Answer 12"
+	      },
+	      {
+	        "type": "text",
+	        "id": "question_13",
+	        "label": "Question 13"
+	      },
+	      {
+	        "type": "richtext",
+	        "id": "answer_13",
+	        "label": "Answer 13"
+	      },
+	      {
+	        "type": "text",
+	        "id": "question_14",
+	        "label": "Question 14"
+	      },
+	      {
+	        "type": "richtext",
+	        "id": "answer_14",
+	        "label": "Answer 14"
+	      },
+	      {
+	        "type": "text",
+	        "id": "question_15",
+	        "label": "Question 15"
+	      },
+	      {
+	        "type": "richtext",
+	        "id": "answer_15",
+	        "label": "Answer 15"
+	      },
+	      {
+	        "type": "text",
+	        "id": "question_16",
+	        "label": "Question 16"
+	      },
+	      {
+	        "type": "richtext",
+	        "id": "answer_16",
+	        "label": "Answer 16"
+	      },
+	      {
+	        "type": "text",
+	        "id": "question_17",
+	        "label": "Question 17"
+	      },
+	      {
+	        "type": "richtext",
+	        "id": "answer_17",
+	        "label": "Answer 17"
+	      },
+	      {
+	        "type": "text",
+	        "id": "question_18",
+	        "label": "Question 18"
+	      },
+	      {
+	        "type": "richtext",
+	        "id": "answer_18",
+	        "label": "Answer 18"
+	      },
+	      {
+	        "type": "text",
+	        "id": "question_19",
+	        "label": "Question 19"
+	      },
+	      {
+	        "type": "richtext",
+	        "id": "answer_19",
+	        "label": "Answer 19"
+	      },
+	      {
+	        "type":"header",
+	        "content" : "Section"
+	      },
+	      {
+	        "type": "select",
+	        "id": "section_spacing",
+	        "label": "Section bottom spacing",
+	        "options": [
+	        {
+	          "value" : "section--xl-spacing",
+	          "label" : "XL Spacing"
+	        },{
+	          "value" : "section--l-spacing",
+	          "label" : "L Spacing"
+	        },{
+	          "value" : "section--m-spacing",
+	          "label" : "M Spacing"
+	        },{
+	          "value" : "section--s-spacing",
+	          "label" : "S Spacing"
+	        },{
+	          "value" : "section--xs-spacing",
+	          "label" : "XS Spacing"
+	        },{
+	          "value" : "section--no-spacing",
+	          "label" : "No Spacing"
+	        }
+	        ]
+	      },
+	      {
+	        "type": "select",
+	        "id": "section_spacing_mobile",
+	        "label": "Section bottom spacing mobile",
+	        "options": [
+	        {
+	          "value":"",
+	          "label":"Same value"
+	        },
+	        {
+	          "value" : "mobile-section--xl-spacing",
+	          "label" : "XL Spacing"
+	        },{
+	          "value" : "mobile-section--l-spacing",
+	          "label" : "L Spacing"
+	        },{
+	          "value" : "mobile-section--m-spacing",
+	          "label" : "M Spacing"
+	        },{
+	          "value" : "mobile-section--s-spacing",
+	          "label" : "S Spacing"
+	        },{
+	          "value" : "mobile-section--xs-spacing",
+	          "label" : "XS Spacing"
+	        },{
+	          "value" : "mobile-section--no-spacing",
+	          "label" : "No Spacing"
+	        }
+	        ],
+	        "default":""
+	      },
+	      {
+	        "type": "select",
+	        "id": "section_bg",
+	        "label": "Couleur du fond",
+	        "options": [
+	        {
+	          "value" : "bg--white",
+	          "label" : "BG white"
+	        },
+	        {
+	          "value" : "bg--color",
+	          "label" : "BG Color"
+	        },{
+	          "value" : "bg--primary",
+	          "label" : "BG Primary"
+	        },{
+	          "value" : "bg--secondary",
+	          "label" : "BG secondary"
+	        }
+	        ]
+	      }
+		]
+	},
+    {
+      "type": "complex-faq",
+      "name": "Complex FAQ",
+      "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Allô véto ? Questions-réponses sur l'alimentation de votre chien."
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Sous titre",
+        "default": "<p>Questions-réponses sur l'alimentation de votre chat</p>"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image personnage",
+    "info":"164x325px"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA text",
+        "default": "Poser une question"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA url"
+      },
+      {
+        "type":"header",
+        "content" : "Block Questions 1"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1",
+        "label": "Question Header",
+        "default": "Question santé"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_1",
+        "label": "Question 1",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_1",
+        "label": "Answer 1",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_2",
+        "label": "Question 2",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_2",
+        "label": "Answer 2",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_3",
+        "label": "Question 3",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_3",
+        "label": "Answer 3",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_4",
+        "label": "Question 4",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_4",
+        "label": "Answer 4",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_5",
+        "label": "Question 5",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_5",
+        "label": "Answer 5",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_6",
+        "label": "Question 6"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_6",
+        "label": "Answer 6"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_7",
+        "label": "Question 7"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_7",
+        "label": "Answer 7"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_8",
+        "label": "Question 8"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_8",
+        "label": "Answer 8"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_9",
+        "label": "Question 9"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_9",
+        "label": "Answer 9"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_10",
+        "label": "Question 10"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_10",
+        "label": "Answer 10"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_11",
+        "label": "Question 11"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_11",
+        "label": "Answer 11"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_12",
+        "label": "Question 12"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_12",
+        "label": "Answer 12"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_13",
+        "label": "Question 13"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_13",
+        "label": "Answer 13"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_14",
+        "label": "Question 14"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_14",
+        "label": "Answer 14"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_15",
+        "label": "Question 15"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_15",
+        "label": "Answer 15"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_16",
+        "label": "Question 16"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_16",
+        "label": "Answer 16"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_17",
+        "label": "Question 17"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_17",
+        "label": "Answer 17"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_18",
+        "label": "Question 18"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_18",
+        "label": "Answer 18"
+      },
+      {
+        "type": "text",
+        "id": "question_header_1_19",
+        "label": "Question 19"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_1_19",
+        "label": "Answer 19"
+      },
+      {
+        "type":"header",
+        "content" : "Block Questions 2"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2",
+        "label": "Question Header",
+        "default": "Question santé"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_1",
+        "label": "Question 1",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_1",
+        "label": "Answer 1",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_2",
+        "label": "Question 2",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_2",
+        "label": "Answer 2",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_3",
+        "label": "Question 3",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_3",
+        "label": "Answer 3",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_4",
+        "label": "Question 4",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_4",
+        "label": "Answer 4",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_5",
+        "label": "Question 5",
+        "default": "Vos recettes sont-elles adaptées à mon chien ?"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_5",
+        "label": "Answer 5",
+        "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_6",
+        "label": "Question 6"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_6",
+        "label": "Answer 6"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_7",
+        "label": "Question 7"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_7",
+        "label": "Answer 7"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_8",
+        "label": "Question 8"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_8",
+        "label": "Answer 8"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_9",
+        "label": "Question 9"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_9",
+        "label": "Answer 9"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_10",
+        "label": "Question 10"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_header_2_10",
+        "label": "Answer 10"
+      },
+      {
+        "type": "text",
+        "id": "question_header_2_11",
+        "label": "Question 11"
+      },
+        {
+          "type": "richtext",
+          "id": "answer_header_2_11",
+          "label": "Answer 11"
+        },
+        {
+          "type": "text",
+          "id": "question_header_2_12",
+          "label": "Question 12"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_2_12",
+          "label": "Answer 12"
+        },
+        {
+          "type": "text",
+          "id": "question_header_2_13",
+          "label": "Question 13"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_2_13",
+          "label": "Answer 13"
+        },
+        {
+          "type": "text",
+          "id": "question_header_2_14",
+          "label": "Question 14"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_2_14",
+          "label": "Answer 14"
+        },
+        {
+          "type": "text",
+          "id": "question_header_2_15",
+          "label": "Question 15"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_2_15",
+          "label": "Answer 15"
+        },
+        {
+          "type": "text",
+          "id": "question_header_2_16",
+          "label": "Question 16"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_2_16",
+          "label": "Answer 16"
+        },
+        {
+          "type": "text",
+          "id": "question_header_2_17",
+          "label": "Question 17"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_2_17",
+          "label": "Answer 17"
+        },
+        {
+          "type": "text",
+          "id": "question_header_2_18",
+          "label": "Question 18"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_2_18",
+          "label": "Answer 18"
+        },
+        {
+          "type": "text",
+          "id": "question_header_2_19",
+          "label": "Question 19"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_2_19",
+          "label": "Answer 19"
+        },
+        {
+          "type":"header",
+          "content" : "Block Questions 3"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3",
+          "label": "Question Header",
+          "default": "Questions pratiques"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_1",
+          "label": "Question 1",
+          "default": "Vos recettes sont-elles adaptées à mon chien ?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_3_1",
+          "label": "Answer 1",
+          "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_2",
+          "label": "Question 2",
+          "default": "Vos recettes sont-elles adaptées à mon chien ?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_3_2",
+          "label": "Answer 2",
+          "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_3",
+          "label": "Question 3",
+          "default": "Vos recettes sont-elles adaptées à mon chien ?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_3_3",
+          "label": "Answer 3",
+          "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_4",
+          "label": "Question 4",
+          "default": "Vos recettes sont-elles adaptées à mon chien ?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_3_4",
+          "label": "Answer 4",
+          "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_5",
+          "label": "Question 5",
+          "default": "Vos recettes sont-elles adaptées à mon chien ?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_3_5",
+          "label": "Answer 5",
+          "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_6",
+          "label": "Question 6"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_3_6",
+          "label": "Answer 6"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_7",
+          "label": "Question 7"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_3_7",
+          "label": "Answer 7"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_8",
+          "label": "Question 8"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_3_8",
+          "label": "Answer 8"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_9",
+          "label": "Question 9"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_header_3_9",
+          "label": "Answer 9"
+        },
+        {
+          "type": "text",
+          "id": "question_header_3_10",
+          "label": "Question 10"
+        },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_10",
+            "label": "Answer 10"
+          },
+          {
+            "type": "text",
+            "id": "question_header_3_11",
+            "label": "Question 11"
+          },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_11",
+            "label": "Answer 11"
+          },
+          {
+            "type": "text",
+            "id": "question_header_3_12",
+            "label": "Question 12"
+          },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_12",
+            "label": "Answer 12"
+          },
+          {
+            "type": "text",
+            "id": "question_header_3_13",
+            "label": "Question 13"
+          },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_13",
+            "label": "Answer 13"
+          },
+          {
+            "type": "text",
+            "id": "question_header_3_14",
+            "label": "Question 14"
+          },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_14",
+            "label": "Answer 14"
+          },
+          {
+            "type": "text",
+            "id": "question_header_3_15",
+            "label": "Question 15"
+          },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_15",
+            "label": "Answer 15"
+          },
+          {
+            "type": "text",
+            "id": "question_header_3_16",
+            "label": "Question 16"
+          },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_16",
+            "label": "Answer 16"
+          },
+          {
+            "type": "text",
+            "id": "question_header_3_17",
+            "label": "Question 17"
+          },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_17",
+            "label": "Answer 17"
+          },
+          {
+            "type": "text",
+            "id": "question_header_3_18",
+            "label": "Question 18"
+          },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_18",
+            "label": "Answer 18"
+          },
+          {
+            "type": "text",
+            "id": "question_header_3_19",
+            "label": "Question 19"
+          },
+          {
+            "type": "richtext",
+            "id": "answer_header_3_19",
+            "label": "Answer 19"
+          },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":"section--xl-spacing"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":"mobile-section--m-spacing"
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ]
+    },
+    {
+      "type": "featured-articles",
+      "name": "Featured articles",
+      "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Titre",
+        "default": "Le journal."
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA url"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "Texte CTA",
+        "default": "Tous les articles"
+      },
+      {
+        "type": "blog",
+        "id": "blog",
+        "label": "Blog"
+      },
+      {
+        "type": "range",
+        "id": "article_number",
+        "label": "Maximum d'article à afficher",
+        "default": 5,
+        "min": 0,
+        "max": 10
+      },
+
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      }
+      ]
+    },
+    {
+      "type": "featured-reviews",
+      "name": "Featured reviews",
+      "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Titre",
+        "default": "Ils ont testé Frankiln."
+      },
+      {
+        "type": "range",
+        "id": "reviews_range",
+        "label": "Note",
+        "default": 5,
+        "min": 0,
+        "max": 5,
+        "step": 1,
+        "unit": "rat"
+      },
+      {
+        "type": "url",
+        "id": "reviews_url",
+        "label": "Reviews url"
+      },
+      {
+        "type": "text",
+        "id": "reviews_text",
+        "label": "Texte reviews",
+        "default": "+2500 avis"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+      "info":"275x330px"
+    },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Description",
+        "default": "<p>Qu'ils soient propriétaires de chat, de chien, ou des deux, ils nous parlent de leur expérience gustative avec Franklin ! </p>"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "Texte CTA",
+        "default": "Vous aussi ?"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "URL CTA"
+      },
+      {
+      "type":"header",
+      "content" : "Reviews"
+    },
+    {
+      "type": "text",
+      "id": "name_1",
+      "label": "Nom 1",
+      "default": "Camille H."
+    },
+    {
+      "type": "text",
+      "id": "subtitle_1",
+      "label": "Sous titre 1",
+      "default": "Croquettes chiot"
+    },
+    {
+      "type": "range",
+      "id": "rate_1",
+      "label": "Note 1",
+      "default": 5,
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "rat"
+    },
+    {
+      "type": "image_picker",
+      "id": "source_image_1",
+      "label": "Image source 1",
+    "info":"95x46px"
+    },
+    {
+      "type": "url",
+      "id": "source_link_1",
+      "label": "Lien source 1"
+    },
+    {
+      "type": "richtext",
+      "id": "review_1",
+      "label": "Review 1",
+      "default": "<p>Mon chiot mange des croquettes Franklin depuis son adoption avec bon appétit. Il est en bonne santé et son poil et brillant. La Livraison flexible et les sacs en papier sont des plus ! Un des meilleurs rapport qualité que je recherchais / prix du marché.</p>"
+    },
+    {
+      "type": "text",
+      "id": "name_2",
+      "label": "Nom2",
+      "default": "Camille H."
+    },
+    {
+      "type": "text",
+      "id": "subtitle_2",
+      "label": "Sous titre 2",
+      "default": "Croquettes chiot"
+    },
+    {
+      "type": "range",
+      "id": "rate_2",
+      "label": "Note 2",
+      "default": 5,
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "rat"
+    },
+    {
+      "type": "image_picker",
+      "id": "source_image_2",
+      "label": "Image source 2"
+    },
+    {
+      "type": "url",
+      "id": "source_link_2",
+      "label": "Lien source 2"
+    },
+    {
+      "type": "richtext",
+      "id": "review_2",
+      "label": "Review 2",
+      "default": "<p>Mon chiot mange des croquettes Franklin depuis son adoption avec bon appétit. Il est en bonne santé et son poil et brillant. La Livraison flexible et les sacs en papier sont des plus ! Un des meilleurs rapport qualité que je recherchais / prix du marché.</p>"
+    },
+    {
+      "type": "text",
+      "id": "name_3",
+      "label": "Nom3",
+      "default": "Camille H."
+    },
+    {
+      "type": "text",
+      "id": "subtitle_3",
+      "label": "Sous titre 3",
+      "default": "Croquettes chiot"
+    },
+    {
+      "type": "range",
+      "id": "rate_3",
+      "label": "Note 3",
+      "default": 5,
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "rat"
+    },
+    {
+      "type": "image_picker",
+      "id": "source_image_3",
+      "label": "Image source 3"
+    },
+    {
+      "type": "url",
+      "id": "source_link_3",
+      "label": "Lien source 3"
+    },
+    {
+      "type": "richtext",
+      "id": "review_3",
+      "label": "Review 3",
+      "default": "<p>Mon chiot mange des croquettes Franklin depuis son adoption avec bon appétit. Il est en bonne santé et son poil et brillant. La Livraison flexible et les sacs en papier sont des plus ! Un des meilleurs rapport qualité que je recherchais / prix du marché.</p>"
+    },
+    {
+      "type": "text",
+      "id": "name_4",
+      "label": "Nom 4",
+      "default": "Camille H."
+    },
+    {
+      "type": "text",
+      "id": "subtitle_4",
+      "label": "Sous titre 4",
+      "default": "Croquettes chiot"
+    },
+    {
+      "type": "range",
+      "id": "rate_4",
+      "label": "Note 4",
+      "default": 5,
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "rat"
+    },
+    {
+      "type": "image_picker",
+      "id": "source_image_4",
+      "label": "Image source 4"
+    },
+    {
+      "type": "url",
+      "id": "source_link_4",
+      "label": "Lien source 4"
+    },
+    {
+      "type": "richtext",
+      "id": "review_4",
+      "label": "Review 4",
+      "default": "<p>Mon chiot mange des croquettes Franklin depuis son adoption avec bon appétit. Il est en bonne santé et son poil et brillant. La Livraison flexible et les sacs en papier sont des plus ! Un des meilleurs rapport qualité que je recherchais / prix du marché.</p>"
+    },
+      {
+      "type":"header",
+      "content" : "Section"
+    },
+    {
+      "type": "select",
+      "id": "section_spacing",
+      "label": "Section bottom spacing",
+      "options": [
+      {
+    	"value" : "section--xl-spacing",
+    	"label" : "XL Spacing"
+      },{
+    	"value" : "section--l-spacing",
+    	"label" : "L Spacing"
+      },{
+    	"value" : "section--m-spacing",
+    	"label" : "M Spacing"
+      },{
+    	"value" : "section--s-spacing",
+    	"label" : "S Spacing"
+      },{
+    	"value" : "section--xs-spacing",
+    	"label" : "XS Spacing"
+      },{
+    	"value" : "section--no-spacing",
+    	"label" : "No Spacing"
+      }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "section_spacing_mobile",
+      "label": "Section bottom spacing mobile",
+      "options": [
+      {
+    	"value":"",
+    	"label":"Same value"
+      },
+      {
+    	"value" : "mobile-section--xl-spacing",
+    	"label" : "XL Spacing"
+      },{
+    	"value" : "mobile-section--l-spacing",
+    	"label" : "L Spacing"
+      },{
+    	"value" : "mobile-section--m-spacing",
+    	"label" : "M Spacing"
+      },{
+    	"value" : "mobile-section--s-spacing",
+    	"label" : "S Spacing"
+      },{
+    	"value" : "mobile-section--xs-spacing",
+    	"label" : "XS Spacing"
+      },{
+    	"value" : "mobile-section--no-spacing",
+    	"label" : "No Spacing"
+      }
+      ],
+      "default":""
+    },
+    {
+      "type": "select",
+      "id": "section_bg",
+      "label": "Couleur du fond",
+      "options": [
+      {
+        "value" : "bg--white",
+        "label" : "BG white"
+      },
+      {
+        "value" : "bg--color",
+        "label" : "BG Color"
+      },{
+        "value" : "bg--primary",
+        "label" : "BG Primary"
+      },{
+        "value" : "bg--secondary",
+        "label" : "BG secondary"
+      }
+      ]
+    }
+      ]
+    },
+    {
+      "type":"ingredients-image",
+      "name":"Ingredients image",
+      "settings":[
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+       	"info":"357x686px"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Titre",
+        "default":"En résumé"
+      },
+      {
+        "type": "text",
+        "id": "title_mobile",
+        "label": "Titre à n'afficher que sur mobile (page produit)"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_1",
+        "label": "Image 1"
+      },
+      {
+        "type": "text",
+        "id": "text_1",
+        "label": "Text 1",
+        "default":"Mono-protéine"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "Image 2"
+      },
+      {
+        "type": "text",
+        "id": "text_2",
+        "label": "Text 2",
+        "default":"Sans céréales"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_3",
+        "label": "Image 3"
+      },
+      {
+        "type": "text",
+        "id": "text_3",
+        "label": "Text 3",
+        "default":"8 ingrédients max."
+      },
+      {
+        "type": "image_picker",
+        "id": "image_4",
+        "label": "Image 4"
+      },
+      {
+        "type": "text",
+        "id": "text_4",
+        "label": "Text 4",
+        "default":"100% naturel"
+      },
+        {
+            "type": "header",
+            "content": "Section"
+          },
+        {
+          "type": "select",
+          "id": "section_spacing",
+          "label": "Section bottom spacing",
+          "options": [
+          {
+            "value" : "section--xxxl-spacing",
+            "label" : "XXXL Spacing"
+          },
+          {
+            "value" : "section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "section_spacing_mobile",
+          "label": "Section bottom spacing mobile",
+          "options": [
+          {
+            "value":"",
+            "label":"Same value"
+          },
+          {
+            "value" : "mobile-section--xxxl-spacing",
+            "label" : "XXXL Spacing"
+          },
+          {
+            "value" : "mobile-section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "mobile-section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "mobile-section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "mobile-section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "mobile-section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "mobile-section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ],
+          "default":""
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_desktop",
+          "label": "Hide desktop",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_mobile",
+          "label": "Hide_mobile",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "image-bullets",
+      "name": "Image bullets",
+      "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Titre",
+        "default": "default"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "header",
+        "content": "Boutons"
+      },
+      {
+        "type": "select",
+        "id": "button_type",
+        "label": "Type de bouton",
+        "options": [
+        {
+          "value" : "",
+          "label" : "Button primary"
+        },{
+          "value" : "button--secondary",
+          "label" : "Button secondary"
+        },{
+          "value" : "button--invert",
+          "label" : "Button invert"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Texte bouton",
+        "default": "En savoir plus"
+      },
+      {
+        "type": "url",
+        "id": "button_url",
+        "label": "URL bouton"
+      },
+      {
+        "type": "text",
+        "id": "button_text_2",
+        "label": "Texte bouton 2",
+        "info" : "Laisser vide pour désactiver"
+      },
+      {
+        "type": "url",
+        "id": "button_url_2",
+        "label": "URL bouton 2"
+      },
+      {
+        "type": "header",
+        "content": "Étapes"
+      },
+
+      {
+        "type": "url",
+        "id": "bullet",
+        "label": "Bullet point",
+        "info": "SVG à uploader dans 'Files'"
+      },
+      {
+        "type": "checkbox",
+        "id": "numbered_steps",
+        "label": "étapes numérotées",
+        "default": false,
+        "info": "Activer pour avoir des bullets points '1 - 2 -3'. Désactive de facto les bullet points classics et custom"
+      },
+      {
+        "type": "header",
+        "content": "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "background",
+        "label": "Background color",
+        "options": [
+        {
+          "value":"",
+          "label":"No background"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "Background color"
+        },{
+          "value" : "bg--primary",
+          "label" : "Primary color"
+        },
+        {
+          "value" : "bg--white",
+          "label" : "whitecolor"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "header",
+        "content": "Steps"
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "Titre de l'étape",
+        "default": "Étape X"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_1",
+        "label": "Sous titre de l'étape",
+        "default": "default"
+      },
+      {
+        "type": "richtext",
+        "id": "text_1",
+        "label": "Texte",
+        "default": "<p>Default subtitle</p>"
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "Titre de l'étape 2"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_2",
+        "label": "Sous titre de l'étape 2"
+      },
+      {
+        "type": "richtext",
+        "id": "text_2",
+        "label": "Texte 2"
+      },
+      {
+        "type": "text",
+        "id": "title_3",
+        "label": "Titre de l'étape 3"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_3",
+        "label": "Sous titre de l'étape 3"
+      },
+      {
+        "type": "richtext",
+        "id": "text_3",
+        "label": "Texte 3"
+      },
+      {
+        "type": "text",
+        "id": "title_4",
+        "label": "Titre de l'étape 4"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_4",
+        "label": "Sous titre de l'étape 4"
+      },
+      {
+        "type": "richtext",
+        "id": "text_4",
+        "label": "Texte 4"
+      },
+      {
+        "type": "text",
+        "id": "title_5",
+        "label": "Titre de l'étape 5"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_5",
+        "label": "Sous titre de l'étape 5"
+      },
+      {
+        "type": "richtext",
+        "id": "text_5",
+        "label": "Texte 5"
+      }
+      ]
+    },
+    {
+      "type": "press",
+      "name": "Press",
+      "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Titre",
+        "default": "La presse parle de Franklin."
+      },
+      {
+        "type": "image_picker",
+        "id": "image_1",
+        "label": "Image 1"
+      },
+      {
+        "type": "url",
+        "id": "link_1",
+        "label": "Lien 1"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "Image 2"
+      },
+      {
+        "type": "url",
+        "id": "link_2",
+        "label": "Lien 2"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_3",
+        "label": "Image 3"
+      },
+      {
+        "type": "url",
+        "id": "link_3",
+        "label": "Lien 3"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_4",
+        "label": "Image 4"
+      },
+      {
+        "type": "url",
+        "id": "link_4",
+        "label": "Lien 4"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_5",
+        "label": "Image 5"
+      },
+      {
+        "type": "url",
+        "id": "link_5",
+        "label": "Lien 5"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_6",
+        "label": "Image 6"
+      },
+      {
+        "type": "url",
+        "id": "link_6",
+        "label": "Lien 6"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_7",
+        "label": "Image 7"
+      },
+      {
+        "type": "url",
+        "id": "link_7",
+        "label": "Lien 7"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_8",
+        "label": "Image 8"
+      },
+      {
+        "type": "url",
+        "id": "link_8",
+        "label": "Lien 8"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      }
+      ]
+    },
+    {
+      "type": "icons-list",
+      "name": "Icons list",
+      "settings": [
+      {
+        "type":"header",
+        "content" : "Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "range",
+        "id": "icon_per_line",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "label": "Images per line Desktop",
+        "default": 3
+      },
+      {
+        "type":"header",
+        "content" : "Icons"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_1",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_1",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_2",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_2",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_3",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_3",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_3",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_4",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_4",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_4",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_5",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_5",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_5",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_6",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title_6",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle_6",
+        "label": "Subtitle"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ]
+    },
+    {
+      "type": "text-image",
+      "name": "Text image",
+      "settings": [
+      {
+        "type":"header",
+        "content" : "Content"
+      },
+      {
+        "type": "select",
+        "id": "content_position",
+        "label": "Content position",
+        "options": [
+        {
+          "value" : "Image-left",
+          "label" : "Image Left / Text Right"
+        },
+        {
+          "value" : "Image-right",
+          "label" : "Text Left / Image Right"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "align_position",
+        "label": "Content Align",
+        "options": [
+        {
+          "value" : "flex-start",
+          "label" : "Top"
+        },
+        {
+          "value" : "center",
+          "label" : "Center"
+        },
+        {
+          "value" : "flex-end",
+          "label" : "Bottom"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type":      "range",
+        "id":        "margin_bottom_title",
+        "min":        0,
+        "max":        50,
+        "step":       2,
+        "unit":       "px",
+        "label":     "margin bottom title",
+        "default":   10
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text"
+      },
+      {
+        "type":      "range",
+        "id":        "width_text",
+        "min":        0,
+        "max":        100,
+        "step":       5,
+        "unit":       "%",
+        "label":     "width text",
+        "default":   100
+      },
+      {
+        "type": "select",
+        "id": "text_position",
+        "label": "Postion text",
+        "options": [
+        {
+          "value" : "align-left",
+          "label" : "Left"
+        },
+        {
+          "value" : "align-center",
+          "label" : "Center"
+        },
+        {
+          "value" : "align-right",
+          "label" : "Right"
+        }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type":      "range",
+        "id":        "width_image",
+        "min":        0,
+        "max":        100,
+        "step":       5,
+        "unit":       "%",
+        "label":     "width image",
+        "default":   100
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "label": "Postion image",
+        "options": [
+        {
+          "value" : "align-left",
+          "label" : "Left"
+        },
+        {
+          "value" : "align-center",
+          "label" : "Center"
+        },
+        {
+          "value" : "align-right",
+          "label" : "Right"
+        }
+        ]
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        },
+        {
+          "value" : "bg--green-light",
+          "label" : "BG green light"
+        }
+        ]
+      }
+      ]
+    },
+    {
+      "type": "text-block-grid",
+      "name": "text blocks",
+      "settings": [
+      {
+        "type":"header",
+        "content" : "Bloc 1"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_1",
+        "label": "image_1",
+        "info": "width: 127px"
+      },
+      {
+        "type": "select",
+        "id": "image_position_1",
+        "label": "image_position_1",
+        "options": [
+        {
+          "value" : "top",
+          "label" : "Top"
+        },
+        {
+          "value" : "center",
+          "label" : "Center"
+        },
+        {
+          "value" : "bottom",
+          "label" : "Bottom"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "title_1",
+        "default": "Un amour sans borne à notre planète."
+      },
+      {
+        "type": "richtext",
+        "id": "text_1",
+        "label": "text_1"
+      },
+      {
+        "type": "select",
+        "id": "bloc_bg_1",
+        "label": "Couleur du fond bloc 1",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        },{
+          "value" : "bg--light",
+          "label" : "BG light"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "cta_text_1",
+        "label": "cta_text_1",
+        "default": "NOS ACTIONS"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_1",
+        "label": "cta_url_1"
+      },
+      {
+        "type": "select",
+        "id": "cta_type_1",
+        "label": "cta_type_1",
+        "options": [
+        {
+          "value" : "button--primary",
+          "label" : "button--primary"
+        },
+        {
+          "value" : "button--secondary",
+          "label" : "button--secondary"
+        },{
+          "value" : "button--invert",
+          "label" : "button--invert"
+        }
+        ]
+      },
+      {
+        "type":"header",
+        "content" : "Bloc 2"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "image_2",
+        "info": "width: 127px"
+      },
+      {
+        "type": "select",
+        "id": "image_position_2",
+        "label": "image_position_2",
+        "options": [
+        {
+          "value" : "top",
+          "label" : "Top"
+        },
+        {
+          "value" : "center",
+          "label" : "Center"
+        },
+        {
+          "value" : "bottom",
+          "label" : "Bottom"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "title_2",
+        "default": "Un soutien sans faille aux animaux."
+      },
+      {
+        "type": "richtext",
+        "id": "text_2",
+        "label": "text_2"
+      },
+      {
+        "type": "select",
+        "id": "bloc_bg_2",
+        "label": "Couleur du fond bloc 2",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        },{
+          "value" : "bg--light",
+          "label" : "BG light"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "cta_text_2",
+        "label": "cta_text_2",
+        "default": "NOS ACTIONS"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_2",
+        "label": "cta_url_2"
+      },
+      {
+        "type": "select",
+        "id": "cta_type_2",
+        "label": "cta_type_2",
+        "options": [
+        {
+          "value" : "button--primary",
+          "label" : "button--primary"
+        },
+        {
+          "value" : "button--secondary",
+          "label" : "button--secondary"
+        },{
+          "value" : "button--invert",
+          "label" : "button--invert"
+        }
+        ]
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ]
+    },
+    {
+      "type": "text-buttons-grid",
+      "name": "Text Button grid",
+      "settings": [
+      {
+        "type":"header",
+        "content" : "Content left"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "image_picker",
+        "id": "gif_1",
+        "label": "gif_1 (laisser vide pour désactiver)"
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "title_1"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_1",
+        "label": "subtitle_1"
+      },
+      {
+        "type": "image_picker",
+        "id": "gif_2",
+        "label": "gif_2 (laisser vide pour désactiver)"
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "title_2"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_2",
+        "label": "subtitle_2"
+      },
+      {
+        "type": "image_picker",
+        "id": "gif_3",
+        "label": "gif_3 (laisser vide pour désactiver)"
+      },
+      {
+        "type": "text",
+        "id": "title_3",
+        "label": "title_3"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_3",
+        "label": "subtitle_3"
+      },
+      {
+        "type":"header",
+        "content" : "Content right"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_1",
+        "label": "Image_1"
+      },
+      {
+        "type": "text",
+        "id": "title_box_1",
+        "label": "Titre_1"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_1",
+        "label": "cta_text_1"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_1",
+        "label": "cta_url_1"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "Image_2"
+      },
+      {
+        "type": "text",
+        "id": "title_box_2",
+        "label": "Titre_2"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_2",
+        "label": "cta_text_2"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_2",
+        "label": "cta_url_2"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ]
+    },
+    {
+      "type": "related-collections",
+      "name": "Related collections",
+      "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Franklin pour toute la famille."
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "texte",
+        "default": "<p>Vous avez d’autres animaux à la maison ? Découvrez nos produits adaptés aux besoin de chacun.</p>"
+      },
+      {
+        "type":"header",
+        "content" : "Collections"
+      },
+      {
+        "type": "collection",
+        "id": "collection_1",
+        "label": "Collection 1"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_1",
+        "label": "Image 1"
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "Titre 1",
+        "default": "Nos produits <br /> chien"
+      },
+      {
+        "type": "collection",
+        "id": "collection_2",
+        "label": "Collection 2"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "Image 2"
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "Titre 2",
+        "default": "Nos produits <br /> chien"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":"section--l-spacing"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":"mobile-section--s-spacing"
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ]
+    },
+    {
+      "type": "text-cta",
+      "name": "Text CTA",
+      "settings": [
+	  {
+  	  "type": "checkbox",
+  	  "id": "transparency_height",
+  	  "label": "Transparency height",
+  	  "default": false,
+  	  "info": "Activer l'apparition du header sticky après cette section"
+    },
+      {
+        "type":"header",
+        "content":"Heading"
+      },
+      {
+	  "type": "checkbox",
+	  "id": "breadcrumb",
+	  "label": "Activer le breadcrumb",
+	  "default": false
+  },
+      {
+        "type": "select",
+        "id": "heading_tag",
+        "label": "Tag du heading",
+        "options": [
+        {
+          "value" : "h1",
+          "label" : "H1"
+        },
+        {
+          "value" : "h2",
+          "label" : "H2"
+        },
+        {
+          "value" : "h3",
+          "label" : "H3"
+        },
+        {
+          "value" : "h4",
+          "label" : "H4"
+        },
+        {
+          "value" : "h5",
+          "label" : "H5"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "heading_class",
+        "label": "Classe du heading",
+        "options": [
+        {
+          "value" : "z-h1",
+          "label" : "z-H1"
+        },
+        {
+          "value" : "z-h2",
+          "label" : "z-H2"
+        },
+        {
+          "value" : "z-h3",
+          "label" : "z-H3"
+        },
+        {
+          "value" : "z-h4",
+          "label" : "z-H4"
+        },
+        {
+          "value" : "z-h5",
+          "label" : "z-H5"
+        },
+          {
+            "value" : "z-h6",
+            "label" : "z-H6"
+          },
+          {
+            "value" : "z-h7",
+            "label" : "z-H7"
+          },
+          {
+            "value" : "z-h8",
+            "label" : "z-H8"
+          },
+          {
+            "value" : "z-h9",
+            "label" : "z-H9"
+          },
+          {
+            "value" : "z-h10",
+            "label" : "z-H10"
+          },
+          {
+            "value" : "z-h11",
+            "label" : "z-H11"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Le retour à l'essentiel."
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Texte"
+      },
+      {
+        "type": "richtext",
+        "id": "text_mobile",
+        "label": "Texte mobile"
+      },
+      {
+        "type": "checkbox",
+        "id": "text_hide_mobile",
+        "label": "Cacher le texte sur mobile",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "text_width",
+        "label": "Largeur du texte",
+        "options": [
+        {
+          "value":"text-cta__text--small",
+          "label":"Small"
+        },
+        {
+          "value":"text-cta__text--medium",
+          "label":"medium"
+        },
+        {
+          "value":"text-cta__text--large",
+          "label":"large"
+        },
+        {
+          "value":"text-cta__text--xlarge",
+          "label":"xlarge"
+        },
+        {
+          "value":"text-cta__text--full",
+          "label":"full"
+        }
+        ],
+        "default" : "text-cta__text--medium"
+      },
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button text",
+        "default": "Découvrir",
+        "info": "Laisser vide pour désactiver le bouton"
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "URL du bouton"
+      },
+      {
+        "type": "checkbox",
+        "id": "arrow_button",
+        "label": "Bouton flèche ?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "button_width",
+        "label": "Arrow button width",
+        "default": "250",
+        "info": "En px."
+      },
+      {
+        "type": "select",
+        "id": "button_type",
+        "label": "Type de bouton",
+        "options": [
+        {
+          "value" : "",
+          "label" : "Button primary"
+        },{
+          "value" : "button--secondary",
+          "label" : "Button secondary"
+        },{
+          "value" : "button--invert",
+          "label" : "Button invert"
+        }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "background_mobile",
+        "label": "Background mobile (laisser vide pour désactiver)"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_desktop",
+        "label": "Background_desktop (laisser vide pour désactiver)"
+      },
+	  {
+  "type": "color",
+  "id": "background_color_mobile",
+  "label": "Background color mobile"
+},
+      {
+        "type": "checkbox",
+        "id": "border_top",
+        "label": "Border top ?",
+        "default": false
+      },
+
+      {
+        "type": "select",
+        "id": "align",
+        "label": "Text alignement",
+        "options": [
+        {
+          "value" : "align-center",
+          "label" : "Align center"
+        },{
+          "value" : "align-left",
+          "label" : "align left"
+        },{
+          "value" : "align-right",
+          "label" : "align right"
+        }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "checkbox",
+        "id": "hide_desktop",
+        "label": "Hide desktop",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "hide_mobile",
+        "label": "Hide_mobile",
+        "default": false
+      }
+      ]
+    },
+    {
+      "type": "table-dropdowns",
+      "name": "Z Table dropdowns",
+      "settings": [
+      {
+        "type":"header",
+        "content":"Heading"
+      },
+      {
+        "type": "select",
+        "id": "heading_tag",
+        "label": "Tag du heading",
+        "options": [
+        {
+          "value" : "z-h1",
+          "label" : "z-H1"
+        },
+        {
+          "value" : "z-h2",
+          "label" : "z-H2"
+        },
+        {
+          "value" : "z-h3",
+          "label" : "z-H3"
+        },
+        {
+          "value" : "z-h4",
+          "label" : "z-H4"
+        },
+        {
+          "value" : "z-h5",
+          "label" : "z-H5"
+        },
+          {
+            "value" : "z-h6",
+            "label" : "z-H6"
+          },
+          {
+            "value" : "z-h7",
+            "label" : "z-H7"
+          },
+          {
+            "value" : "z-h8",
+            "label" : "z-H8"
+          },
+          {
+            "value" : "z-h9",
+            "label" : "z-H9"
+          },
+          {
+            "value" : "z-h10",
+            "label" : "z-H10"
+          },
+          {
+            "value" : "z-h11",
+            "label" : "z-H11"
+          }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "heading_class",
+          "label": "Classe du heading",
+          "options": [
+          {
+            "value" : "z-h1",
+            "label" : "z-H1"
+          },
+          {
+            "value" : "z-h2",
+            "label" : "z-H2"
+          },
+          {
+            "value" : "z-h3",
+            "label" : "z-H3"
+          },
+          {
+            "value" : "z-h4",
+            "label" : "z-H4"
+          },
+          {
+            "value" : "z-h5",
+            "label" : "z-H5"
+          }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Le retour à l'essentiel."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texte"
+        },
+        {
+          "type": "select",
+          "id": "text_width",
+          "label": "Largeur du texte",
+          "options": [
+          {
+            "value":"text-cta__text--small",
+            "label":"Small"
+          },
+          {
+            "value":"text-cta__text--medium",
+            "label":"medium"
+          },
+          {
+            "value":"text-cta__text--large",
+            "label":"large"
+          },
+          {
+            "value":"text-cta__text--xlarge",
+            "label":"xlarge"
+          },
+          {
+            "value":"text-cta__text--full",
+            "label":"full"
+          }
+          ],
+          "default" : "text-cta__text--medium"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image mobile (laisser vide pour désactiver)"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_desktop",
+          "label": "Background_desktop (laisser vide pour désactiver)"
+        },
+        {
+          "type": "header",
+          "content": "Dropdowns"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title 1",
+          "default": "Le produit"
+        },
+        {
+          "type": "richtext",
+          "id": "preview_text_1",
+          "label": "Preview text 1"
+        },
+        {
+          "type": "richtext",
+          "id": "expanded_text_1",
+          "label": "Expanded text 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title 2",
+          "default": "Le produit"
+        },
+        {
+          "type": "richtext",
+          "id": "preview_text_2",
+          "label": "Preview text 2"
+        },
+        {
+          "type": "richtext",
+          "id": "expanded_text_2",
+          "label": "Expanded text 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3"
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title 3",
+          "default": "Le produit"
+        },
+        {
+          "type": "richtext",
+          "id": "preview_text_3",
+          "label": "Preview text 3"
+        },
+        {
+          "type": "richtext",
+          "id": "expanded_text_3",
+          "label": "Expanded text 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image 4"
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Title 4",
+          "default": "Le produit"
+        },
+        {
+          "type": "richtext",
+          "id": "preview_text_4",
+          "label": "Preview text 4"
+        },
+        {
+          "type": "richtext",
+          "id": "expanded_text_4",
+          "label": "Expanded text 4"
+        },
+        {
+          "type": "header",
+          "content": "Section"
+        },
+        {
+          "type": "select",
+          "id": "section_spacing",
+          "label": "Section bottom spacing",
+          "options": [
+          {
+            "value" : "section--xxxl-spacing",
+            "label" : "XXXL Spacing"
+          },
+          {
+            "value" : "section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "section_spacing_mobile",
+          "label": "Section bottom spacing mobile",
+          "options": [
+          {
+            "value":"",
+            "label":"Same value"
+          },
+          {
+            "value" : "mobile-section--xxxl-spacing",
+            "label" : "XXXL Spacing"
+          },
+          {
+            "value" : "mobile-section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "mobile-section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "mobile-section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "mobile-section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "mobile-section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "mobile-section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ],
+          "default":""
+        }
+        ]
+      },
+      {
+        "type": "vertical-scroll-timeline",
+        "name": "Z Vertical scroll",
+        "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "default"
+        },
+        {
+          "type": "header",
+          "content": "Boutons"
+        },
+        {
+          "type": "select",
+          "id": "button_type",
+          "label": "Type de bouton",
+          "options": [
+          {
+            "value" : "",
+            "label" : "Button primary"
+          },{
+            "value" : "button--secondary",
+            "label" : "Button secondary"
+          },{
+            "value" : "button--invert",
+            "label" : "Button invert"
+          }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Texte bouton",
+          "default": "En savoir plus"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "URL bouton"
+        },
+        {
+          "type": "text",
+          "id": "button_text_2",
+          "label": "Texte bouton 2",
+          "info" : "Laisser vide pour désactiver"
+        },
+        {
+          "type": "url",
+          "id": "button_url_2",
+          "label": "URL bouton 2"
+        },
+        {
+          "type": "header",
+          "content": "Étapes"
+        },
+        {
+          "type": "text",
+          "id": "maxEventProgress",
+          "label": "Max event progress",
+          "default": "0.68",
+          "info": "Maximum de la barre. Réglage dev."
+        },
+        {
+          "type": "url",
+          "id": "bullet_full",
+          "label": "Bullet point full",
+          "info": "SVG à uploader dans 'Files' - Laisser vide pour bullet points classics"
+        },
+        {
+          "type": "url",
+          "id": "bullet_empty",
+          "label": "Bullet point vide",
+          "info": "SVG à uploader dans 'Files'"
+        },
+        {
+          "type": "checkbox",
+          "id": "numbered_steps",
+          "label": "étapes numérotées",
+          "default": false,
+          "info": "Activer pour avoir des bullets points '1 - 2 -3'. Désactive de facto les bullet points classics et custom"
+        },
+        {
+          "type": "header",
+          "content": "Section"
+        },
+        {
+          "type": "select",
+          "id": "section_spacing",
+          "label": "Section bottom spacing",
+          "options": [
+          {
+            "value" : "section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "section_spacing_mobile",
+          "label": "Section bottom spacing mobile",
+          "options": [
+          {
+            "value":"",
+            "label":"Same value"
+          },
+          {
+            "value" : "mobile-section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "mobile-section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "mobile-section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "mobile-section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "mobile-section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "mobile-section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ],
+          "default":""
+        },
+        {
+          "type": "header",
+          "content": "Steps"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image de gauche"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Titre de l'étape",
+          "default": "Étape X"
+        },
+        {
+          "type": "text",
+          "id": "subtitle_1",
+          "label": "Sous titre de l'étape",
+          "default": "default"
+        },
+        {
+          "type": "richtext",
+          "id": "text_1",
+          "label": "Texte",
+          "default": "<p>Default subtitle</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image de gauche 2"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Titre de l'étape 2"
+        },
+        {
+          "type": "text",
+          "id": "subtitle_2",
+          "label": "Sous titre de l'étape 2"
+        },
+        {
+          "type": "richtext",
+          "id": "text_2",
+          "label": "Texte 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image de gauche 3"
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Titre de l'étape 3"
+        },
+        {
+          "type": "text",
+          "id": "subtitle_3",
+          "label": "Sous titre de l'étape 3"
+        },
+        {
+          "type": "richtext",
+          "id": "text_3",
+          "label": "Texte 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image de gauche 4"
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Titre de l'étape 4"
+        },
+        {
+          "type": "text",
+          "id": "subtitle_4",
+          "label": "Sous titre de l'étape 4"
+        },
+        {
+          "type": "richtext",
+          "id": "text_4",
+          "label": "Texte 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_5",
+          "label": "Image de gauche 5"
+        },
+        {
+          "type": "text",
+          "id": "title_5",
+          "label": "Titre de l'étape 5"
+        },
+        {
+          "type": "text",
+          "id": "subtitle_5",
+          "label": "Sous titre de l'étape 5"
+        },
+        {
+          "type": "richtext",
+          "id": "text_5",
+          "label": "Texte 5"
+        }
+        ]
+      },
+      {
+        "type": "featured-collection",
+        "name": "Z Featured collection",
+        "settings": [
+        {
+          "type":"header",
+          "content":"Collection"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Featured collection",
+          "info": "Créer une collection dédiée"
+        },
+        {
+          "type": "range",
+          "id": "product_max",
+          "label": "Maximum displayed product",
+          "default": 4,
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "unit": "p"
+        },
+        {
+          "type":"header",
+          "content":"Settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image displayed on desktop"
+        },
+        {
+          "type": "checkbox",
+          "id": "image_left",
+          "label": "Image à gauche ?",
+          "default": true
+        },
+        {
+          "type":"header",
+          "content" : "Section"
+        },
+        {
+          "type": "select",
+          "id": "section_spacing",
+          "label": "Section bottom spacing",
+          "options": [
+          {
+            "value" : "section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "section_spacing_mobile",
+          "label": "Section bottom spacing mobile",
+          "options": [
+          {
+            "value":"",
+            "label":"Same value"
+          },
+          {
+            "value" : "mobile-section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "mobile-section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "mobile-section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "mobile-section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "mobile-section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "mobile-section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ],
+          "default":""
+        }
+        ]
+      },
+      {
+        "type": "ingredients",
+        "name": "Z - Ingredients",
+        "settings": [
+        {
+          "type": "image_picker",
+          "id": "ingredient_1",
+          "label": "Ingredient 1"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_speed_1",
+          "label": "Ingredient 1 speed",
+          "default": "0",
+          "info": "En millisecondes"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredient_2",
+          "label": "Ingredient 2"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_speed_2",
+          "label": "Ingredient 2 speed",
+          "default": "0",
+          "info": "En millisecondes"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "La recette idéale contre les allergies alimentaires."
+        },
+        {
+          "type": "image_picker",
+          "id": "picto_1",
+          "label": "Picto 1"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title 1",
+          "default": "Mono-protéine"
+        },
+        {
+          "type": "image_picker",
+          "id": "picto_2",
+          "label": "Picto 2"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title 2",
+          "default": "Mono-protéine"
+        },
+        {
+          "type": "image_picker",
+          "id": "picto_3",
+          "label": "Picto 3"
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title 3",
+          "default": "Mono-protéine"
+        },
+        {
+          "type": "image_picker",
+          "id": "picto_4",
+          "label": "Picto 4"
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Title 4",
+          "default": "Mono-protéine"
+        },
+        {
+          "type":"header",
+          "content" : "Section"
+        },
+        {
+          "type": "select",
+          "id": "section_spacing",
+          "label": "Section bottom spacing",
+          "options": [
+          {
+            "value" : "section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "section_spacing_mobile",
+          "label": "Section bottom spacing mobile",
+          "options": [
+          {
+            "value":"",
+            "label":"Same value"
+          },
+          {
+            "value" : "mobile-section--xl-spacing",
+            "label" : "XL Spacing"
+          },{
+            "value" : "mobile-section--l-spacing",
+            "label" : "L Spacing"
+          },{
+            "value" : "mobile-section--m-spacing",
+            "label" : "M Spacing"
+          },{
+            "value" : "mobile-section--s-spacing",
+            "label" : "S Spacing"
+          },{
+            "value" : "mobile-section--xs-spacing",
+            "label" : "XS Spacing"
+          },{
+            "value" : "mobile-section--no-spacing",
+            "label" : "No Spacing"
+          }
+          ],
+          "default":""
+        }
+        ]
+      }
+      ]
+    }
+    {% endschema %}

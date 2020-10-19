@@ -1,0 +1,254 @@
+{% assign status = 'NO-SUBSCRIBE' %}
+{% if item.product.metafields.subscriptions.original_handle %}
+  {% assign status = 'SUBSCRIBE-ON' %}
+  {% assign rootItem = all_products[item.product.metafields.subscriptions.original_handle] %}
+{% elsif item.product.metafields.subscriptions.has_subscription == 'True' %}
+  {% assign status = 'SUBSCRIBE-OFF' %}
+{% endif %}
+
+{% assign product_why_subscribe = settings.product_why_subscribe %}
+{% assign subscribe_popup_title = settings.subscribe_popup_title %}
+{% assign subscribe_popup_content = settings.subscribe_popup_content %}
+{% assign subscribe_popup_cta = settings.subscribe_popup_cta %}
+{% assign subscribe_popup_url = settings.subscribe_popup_url %}
+{% assign subscribe_popup_picto_1 = settings.subscribe_popup_picto_1 %}
+{% assign subscribe_popup_title_1 = settings.subscribe_popup_title_1 %}
+{% assign subscribe_popup_text_1 = settings.subscribe_popup_text_1 %}
+{% assign subscribe_popup_picto_2 = settings.subscribe_popup_picto_2 %}
+{% assign subscribe_popup_title_2 = settings.subscribe_popup_title_2 %}
+{% assign subscribe_popup_text_2 = settings.subscribe_popup_text_2 %}
+{% assign subscribe_popup_picto_3 = settings.subscribe_popup_picto_3 %}
+{% assign subscribe_popup_title_3 = settings.subscribe_popup_title_3 %}
+{% assign subscribe_popup_text_3 = settings.subscribe_popup_text_3 %}
+{% assign subscribe_popup_picto_4 = settings.subscribe_popup_picto_4 %}
+{% assign subscribe_popup_title_4 = settings.subscribe_popup_title_4 %}
+{% assign subscribe_popup_text_4 = settings.subscribe_popup_text_4 %}
+
+{% unless item.variant.title == "Default Title" %}
+{% assign item_variant_title = item.variant.title %}
+{% endunless %}
+
+{% assign item_image = item.image | img_url: '240x240' %}
+{% assign item_key = item.key %}
+{% assign item_variant_id = item.variant.id %}
+{% assign item_product_title = item.product.title %}
+{% assign item_vendor = item.product.vendor %}
+{% assign item_quantity = item.quantity  %}
+{% assign item_price = item.price | times : item_quantity | money %}
+{% assign item_quantity_plus = item.quantity | plus: 1 | at_most : 19 %}
+{% assign item_quantity_minus = item.quantity | minus: 1 %}
+{% assign item_line_price = item.line_price | money %}
+{% assign item_url = item.url | within: collections.all %}
+{% assign item_discount_percentage = item.product.metafields.subscriptions.discount_percentage | remove : '0' | remove : '.' %}
+{% assign item_discount_variant_price = item.variant.metafields.subscriptions.discount_variant_price | times : item_quantity | times : 100 | money %}
+
+{% if status == 'NO-SUBSCRIBE' %}
+<div data-cart-item data-item-status="NO-SUBSCRIBE" class="cart-item cart-item--no-subscribe">
+  <div class="cart-item__grid">
+    <div class="cart-item__image-container">
+      <a href="{{ item_url }}">
+        <img src="{{ item_image }}" alt="{{ item_product_title }} - {{ item_variant_title }}" />
+      </a>
+    </div>
+    <div class="cart-item__content">
+      <div class="cart-item__header">
+        <h4 class="z-h8 heading cart-item__title">{{ item_product_title }}</h4>
+        <div class="z-h8 heading cart-item__price">
+          <span>{{ item_price }}</span>
+        </div>
+      </div>
+      <div class="cart-item__infos">
+        <div class="cart-item__info-left">
+          <h5 class="text t-11 uppercase">{{ item_vendor }}</h5>
+          <h6 class="text t-11 uppercase">{{ item_variant_title }}</h6>
+        </div>
+        <div class="cart-item__info-right uppercase text t-13 cart-item__delete" data-item-update="{{ item_key }}" data-item-quantity="0">Supprimer</div>
+      </div>
+      <div class="cart-item__oneshot-container">
+        <div class="cart-item__oneshot-title-quantity">
+          <!-- <div class="text t-4 uppercase bold cart-item__subscription-title">
+            Produit unique
+          </div> -->
+          <div class="cart-item__quantity-container product__qty-container">
+            <div data-item-update="{{ item_key }}" data-item-quantity="{{ item_quantity_minus }}" class="product__qty-btn">
+              -
+            </div>
+            <div data-item-quantity data-quantity="{{ item_quantity }}" class="product__qty bold t-11">
+              {{ item_quantity }}
+            </div>
+            <div data-item-update="{{ item_key }}" data-item-quantity="{{ item_quantity_plus }}" class="product__qty-btn">
+              +
+            </div>
+          </div>
+        </div>
+		<div class="flex-grow">
+
+        </div>
+        <div class="cart-item__subscription-right">
+          <div data-item-popup-toggle data-item-popup-key="{{ item_key }}" data-item-popup class="text t-13 cart-item__delete">
+            Modifier
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% elsif status == 'SUBSCRIBE-ON' %}
+{% assign item_url = rootItem.url | within: collections.all %}
+{% assign item_image = rootItem.featured_image | img_url: '240x240' %}
+{% assign item_shipping_interval_frequency = item.properties.shipping_interval_frequency %}
+{% assign item_product_title = rootItem.title %}
+{% assign item_vendor = rootItem.vendor %}
+{% assign item_discount_percentage = rootItem.metafields.subscriptions.discount_percentage | remove : '0' | remove : '.' %}
+<div data-cart-item data-item-status="SUBSCRIBE-ON" class="cart-item cart-item--subscribe-on">
+  <div class="cart-item__grid">
+    <div class="cart-item__image-container">
+      <a href="{{ item_url }}">
+        <img src="{{ item_image }}" alt="{{ item_product_title }} - {{ item_variant_title }}" />
+      </a>
+    </div>
+    <div class="cart-item__content">
+      <div class="cart-item__header">
+        <h4 class="z-h8 heading cart-item__title">{{ item_product_title }}</h4>
+        <div class="z-h8 heading cart-item__price">
+			<span class="cart-item__highlight-oneshot-price">{{ item_initial_price }}</span>
+          <span>{{ item_price }}</span>
+        </div>
+      </div>
+      <div class="cart-item__infos">
+        <div class="cart-item__info-left">
+          <h5 class="text t-11 uppercase">{{ item_vendor }}</h5>
+        </div>
+        <div class="cart-item__info-right uppercase text t-13 cart-item__delete" data-item-update="{{ item_key }}" data-item-quantity="0">Supprimer</div>
+      </div>
+      <div class="cart-item__subscription-container">
+        <div class="cart-item__subscription-left product__choice--active">
+          <div class="product__choice-outbox" data-item-unsubscribe data-item-key="{{ item_key }}">
+            <div class="product__choice-inbox">
+
+            </div>
+          </div>
+        </div>
+        <div class="cart-item__subscription-center">
+          <div class="text t-4 uppercase bold cart-item__subscription-title">
+            Abonnement (-{{ item_discount_percentage }}%)
+          </div>
+          <div class="text t-10 uppercase cart-item__subscription-infos">
+            QT. {{ item_quantity }} - Conditionnement {{ item_variant_title }}
+          </div>
+          <div class="text t-10 uppercase cart-item__subscription-frequency">
+            Livraison tous les {{ item_shipping_interval_frequency }} jours
+          </div>
+        </div>
+        <div class="flex-grow">
+
+        </div>
+        <div class="cart-item__subscription-right">
+          <div data-item-popup-toggle data-item-popup-key="{{ item_key }}" class="text t-13 cart-item__delete">
+            Modifier
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% elsif status == 'SUBSCRIBE-OFF' %}
+<div data-cart-item data-item-status="SUBSCRIBE-OFF" class="cart-item cart-item--subscribe-off">
+  <div class="cart-item__grid">
+    <div class="cart-item__image-container">
+      <a href="{{ item_url }}">
+        <img src="{{ item_image }}" alt="{{ item_product_title }} - {{ item_variant_title }}" />
+      </a>
+    </div>
+    <div class="cart-item__content">
+      <div class="cart-item__header">
+        <h4 class="z-h8 heading cart-item__title">{{ item_product_title }}</h4>
+        <div class="z-h8 heading cart-item__price">
+          <span>{{ item_price }}</span>
+        </div>
+      </div>
+      <div class="cart-item__infos">
+        <div class="cart-item__info-left">
+          <h5 class="text t-11 uppercase">{{ item_vendor }}</h5>
+          <h6 class="text t-11 uppercase">Conditionnement {{ item_variant_title }}</h6>
+        </div>
+        <div class="cart-item__info-right uppercase text t-13 cart-item__delete" data-item-update="{{ item_key }}" data-item-quantity="0">Supprimer</div>
+      </div>
+      <div class="cart-item__oneshot-container">
+        <div class="cart-item__oneshot-title-quantity">
+          <!-- <div class="text t-4 uppercase bold cart-item__subscription-title">
+            Produit unique
+          </div> -->
+          <div class="cart-item__quantity-container product__qty-container">
+            <div data-item-update="{{ item_key }}" data-item-quantity="{{ item_quantity_minus }}" class="product__qty-btn">
+              -
+            </div>
+            <div data-item-quantity data-quantity="{{ item_quantity }}" class="product__qty bold t-11">
+              {{ item_quantity }}
+            </div>
+            <div data-item-update="{{ item_key }}" data-item-quantity="{{ item_quantity_plus }}" class="product__qty-btn">
+              +
+            </div>
+          </div>
+        </div>
+        <div class="flex-grow">
+
+        </div>
+        <div class="cart-item__subscription-right">
+          <div data-item-popup-toggle data-item-popup-key="{{ item_key }}" data-item-popup class="text t-13 cart-item__delete">
+            Modifier
+          </div>
+        </div>
+      </div>
+      <div class="cart-item__highlight-container">
+        <div class="cart-item__highlight">
+          <div class="cart-item__highlight-subscribe">
+            <div class="product__choice-outbox" data-item-subscribe data-item-key="{{ item_key }}">
+              <div class="product__choice-inbox">
+
+              </div>
+            </div>
+            <div class="text t-5 uppercase cart-item__highlight-title">
+              S'abonner (-{{ item_discount_percentage }}%)
+            </div>
+          </div>
+          <div class="cart-item__highlight-prices">
+            <span class="cart-item__highlight-oneshot-price">{{ item_price }}</span>
+            <span class="cart-item__highlight-subscription-price bold">{{ item_discount_variant_price }}</span>
+          </div>
+        </div>
+        <div class="flex-grow">
+
+        </div>
+        <div class="cart-item__highlight-why">
+          <div class="subscribe-popup__hover text t-13">
+            {{ product_why_subscribe }}
+            <div class="subscribe-popup__block">
+              <div class="subscribe-popup__block-content">
+                <div class="subscribe-popup__title heading z-h12">
+                  {{ subscribe_popup_title }}
+                </div>
+                <div class="subscribe-popup__description text">
+                  {{ subscribe_popup_content }}
+                </div>
+                <div class="subscribe-popup__link">
+                  <div class="arrow-button__container">
+                    <a href="{{ subscribe_popup_url }}" class="arrow-button__link secondary collection-slider__button" target="_blank">
+                      <div class="arrow-button arrow-button--white">
+                        {{ subscribe_popup_cta }}
+                        <div class="arrow-button__line"></div>
+                        <div class="arrow-button__line--hover"></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

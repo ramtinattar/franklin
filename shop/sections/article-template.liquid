@@ -1,0 +1,621 @@
+<style>
+{% if article.metafields.image.banner != blank %}
+	#section-{{section.id}} .article_featured_image {
+	  background:url('{{ article.metafields.image.banner }}');
+	}
+{% elsif article.image != blank %}
+  #section-{{section.id}} .article_featured_image {
+    background:url('{{ article | img_url: "1024x1024" }}');
+  }
+{% endif %}
+</style>
+
+<section class="{% if section.settings.section_bg %}{{ section.settings.section_bg }} {% endif %}{% if section.settings.section_spacing %}{{ section.settings.section_spacing }} {% endif %} {{ section.settings.section_spacing_mobile }} section" id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="article">
+	<div class="{% if section.settings.section_spacing %}{{ section.settings.section_spacing }} {% endif %} {{ section.settings.section_spacing_mobile }}"></div>
+
+	{% comment %}
+	  When a comment is submitted, the browser is redirected to a page that includes
+	  the new comment id in its URL.
+	  #comments is a required ID and is used as an anchor link by Shopify.
+	{% endcomment %}
+
+	{%- assign number_of_comments = article.comments_count -%}
+
+	{% comment %}
+	  If a comment was just submitted but requires moderation, we have an extra comment to count.
+	{% endcomment %}
+	{% if comment and comment.status != 'published' %}
+	  {% assign number_of_comments = article.comments_count | plus: 1 %}
+	{% endif %}
+
+	<article role="article" itemscope itemtype="http://schema.org/Article" class="article">
+
+	  {% if article.image %}
+      <div class="article_featured_image"></div>
+	  {% endif %}
+
+    <div class="container--medium article_container">
+      <div class="article_header">
+        {% if article.tags.size > 0 %}
+          {% for tag in article.tags %}
+          {% unless tag contains 'author' %}
+              <span class="article_tag text t-6" style="display:none;">
+                <a href="{{ blog.url }}/tagged/{{ tag | remove: 'tag__' | handle }}">{{ tag | remove: 'tag__' }}</a>{% unless forloop.last %}{% endunless %}
+              </span>
+              {% endunless %}
+          {% endfor %}
+        {% endif %}
+
+        <span class="article_date text t-7">LE {{ article.published_at | time_tag: format: 'day_month_year' }}</span>
+      </div>
+
+  	  <header role="banner">
+  	    <h1 class="article_title heading z-h4">{{ article.title }}</h1>
+
+  	  </header>
+
+  	  <div class="rte" itemprop="articleBody">
+        {% if section.blocks.size == 0 %}
+  	       {{ article.content }}
+         {% else %}
+            {% assign articleDescription = article.content %}
+
+            {% if articleDescription contains '{{button_1}}' %}
+              {% for block in section.blocks %}
+                {% if block.type == 'button_1' %}
+
+                  {% capture button_1_content %}
+                    <div class="align-center"><a href="{{ block.settings.button_url }}" class="button {{ block.settings.button_type }} article_button">{{ block.settings.button_text }}</a></div>
+                  {% endcapture %}
+
+                  {%- if block.settings.article_tag != blank -%}
+                    {% if article.tags.size > 0 %}
+                      {% for tag in article.tags %}
+                        {%- if tag contains block.settings.article_tag -%}
+                          {% assign articleDescription = articleDescription | replace: '{{button_1}}', button_1_content %}
+                        {%- endif -%}
+                      {% endfor %}
+                    {% endif %}
+                  {%- elsif block.settings.featured_article != blank -%}
+                    {% assign _article = articles[block.settings.featured_article] %}
+                    {% if _article.id == article.id %}
+                      {% assign articleDescription = articleDescription | replace: '{{button_1}}', button_1_content %}
+                    {% endif %}
+                  {%- endif -%}
+
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if articleDescription contains '{{button_2}}' %}
+              {% for block in section.blocks %}
+                {% if block.type == 'button_2' %}
+
+                  {% capture button_2_content %}
+                    <div class="align-center"><a href="{{ block.settings.button_url }}" class="button {{ block.settings.button_type }} article_button">{{ block.settings.button_text }}</a></div>
+                  {% endcapture %}
+
+                  {%- if block.settings.article_tag != blank -%}
+                    {% if article.tags.size > 0 %}
+                      {% for tag in article.tags %}
+                        {%- if tag contains block.settings.article_tag -%}
+                        {% assign articleDescription = articleDescription | replace: '{{button_2}}', button_2_content %}
+                        {%- endif -%}
+                      {% endfor %}
+                    {% endif %}
+                  {%- elsif block.settings.featured_article != blank -%}
+                    {% assign _article = articles[block.settings.featured_article] %}
+                    {% if _article.id == article.id %}
+                      {% assign articleDescription = articleDescription | replace: '{{button_2}}', button_2_content %}
+                    {% endif %}
+                  {%- endif -%}
+
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if articleDescription contains '{{encart_1}}' %}
+              {% for block in section.blocks %}
+                {% if block.type == 'encart_1' %}
+
+                  {% capture encart_1_content %}
+                    <div class="article_encart {{ block.settings.section_bg }}">
+                      <img class="article_encart-icon" src="{{ block.settings.icon |img_url: '100x' }}" alt="{{ block.settings.icon.alt }}">
+                      <h6 class="article_encart-title">{{ block.settings.title }}</h6>
+                      <p>{{ block.settings.content }}</p>
+                    </div>
+                  {% endcapture %}
+
+                  {%- if block.settings.article_tag != blank -%}
+                    {% if article.tags.size > 0 %}
+                      {% for tag in article.tags %}
+                        {%- if tag contains block.settings.article_tag -%}
+                        {% assign articleDescription = articleDescription | replace: '{{encart_1}}', encart_1_content %}
+                        {%- endif -%}
+                      {% endfor %}
+                    {% endif %}
+                  {%- elsif block.settings.featured_article != blank -%}
+                    {% assign _article = articles[block.settings.featured_article] %}
+                    {% if _article.id == article.id %}
+                    {% assign articleDescription = articleDescription | replace: '{{encart_1}}', encart_1_content %}
+                    {% endif %}
+                  {%- endif -%}
+
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if articleDescription contains '{{encart_2}}' %}
+              {% for block in section.blocks %}
+                {% if block.type == 'encart_2' %}
+
+                  {% capture encart_1_content %}
+                    <div class="article_encart {{ block.settings.section_bg }}">
+                      <img class="article_encart-icon" src="{{ block.settings.icon |img_url: '100x' }}" alt="{{ block.settings.icon.alt }}">
+                      <h6 class="article_encart-title">{{ block.settings.title }}</h6>
+                      <p>{{ block.settings.content }}</p>
+                    </div>
+                  {% endcapture %}
+
+                  {%- if block.settings.article_tag != blank -%}
+                    {% if article.tags.size > 0 %}
+                      {% for tag in article.tags %}
+                        {%- if tag contains block.settings.article_tag -%}
+                        {% assign articleDescription = articleDescription | replace: '{{encart_2}}', encart_2_content %}
+                        {%- endif -%}
+                      {% endfor %}
+                    {% endif %}
+                  {%- elsif block.settings.featured_article != blank -%}
+                    {% assign _article = articles[block.settings.featured_article] %}
+                    {% if _article.id == article.id %}
+                    {% assign articleDescription = articleDescription | replace: '{{encart_2}}', encart_2_content %}
+                    {% endif %}
+                  {%- endif -%}
+
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {{ articleDescription }}
+        {% endif %}
+
+  	  </div>
+
+  	  {% if settings.social_sharing_blog %}
+  	    {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+  	  {% endif %}
+
+      {% if blog.next_article or blog.previous_article %}
+        <div class="prev_next_article hide--pocket">
+          {%- if blog.previous_article -%}
+            <div class="prev_article">
+              <span>{% include 'icon-right-arrow' %}</span>{{ blog.previous_article.title | link_to: blog.previous_article }}
+            </div>
+          {%- endif -%}
+          {%- if blog.next_article -%}
+            <div class="next_article">
+              {{ blog.next_article.title | link_to: blog.next_article }}<span>{% include 'icon-right-arrow' %}</span>
+            </div>
+          {%- endif -%}
+        </div>
+      {% endif %}
+
+      {% include 'arrow-button' with left_arrow:true, href:blog.url, text:settings.back_journal , classes:'secondary' %}
+
+  	  {% if blog.comments_enabled? %}
+  	    <h3>{{ 'blogs.comments.with_count' | t: count: number_of_comments }}</h3>
+
+  	    {% paginate article.comments by 5 %}
+
+  	    <div id="comments">
+  	      {% if comment and comment.status and paginate.current_page == 1 %}
+  	        <p class="form-success">
+  	          {% if blog.moderated? and comment.status != 'published' %}
+  	            {{ 'blogs.comments.success_moderated' | t }}
+  	          {% else %}
+  	            {{ 'blogs.comments.success' | t }}
+  	          {% endif %}
+  	        </p>
+  	      {% endif %}
+
+  	      {% if number_of_comments > 0 %}
+  	        <ul>
+  	          {% comment %}
+  	            Display comment from URL parameters if it is waiting moderation
+  	          {% endcomment %}
+  	          {% if comment and comment.status != 'published' %}
+  	            <li id="{{ comment.id }}">
+  	              <div class="rte">
+  	                {{ comment.content }}
+  	              </div>
+  	              {% capture date %}{{ comment.created_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+  	              <p>{{ 'blogs.article.comment_meta_html' | t: author: comment.author, date: date }}</p>
+  	            </li>
+  	          {% endif %}
+
+  	          {% for comment in article.comments %}
+  	            <li id="{{ comment.id }}">
+  	              <div class="rte">
+  	                {{ comment.content }}
+  	              </div>
+  	              {% capture date %}{{ comment.created_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+  	              <p>{{ 'blogs.article.comment_meta_html' | t: author: comment.author, date: date }}</p>
+  	            </li>
+
+  	          {% endfor %}
+  	        </ul>
+
+  	        {% if paginate.pages > 1 %}
+  	          {% include 'pagination' %}
+  	        {% endif %}
+  	      {% endif %}
+  	    </div>
+
+  	    {% endpaginate %}
+
+  	    {% form 'new_comment', article %}
+  	      <h3>{{ 'blogs.comments.title' | t }}</h3>
+
+  	      {{ form.errors | default_errors }}
+
+  	      <label for="CommentAuthor" class="label-hidden">
+  	        {{ 'blogs.comments.name' | t }}
+  	      </label>
+  	      <input type="text"
+  	             name="comment[author]"
+  	             id="CommentAuthor"
+  	             class="{% if form.errors contains 'author' %}input-error{% endif %}"
+  	             placeholder="{{ 'blogs.comments.name' | t }}"
+  	             value="{{ form.author }}"
+  	             autocapitalize="words">
+
+  	      <label for="CommentEmail" class="label-hidden">
+  	        {{ 'blogs.comments.email' | t }}
+  	      </label>
+  	      <input type="email"
+  	             name="comment[email]"
+  	             id="CommentEmail"
+  	             class="{% if form.errors contains 'email' %}input-error{% endif %}"
+  	             placeholder="{{ 'blogs.comments.email' | t }}"
+  	             value="{{ form.email }}"
+  	             spellcheck="false"
+  	             autocomplete="off"
+  	             autocapitalize="off">
+
+  	      <label for="CommentBody" class="label-hidden">
+  	        {{ 'blogs.comments.message' | t }}
+  	      </label>
+  	      <textarea
+  	        name="comment[body]"
+  	        id="CommentBody"
+  	        class="{% if form.errors contains 'body' %}input-error{% endif %}"
+  	        placeholder="{{ 'blogs.comments.message' | t }}">
+  	        {{ form.body }}
+  	      </textarea>
+
+  	      {% if blog.moderated? %}
+  	        <p>{{ 'blogs.comments.moderated' | t }}</p>
+  	      {% endif %}
+
+  	      <input type="submit" class="btn" value="{{ 'blogs.comments.post' | t }}">
+  	    {% endform %}
+
+  	  {% endif %}
+    </div>
+
+	</article>
+
+
+</section>
+
+{% schema %}
+{
+  "name": "article",
+  "settings": [
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ],
+      "blocks": [
+        {
+          "type": "button_1",
+          "name": "Button 1",
+          "settings": [
+            {
+             "type": "article",
+             "id": "featured_article",
+             "label": "Article to display"
+           },
+           {
+             "type": "text",
+             "id": "article_tag",
+             "label": "Article Tag"
+           },
+            {
+              "type": "text",
+              "id": "button_text",
+              "label": "Button Text",
+              "default": "Button"
+            },
+            {
+              "type": "url",
+              "id": "button_url",
+              "label": "Button Url"
+            },
+            {
+              "type": "select",
+              "id": "button_type",
+              "label": "button type",
+              "options": [
+              {
+                "value" : "button--primary",
+                "label" : "button--primary"
+              },
+              {
+                "value" : "button--secondary",
+                "label" : "button--secondary"
+              },{
+                "value" : "button--invert",
+                "label" : "button--invert"
+              }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "button_2",
+          "name": "Button 2",
+          "settings": [
+            {
+             "type": "article",
+             "id": "featured_article",
+             "label": "Article to display"
+           },
+           {
+             "type": "text",
+             "id": "article_tag",
+             "label": "Article Tag"
+           },
+            {
+              "type": "text",
+              "id": "button_text",
+              "label": "Button Text",
+              "default": "Button"
+            },
+            {
+              "type": "url",
+              "id": "button_url",
+              "label": "Button Url"
+            },
+            {
+              "type": "select",
+              "id": "button_type",
+              "label": "button type",
+              "options": [
+              {
+                "value" : "button--primary",
+                "label" : "button--primary"
+              },
+              {
+                "value" : "button--secondary",
+                "label" : "button--secondary"
+              },{
+                "value" : "button--invert",
+                "label" : "button--invert"
+              }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "encart_1",
+          "name": "Encart 1",
+          "settings": [
+            {
+             "type": "article",
+             "id": "featured_article",
+             "label": "Article to display"
+           },
+           {
+             "type": "text",
+             "id": "article_tag",
+             "label": "Article Tag"
+           },
+            {
+              "type": "select",
+              "id": "section_bg",
+              "label": "Couleur du fond",
+              "options": [
+                {
+                  "value" : "bg--white",
+                  "label" : "BG white"
+                },
+                {
+                  "value" : "bg--color--border",
+                  "label" : "BG Color with border"
+                },
+                {
+                  "value" : "bg--color",
+                  "label" : "BG Color"
+                },{
+                  "value" : "bg--primary",
+                  "label" : "BG Primary"
+                },{
+                  "value" : "bg--secondary",
+                  "label" : "BG secondary"
+                }
+              ]
+            },
+            {
+              "type": "image_picker",
+              "id": "icon",
+              "label": "label"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title",
+              "default": "Title"
+            },
+            {
+              "type": "text",
+              "id": "content",
+              "label": "Content",
+              "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            }
+          ]
+        },
+        {
+          "type": "encart_2",
+          "name": "Encart 2",
+          "settings": [
+            {
+             "type": "article",
+             "id": "featured_article",
+             "label": "Article to display"
+           },
+           {
+             "type": "text",
+             "id": "article_tag",
+             "label": "Article Tag"
+           },
+            {
+              "type": "select",
+              "id": "section_bg",
+              "label": "Couleur du fond",
+              "options": [
+                {
+                  "value" : "bg--white",
+                  "label" : "BG white"
+                },
+                {
+                  "value" : "bg--color--border",
+                  "label" : "BG Color with border"
+                },
+                {
+                  "value" : "bg--color",
+                  "label" : "BG Color"
+                },{
+                  "value" : "bg--primary",
+                  "label" : "BG Primary"
+                },{
+                  "value" : "bg--secondary",
+                  "label" : "BG secondary"
+                }
+              ]
+            },
+            {
+              "type": "image_picker",
+              "id": "icon",
+              "label": "label"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title",
+              "default": "Title"
+            },
+            {
+              "type": "text",
+              "id": "content",
+              "label": "Content",
+              "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            }
+          ]
+        }
+      ],
+      "presets": [
+      {
+        "name": "article",
+        "category": "Studio Zerance"
+      }
+      ]
+    }
+    {% endschema %}

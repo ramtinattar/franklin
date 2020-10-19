@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+  <meta name="referrer" content="origin">
+
+  <title>{{ page_title }}</title>
+
+  {{ content_for_header }}
+
+  {{ checkout_stylesheets }}
+  {{ checkout_scripts }}
+
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+  {{ 'checkout.css' | asset_url | stylesheet_tag }}
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-M4232MX');</script>
+  <!-- End Google Tag Manager -->
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M4232MX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  {{ skip_to_content_link }}
+
+  <div class="announcement-bar t-9" data-announcement-bar>
+    <p class="announcement-bar__text">Franklin vous offre<strong> 25% de réduction&nbsp;</strong>sur votre première&nbsp;commande avec le code <strong>HELLOPATTE</strong></p>
+  </div>
+
+  <header class="banner" data-header role="banner">
+    <div class="wrap banner_flex">
+      {{ content_for_logo }}
+      <p class="banner_text">Un dernier effort,<br/> la gamelle est bientôt prête !</p>
+    </div>
+  </header>
+
+  <div data-checkout-loader class="checkout-loading">Loading&#8230;</div>
+
+  {{ order_summary_toggle }}
+  <div class="content checkout__content" data-content>
+    <div class="wrap">
+      <div class="main">
+        <header class="main__header" role="banner">
+          {{ content_for_logo }}
+          {{ breadcrumb }}
+          <h2 data-upsell-title style="display:none;" class="section__title upsell-section__title">Faites-lui plaisir avec une friandise.</h2>
+          {% comment %} The Vaan Group - Order Bump (1/2) {% endcomment %}
+              <div id="orderbump"></div>
+          {% comment %} END OF The Vaan Group - Order Bump (1/2) {% endcomment %}
+          {{ alternative_payment_methods }}
+        </header>
+        <main class="main__content" role="main">
+          {{ content_for_layout }}
+        </main>
+        <footer class="main__footer" role="contentinfo">
+          {{ content_for_footer }}
+        </footer>
+      </div>
+      <aside class="sidebar" role="complementary">
+        <div class="sidebar__header">
+          {{ content_for_logo }}
+        </div>
+        <div class="sidebar__content">
+          {{ content_for_order_summary }}
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  {% render "helpers_checkout" %}
+  {% render "service_points_checkout" %}
+  {% render "recharge_integration_checkout" %}
+  {{ tracking_code }}
+
+  {% assign isMondialRelay = false %}
+  {%- if content_for_layout contains 'Mondial Relay' -%}
+    {% assign isMondialRelay = true %}
+  {%- endif -%}
+
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe sandbox src="https://www.googletagmanager.com/ns.html?id=GTM-M4232MX"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  {% comment %} The Vaan Group - Order Bump (2/2) {% endcomment %}
+ <script src="https://tvg-order-bump.herokuapp.com/storefront/assets/order-bump.js"></script>
+ {% comment %} END OF The Vaan Group - Order Bump (2/2) {% endcomment %}
+<script>
+$(function(){
+  setInterval(function(){
+    if(!$('#orderbump').is(':empty')){
+      $('[data-upsell-title]').show();
+    }
+  }, 500)
+});
+
+//Fixed announcement bar
+var fixmeTop = $('[data-announcement-bar]').offset().top;
+
+$(window).scroll(function() {
+  var currentScroll = $(window).scrollTop();
+
+  if (currentScroll > fixmeTop) {
+      $('[data-announcement-bar]').css({
+          position: 'fixed',
+          top: '0',
+          left: '0'
+      });
+  } else {
+      $('[data-announcement-bar]').css({
+          position: 'static'
+      });
+  }
+
+});
+
+// THANK YOU PAGE
+
+//Update link contact
+$('[data-tekkie-id="contact_us_link"]').attr("href", "/pages/contactez-nous");
+$('[data-tekkie-id="contact_us_link"]').attr('target','_blank');
+
+//Hide mondial relay map
+if ({{ isMondialRelay }}) {
+  if ($('.map.default-background').length > 0) {
+    $('.map.default-background').parent().hide();
+    $('.map.default-background').parent().next().css('border-top', 'none');
+  }
+}
+
+console.log($('[data-order-updates]').length > 0);
+
+//Add buttton back
+if ($('.step__footer__continue-btn').length == 0) {
+  $('.step__footer').prepend('<a href="https://franklinpetfood.com/" data-trekkie-id="continue_shopping_button" class="step__footer__continue-btn btn"><span class="btn__content">Retour à la boutique</span><svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button" aria-hidden="true" focusable="false"> <use xlink:href="#spinner-button"></use> </svg></a>');
+}
+
+</script>
+
+</body>
+</html>

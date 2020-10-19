@@ -1,0 +1,33 @@
+<section class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="text-bloc-grid">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} text_with_bloc_image"></div>
+	<div class="page-width text_bloc_grid">
+		<div class="text_bloc_grid--grid">
+			{% for i in (1..2) %}
+			{% capture current %}{% cycle 1, 2 %}{% endcapture %}
+			{% assign imageKey = 'image_' | append : current %}
+			{% assign imagePositionKey = 'image_position_' | append : current %}
+			{% assign titleKey = 'title_' | append : current %}
+			{% assign textKey = 'text_' | append : current %}
+			{% assign bgKey = 'bloc_bg_' | append : current %}
+			{% assign CtaTextKey = 'cta_text_' | append : current %}
+			{% assign CtaUrlKey = 'cta_url_' | append : current %}
+			{% assign CtaTypeKey = 'cta_type_' | append : current %}
+			{% if Settings[titleKey] == blank %}{% continue %}{% endif %}
+			<div class="text_bloc_grid-container {{ Settings[bgKey] }} align-center">
+					<div class="text_bloc_grid_image-{{Settings[imagePositionKey]}}">
+						<img class="text_bloc_grid_image" src="{{ Settings[imageKey] | img_url:'400x' }}" alt="{{ Settings[imageKey].alt }}">
+					</div>
+					<h2 class="heading z-h3 text_bloc_grid_title">{{Settings[titleKey]}}</h2>
+					<div class="text_bloc_grid_content">
+						{{Settings[textKey]}}
+					</div>
+					{%- if Settings[CtaTextKey] != blank -%}
+						<a class="text_bloc_grid_cta button {{ Settings[CtaTypeKey] }}" href="{{ Settings[CtaUrlKey] }}">{{ Settings[CtaTextKey] }}</a>
+					{%- endif -%}
+			</div>
+			{% endfor %}
+
+		</div>
+	</div>
+
+</section>

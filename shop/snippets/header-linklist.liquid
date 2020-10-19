@@ -1,0 +1,93 @@
+{% for link in linklists[linklist].links %}
+
+{% assign count_mini_menu = 0 %}
+{% assign counter = 0 %}
+{%- assign link_handle = link.title | handleize -%}
+{% for block in section.blocks %}
+{% assign blockHandle = block.settings.handle | strip %}
+{% assign link_handle = link_handle | strip %}
+
+{%- if blockHandle== link_handle -%}
+{% assign count_mini_menu = count_mini_menu | plus : 1 %}
+{% endif %}
+{% endfor %}
+
+<li class="header__menu-item {% if link.active and link.url != '/' %}header__menu-item--active
+{% endif %}" >
+{% if link.url contains 'customer-portal' and customer.metafields.subscriptions.customer_string %}
+  {% assign link_url = '/tools/recurring/customer_portal/' | append : customer.metafields.subscriptions.customer_string | append : '/subscriptions/' %}
+  {% assign link_url = '/pages/recharge-customer-portal' %}
+{% else %}
+  {% assign link_url = link.url %}
+{% endif %}
+
+{% if link.url contains 'nolink' %}
+<span class="pointer header__menu-link" {% if count_mini_menu > 0 %}data-menu-double{% endif %} href="{{ link.url }}">{{- link.title | escape | strip -}}</span>
+{% elsif link.url contains 'customer-portal' and customer == blank %}
+<a class="header__menu-link" data-open-account="{{link_url}}">{{- link.title | escape | strip -}}</a>
+{% comment %}
+<a class="header__menu-link" href="{{link_url}}">{{- link.title | escape | strip -}}</a>
+{% endcomment %}
+
+{% else %}
+<a class="header__menu-link" {% if count_mini_menu > 0 %}data-menu-double{% endif %} href="{{ link_url }}">{{- link.title | escape | strip -}}</a>
+{% endif %}
+{% if count_mini_menu > 0 %}
+<div class="header__submenu">
+  <div class="">
+    <div class="grid header__submenu-grid grid--large">
+      {% for block in section.blocks %}
+      {% if block.settings.handle == link_handle %}
+      {% assign counter = counter | plus : 1 %}
+      {% if block.type == 'megamenu-linklist' %}
+      <div class="megamenu__container grid__cell {{ block.settings.size }} {% if counter == count_mini_menu %}megamenu__container--last{% endif %}">
+        <div class="megamenu__content {% if counter == 1 %}megamenu__content--first{% elsif counter == count_mini_menu %}megamenu__content--last{% endif %}">
+          <div class="z-h10 megamenu__title">
+            {{ block.settings.title }}
+          </div>
+          <ul>
+            {% for l in linklists[block.settings.linklist].links %}
+			{% assign imageKey = 'logo_' | append : forloop.index %}
+
+            <li class="text t-6 header__submenu-item {% if l.active or l.title contains 'Tous les ' %}header__submenu-item--active{% endif %}">
+				{% if block.settings[imageKey] != blank %}
+					<img src="{{ block.settings[imageKey] }}" class="header__submenu-item-picto" alt="picto submenu"/>
+				{% endif %}
+			  <a href="{{ l.url }}">{{ l.title | escape }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% elsif block.type == 'megamenu-images' %}
+      <div class="megamenu__container grid__cell {{ block.settings.size }} {%if counter == count_mini_menu %}megamenu__container--last{% endif %}">
+        <div class="megamenu__content {% if counter == 1 %}megamenu__content--first{% elsif counter == count_mini_menu %}megamenu__content--last{% endif %}">
+          <div class="z-h10 megamenu__title">
+            {{ block.settings.title }}
+          </div>
+          <div class="grid grid--small">
+			  {% assign gridSize = 0 %}
+			{% for i in (1..6) %}
+				{% assign imageKey = 'image_' | append : i %}
+				{% if block.settings[imageKey] != blank %}
+					{% assign gridSize = gridSize | plus : 1 %}
+				{% endif %}
+			{% endfor %}
+            {% if block.settings.image_1 != blank %}{% include 'megamenu-image' with gridSize : gridSize, image_hover : block.settings.image_hover_1, image : block.settings.image_1, title : block.settings.title_1, url : block.settings.link_1 %}{% endif %}
+            {% if block.settings.image_2 != blank %}{% include 'megamenu-image' with gridSize : gridSize, image_hover : block.settings.image_hover_2, image : block.settings.image_2, title : block.settings.title_2, url : block.settings.link_2 %}{% endif %}
+            {% if block.settings.image_3 != blank %}{% include 'megamenu-image' with gridSize : gridSize, image_hover : block.settings.image_hover_3, image : block.settings.image_3, title : block.settings.title_3, url : block.settings.link_3 %}{% endif %}
+            {% if block.settings.image_4 != blank %}{% include 'megamenu-image' with gridSize : gridSize, image_hover : block.settings.image_hover_4, image : block.settings.image_4, title : block.settings.title_4, url : block.settings.link_4 %}{% endif %}
+            {% if block.settings.image_5 != blank %}{% include 'megamenu-image' with gridSize : gridSize, image_hover : block.settings.image_hover_5, image : block.settings.image_5, title : block.settings.title_5, url : block.settings.link_5 %}{% endif %}
+            {% if block.settings.image_6 != blank %}{% include 'megamenu-image' with gridSize : gridSize, image_hover : block.settings.image_hover_6, image : block.settings.image_6, title : block.settings.title_6, url : block.settings.link_6 %}{% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+</li>
+{% endfor %}

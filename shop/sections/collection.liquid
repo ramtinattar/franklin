@@ -1,0 +1,157 @@
+{% assign selectedCollection = collection %}
+{% if section.settings.collection != blank %}
+	{% assign selectedCollection = collections[section.settings.collection] %}
+{% endif %}
+{% include 'collection' with Settings:section.settings, id:section.id, sectionCollection:selectedCollection %}
+
+{% schema %}
+{
+	"name": "Collection(page col only)",
+	"settings": [
+	{
+	  "type": "collection",
+	  "id": "collection",
+	  "label": "Collection",
+	  "info": "Si on souhaite définir une collection spécifique. Laisser vide pour choisir celle de la page."
+  },
+  {
+	  "type":"header",
+	  "content":"Encart image"
+  },
+  {
+    "type": "image_picker",
+    "id": "encart_image",
+    "label": "Encart d'image",
+	"info":"164x325px"
+},
+	{
+		"type":"header",
+		"content":"Encart text"
+	},
+	{
+	  "type": "text",
+	  "id": "encart_title",
+	  "label": "Encart title",
+	  "default": "Toutes nos croquettes pour chien"
+  },
+  {
+    "type": "color",
+    "id": "encart_text_color",
+    "label": "Couleur de fond"
+},
+  {
+    "type": "richtext",
+    "id": "encart_text",
+    "label": "Encart texte",
+    "default": "<p>Des croquettes sans céréales et hypo-allergéniques pensées pour les estomacs les plus sensibles.</p>"
+},
+	{
+	  "type": "image_picker",
+	  "id": "encart_picto",
+	  "label": "Picto",
+  	"info":"164x325px"
+  },
+	{
+		"type": "select",
+		"id": "encart_color",
+		"label": "Couleur",
+		"options": [
+		{
+			"value" : "bg--color",
+			"label" : "BG Color"
+		},{
+			"value" : "bg--primary",
+			"label" : "BG Primary"
+		},{
+			"value" : "bg--secondary",
+			"label" : "BG secondary"
+		}
+		]
+	},
+		{
+			"type":"header",
+			"content" : "Section"
+		},
+		{
+		  "type": "text",
+		  "id": "anchor_id",
+		  "label": "ID de l'ancre"
+	  },
+		{
+		  "type": "checkbox",
+		  "id": "border_bottom",
+		  "label": "Border bottom",
+		  "default": true
+	  },
+	  {
+		  "type": "checkbox",
+		  "id": "border_bottom_all",
+		  "label": "Border bottom ALL SIZES",
+		  "default": false
+	  },
+		{
+			"type": "select",
+			"id": "section_spacing",
+			"label": "Section bottom spacing",
+			"options": [
+			{
+				"value" : "section--xl-spacing",
+				"label" : "XL Spacing"
+			},{
+				"value" : "section--l-spacing",
+				"label" : "L Spacing"
+			},{
+				"value" : "section--m-spacing",
+				"label" : "M Spacing"
+			},{
+				"value" : "section--s-spacing",
+				"label" : "S Spacing"
+			},{
+				"value" : "section--xs-spacing",
+				"label" : "XS Spacing"
+			},{
+				"value" : "section--no-spacing",
+				"label" : "No Spacing"
+			}
+			]
+		},
+		{
+			"type": "select",
+			"id": "section_spacing_mobile",
+			"label": "Section bottom spacing mobile",
+			"options": [
+			{
+				"value":"",
+				"label":"Same value"
+			},
+			{
+				"value" : "mobile-section--xl-spacing",
+				"label" : "XL Spacing"
+			},{
+				"value" : "mobile-section--l-spacing",
+				"label" : "L Spacing"
+			},{
+				"value" : "mobile-section--m-spacing",
+				"label" : "M Spacing"
+			},{
+				"value" : "mobile-section--s-spacing",
+				"label" : "S Spacing"
+			},{
+				"value" : "mobile-section--xs-spacing",
+				"label" : "XS Spacing"
+			},{
+				"value" : "mobile-section--no-spacing",
+				"label" : "No Spacing"
+			}
+			],
+			"default":""
+		}
+		],
+		"presets": [
+		{
+			"name": "Collection(page col only)",
+			"category": "Studio Zerance"
+		}
+		]
+	}
+	{% endschema %}

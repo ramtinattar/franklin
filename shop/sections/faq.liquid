@@ -1,0 +1,330 @@
+{% include 'faq' with Settings:section.settings, id:section.id %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+  {
+    "type": "text",
+    "id": "title",
+    "label": "Title",
+    "default": "Allô véto ? Questions-réponses sur l'alimentation de votre chien."
+  },
+  {
+    "type": "richtext",
+    "id": "text",
+    "label": "Sous titre",
+    "default": "<p>Questions-réponses sur l'alimentation de votre chat</p>"
+  },
+  {
+    "type": "image_picker",
+    "id": "image",
+    "label": "Image personnage",
+"info":"164x325px"
+  },
+  {
+    "type": "text",
+    "id": "cta_text",
+    "label": "CTA text",
+    "default": "Poser une question"
+  },
+  {
+    "type": "url",
+    "id": "cta_url",
+    "label": "CTA url"
+  },
+  {
+    "type":"header",
+    "content" : "Questions"
+  },
+  {
+    "type": "text",
+    "id": "question_1",
+    "label": "Question 1",
+    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+  },
+  {
+    "type": "richtext",
+    "id": "answer_1",
+    "label": "Answer 1",
+    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+  },
+  {
+    "type": "text",
+    "id": "question_2",
+    "label": "Question 2",
+    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+  },
+  {
+    "type": "richtext",
+    "id": "answer_2",
+    "label": "Answer 2",
+    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+  },
+  {
+    "type": "text",
+    "id": "question_3",
+    "label": "Question 3",
+    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+  },
+  {
+    "type": "richtext",
+    "id": "answer_3",
+    "label": "Answer 3",
+    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+  },
+  {
+    "type": "text",
+    "id": "question_4",
+    "label": "Question 4",
+    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+  },
+  {
+    "type": "richtext",
+    "id": "answer_4",
+    "label": "Answer 4",
+    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+  },
+  {
+    "type": "text",
+    "id": "question_5",
+    "label": "Question 5",
+    "default": "Vos recettes sont-elles adaptées à mon chien ?"
+  },
+  {
+    "type": "richtext",
+    "id": "answer_5",
+    "label": "Answer 5",
+    "default": "<p>Les recettes Franklin ont été conçues pour répondre aux besoins de votre chien, quel que soit son âge, sa race et son niveau d’activité. Nos croquettes, pâtées et friandises pour chien sont 100% naturelles et sans céréales, principalement à base de viande fraiche (poulet, dinde, agneau, canard), de poisson frais (saumon, truite), de légumes (patate douce, carotte, asperge), de fruits (canneberge, orange), et d'herbes. </p>"
+  },
+  {
+    "type": "text",
+    "id": "question_6",
+    "label": "Question 6"
+  },
+  {
+    "type": "richtext",
+    "id": "answer_6",
+    "label": "Answer 6"
+  },
+  {
+    "type": "text",
+    "id": "question_7",
+    "label": "Question 7"
+  },
+  {
+    "type": "richtext",
+    "id": "answer_7",
+    "label": "Answer 7"
+  },
+  {
+    "type": "text",
+    "id": "question_8",
+    "label": "Question 8"
+  },
+  {
+    "type": "richtext",
+    "id": "answer_8",
+    "label": "Answer 8"
+  },
+  {
+    "type": "text",
+    "id": "question_9",
+    "label": "Question 9"
+  },
+  {
+    "type": "richtext",
+    "id": "answer_9",
+    "label": "Answer 9"
+  },
+  {
+    "type": "text",
+    "id": "question_10",
+    "label": "Question 10"
+  },
+    {
+      "type": "richtext",
+      "id": "answer_10",
+      "label": "Answer 10"
+    },
+    {
+      "type": "text",
+      "id": "question_11",
+      "label": "Question 11"
+    },
+      {
+        "type": "richtext",
+        "id": "answer_11",
+        "label": "Answer 11"
+      },
+      {
+        "type": "text",
+        "id": "question_12",
+        "label": "Question 12"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_12",
+        "label": "Answer 12"
+      },
+      {
+        "type": "text",
+        "id": "question_13",
+        "label": "Question 13"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_13",
+        "label": "Answer 13"
+      },
+      {
+        "type": "text",
+        "id": "question_14",
+        "label": "Question 14"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_14",
+        "label": "Answer 14"
+      },
+      {
+        "type": "text",
+        "id": "question_15",
+        "label": "Question 15"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_15",
+        "label": "Answer 15"
+      },
+      {
+        "type": "text",
+        "id": "question_16",
+        "label": "Question 16"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_16",
+        "label": "Answer 16"
+      },
+      {
+        "type": "text",
+        "id": "question_17",
+        "label": "Question 17"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_17",
+        "label": "Answer 17"
+      },
+      {
+        "type": "text",
+        "id": "question_18",
+        "label": "Question 18"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_18",
+        "label": "Answer 18"
+      },
+      {
+        "type": "text",
+        "id": "question_19",
+        "label": "Question 19"
+      },
+      {
+        "type": "richtext",
+        "id": "answer_19",
+        "label": "Answer 19"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ],
+      "presets": [
+      {
+        "name": "FAQ",
+        "category": "Studio Zerance"
+      }
+      ]
+    }
+    {% endschema %}

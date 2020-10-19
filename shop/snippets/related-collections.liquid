@@ -1,0 +1,31 @@
+<section class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="featured-reviews">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div class="page-width related-collections">
+		<div class="related-collections__heading align-center">
+			<h2 class="z-h2 heading">
+				{{ Settings.title }}
+			</h2>
+			<div class="text--xlarge text related-collections__text">
+				{{ Settings.text }}
+			</div>
+		</div>
+		<div class="related-collections__collections grid">
+			<div class="related-collections__collection related-collections__collection--left grid__cell 1/2--desk">
+				<div class="related-collections__collection-container">
+					<a href="{{ collections[Settings.collection1].url }}">
+						{% include 'image' with img: Settings.image_1, classes:"related-collections__collection-image border--desktop" %}
+						<h3 class="secondary related-collections__collection-title z-h7">{{ Settings.title_1 }}</h3>
+					</a>
+				</div>
+			</div>
+			<div class="related-collections__collection related-collections__collection--right grid__cell 1/2--desk">
+				<a href="{{ collections[Settings.collection2].url }}">
+					<div class="related-collections__collection-container">
+						{% include 'image' with img: Settings.image_2, classes:"related-collections__collection-image border--desktop" %}
+						<h3 class="secondary related-collections__collection-title z-h7">{{ Settings.title_2 }}</h3>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>

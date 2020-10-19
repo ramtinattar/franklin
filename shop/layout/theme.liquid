@@ -1,0 +1,569 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+	<meta name="theme-color" content="{{ settings.color_primary }}">
+	<link rel="canonical" href="{{ canonical_url }}">
+
+	{% if settings.favicon != blank %}
+	<link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+	{% endif %}
+
+	{% capture seo_title %}
+	{{ page_title }}
+	{% if current_tags %}
+	{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+	{% endif %}
+	{% if current_page != 1 %}
+	&ndash; {{ 'general.meta.page' | t: page: current_page }}
+	{% endif %}
+	{% unless page_title contains shop.name %}
+	&ndash; {{ shop.name }}
+	{% endunless %}
+	{% endcapture %}
+	<title>{{ seo_title }}</title>
+
+	{% if page_description %}
+	<meta name="description" content="{{ page_description | escape }}">
+	{% endif %}
+
+	{% include 'social-meta-tags' %}
+
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M4232MX');</script>
+<!-- End Google Tag Manager -->
+
+
+
+<data data-attributes
+{% if customer.id %}data-customer-id="{{ customer.id }}"{% endif %}
+{% if customer.email %}data-custom-email="{{ customer.email }}"{% endif %}>
+</data>
+
+{% if template.directory == 'customers' %}
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ 'shopify_common.js' | shopify_asset_url }}"></script><![endif]-->
+{% endif %}
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+{% comment %}
+<link href="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/css/widget.css" rel="stylesheet" type="text/css">
+{% endcomment %}
+
+{% comment %}
+<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+<!-- ScrollMagic -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.6/ScrollMagic.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.6/plugins/debug.addIndicators.js"></script>
+
+<!--GSAP animation plugin should be placed after ScrollMagic! -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.6/plugins/animation.gsap.js"></script>
+
+{% endcomment %}
+
+
+{% comment %}
+<!-- Start of Littledata - Fix Google Analytics Script-->
+{% include 'LittledataLayer' %}
+<!-- End of Littledata - Fix Google Analytics Script -->
+{% endcomment %}
+
+{{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+
+{{ content_for_header }}
+{% comment %}
+<style>body{opacity:0;}</style>
+{% endcomment %}
+
+<script type="text/javascript">
+// Utilities
+function setCookie(cname, cvalue, exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+		var expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function deleteCookie(cname) {
+		document.cookie = cname + "= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+}
+
+function getCookie(cname) {
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == ' ') {
+						c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+						return c.substring(name.length, c.length);
+				}
+		}
+		return "";
+}
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://unpkg.com/vuejs-datepicker"></script>
+	<script src="https://unpkg.com/vuejs-datepicker/dist/locale/translations/fr.js"></script>
+	<script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>
+	<script charset="UTF-8" type="text/javascript" src="https://cdn.shipup.co/latest_v2/shipup-js.js"></script>
+	<link rel="stylesheet" href="https://cdn.shipup.co/latest_v2/shipup.css"></link>
+	<script>
+		var customer_data = [];
+		function getCustomerData(){
+			var cache = {};
+
+			var customerAccessToken = getCookie('customerAccessToken');
+			const query = `query allOrders {
+		     customer(customerAccessToken: "` + customerAccessToken.toString() + `") {
+						acceptsMarketing
+				    createdAt
+				    displayName
+				    email
+				    firstName
+				    id
+				    lastName
+				    phone
+				    tags
+				    updatedAt
+				    addresses(first: 10) {
+				      edges {
+				        node {
+				          address1
+				          address2
+				          city
+				          company
+				          country
+				          countryCode
+				          countryCodeV2
+				          firstName
+				          formattedArea
+				          id
+				          name
+				          phone
+				          province
+				          provinceCode
+				          zip
+				          lastName
+				        }
+				      }
+				    }
+				    defaultAddress {
+				      address1
+				      address2
+				      company
+				      city
+				      country
+				      countryCode
+				      countryCodeV2
+				      firstName
+				      formattedArea
+				      id
+				      lastName
+				      phone
+				      name
+				      province
+				      provinceCode
+				      zip
+				    }
+				    orders(first: 100, reverse: true) {
+				      edges {
+				        node {
+				          id
+				          currencyCode
+				          customerLocale
+				          customerUrl
+				          email
+				          name
+				          orderNumber
+				          phone
+				          processedAt
+				          statusUrl
+				          subtotalPrice
+				          totalPrice
+				          totalRefunded
+				          totalShippingPrice
+				          totalTax
+									statusUrl
+									discountApplications(first: 10) {
+				            edges {
+				              node {
+												value {
+				                  ... on MoneyV2 {
+				                    __typename
+				                    amount
+				                  }
+				                }
+				              }
+				            }
+				          }
+				          shippingAddress {
+				            address1
+				            address2
+				            city
+				            company
+				            country
+				            countryCode
+				            firstName
+				            id
+				            lastName
+				            name
+				            phone
+				            province
+				            provinceCode
+				            zip
+				          }
+				          lineItems(first: 15) {
+				            edges {
+				              node {
+				                quantity
+				                title
+				                variant {
+				                  id
+				                  compareAtPrice
+				                  available
+				                  image {
+				                    id
+				                    src
+				                    altText
+				                    originalSrc
+				                  }
+													product {
+														id
+				                  }
+				                  price
+				                  title
+				                  weight
+				                  weightUnit
+				                  sku
+				                  requiresShipping
+				                  selectedOptions {
+				                    name
+				                    value
+				                  }
+				                }
+				              }
+				            }
+				          }
+				        }
+				      }
+				    }
+		      }
+					products(first: 100) {
+						edges {
+							node {
+								availableForSale
+								createdAt
+								description
+								descriptionHtml
+								handle
+								id
+								options {
+				          id
+				          name
+				          values
+				        }
+								images(first: 10) {
+									edges {
+										node {
+											altText
+											id
+											originalSrc
+											src
+										}
+									}
+								}
+								productType
+								publishedAt
+								title
+								updatedAt
+								vendor
+								onlineStoreUrl
+								variants(first: 10) {
+									edges {
+										node {
+											price
+											id
+											title
+											available
+											selectedOptions {
+	                      name
+	                      value
+	                    }
+											image {
+												altText
+												id
+												originalSrc
+												src
+											}
+											sku
+											weight
+											weightUnit
+										}
+									}
+								}
+							}
+						}
+					}
+					productTypes(first: 20) {
+				    edges {
+				      node
+				    }
+				  }
+		    }`
+			const params = {
+				query:query
+			}
+			const optionsQuery = {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"X-Shopify-Storefront-Access-Token": 'f30850f961aadcf23f39666a3041d658'
+				},
+				body: JSON.stringify(params)
+			};
+			return fetch(`/api/graphql`, optionsQuery)
+			.then(res => res.json())
+			.then(function(response) {
+				console.log('getCustomerData');
+				console.log(response);
+				customer_data = response;
+			});
+		}
+	</script>
+
+</head>
+
+<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}">
+
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe sandbox src="https://www.googletagmanager.com/ns.html?id=GTM-M4232MX"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		{% include 'ld-json' %}
+		<a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+		<div data-quickview-container></div>
+		{% section 'header' %}
+		{% section 'burger-menu' %}
+		{% section 'side-cart' %}
+		<main role="main" id="MainContent">
+			{{ content_for_layout }}
+		</main>
+		{% section 'footer' %}
+		{% section 'account-popup' %}
+
+		{% include 'klaviyo' %}
+		<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"26042050"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
+
+		<!--Gorgias Chat Widget Start-->
+		<div id="gorgias-chat">
+
+		</div><!--Gorgias Chat Widget End-->
+
+
+
+	{% comment %}Yotpo{% endcomment %}
+	<script type="text/javascript">(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/ib3UZsEMCWTakCBdQIiLYciJnTn4wbwvcu2EfhwC/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();</script>
+	<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}"></script><!--<![endif]-->
+	<!--[if lt IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
+
+	<script>
+	document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+	window.theme = {
+		strings: {
+			addToCart: {{ 'products.product.add_to_cart' | t | json }},
+			soldOut: {{ 'products.product.sold_out' | t | json }},
+			unavailable: {{ 'products.product.unavailable' | t | json }}
+		},
+		moneyFormat: {{ shop.money_format | json }}
+	};
+	var all_products = [];
+	var push = null;
+	var shop_url = '{{ shop.permanent_domain }}';
+	{% assign integrate_checkout = settings.integrate_checkout %}
+	var integrate_checkout = {{ integrate_checkout }};
+
+	var themeSettings = {};
+	themeSettings.product_why_subscribe = '{{ settings.product_why_subscribe | escape }}';
+	themeSettings.subscribe_popup_title = '{{ settings.subscribe_popup_title | escape }}';
+	themeSettings.subscribe_popup_content = '{{ settings.subscribe_popup_content | escape }}';
+	themeSettings.subscribe_popup_cta = '{{ settings.subscribe_popup_cta  | escape }}';
+	themeSettings.subscribe_popup_url = '{{ settings.subscribe_popup_url | escape }}';
+	themeSettings.subscribe_popup_picto_1 = '{{ settings.subscribe_popup_picto_1 | escape }}';
+	themeSettings.subscribe_popup_title_1 = '{{ settings.subscribe_popup_title_1 | escape }}';
+	themeSettings.subscribe_popup_text_1 = '{{ settings.subscribe_popup_text_1 | escape }}';
+	themeSettings.subscribe_popup_picto_2 = '{{ settings.subscribe_popup_picto_2 | escape }}';
+	themeSettings.subscribe_popup_title_2 = '{{ settings.subscribe_popup_title_2 | escape }}';
+	themeSettings.subscribe_popup_text_2 = '{{ settings.subscribe_popup_text_2 | escape }}';
+	themeSettings.subscribe_popup_picto_3 = '{{ settings.subscribe_popup_picto_3 | escape }}';
+	themeSettings.subscribe_popup_title_3 = '{{ settings.subscribe_popup_title_3 | escape }}';
+	themeSettings.subscribe_popup_text_3 = '{{ settings.subscribe_popup_text_3 | escape }}';
+	themeSettings.subscribe_popup_picto_4 = '{{ settings.subscribe_popup_picto_4 | escape }}';
+	themeSettings.subscribe_popup_title_4 = '{{ settings.subscribe_popup_title_4 | escape }}';
+	themeSettings.subscribe_popup_text_4 = '{{ settings.subscribe_popup_text_4 | escape }}';
+
+	{% for product in collections.all.products %}
+	push = {
+		product : {{ product | json }},
+		metafields : {}
+	}
+	push.variants = [];
+	{% for variant in product.variants %}
+	push.variants.push({
+		variant : {{ variant | json }},
+		metafields : {}
+	});
+	{% endfor %}
+	all_products.push(push);
+	{% endfor %}
+	</script>
+
+	<!--[if (gt IE 9)|!(IE)]><!--><script defer src="{{ 'theme.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+	<!--[if lt IE 9]><script src="{{ 'theme.js' | asset_url }}"></script><![endif]-->
+
+	<script>
+	var all_products_2 = [];
+	function populateProducts(){
+		var cache = {};
+		// 1. Query product json
+
+
+		// 2. Query product metafields
+		const query = `query ProductMetafields {
+			products(first: 80) {
+				edges {
+					node {
+						handle
+						onlineStoreUrl
+						metafields(namespace: "subscriptions", first:15) {
+							edges {
+								node {
+									namespace
+									key
+									value
+								}
+							}
+						}
+						variants(first: 20) {
+							edges {
+								node {
+									metafields(namespace: "subscriptions", first: 4) {
+										edges {
+											node {
+												namespace
+												key
+												value
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}`
+		const params = {
+			query:query
+		}
+		const optionsQuery = {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"X-Shopify-Storefront-Access-Token": 'f30850f961aadcf23f39666a3041d658'
+			},
+			body: JSON.stringify(params)
+		};
+		return fetch(`/api/graphql`, optionsQuery)
+		.then(res => res.json())
+		.then(function(response){
+			cache.productMetafieldResponse = response;
+			var push = { product : {}, metafields : {}};
+			var queryProducts = cache.productMetafieldResponse.data.products.edges;
+			var queryProduct = null;
+			var index = -1;
+			for(var i = 0; i < queryProducts.length; i++){
+				queryProduct = queryProducts[i];
+				for(var k = 0; k < all_products.length; k++){
+					var objectProduct = all_products[k].product;
+					if(objectProduct.handle == queryProduct.node.handle){
+						for(var j = 0; j < queryProduct.node.metafields.edges.length; j++){
+							var queryMetafield = queryProduct.node.metafields.edges[j].node;
+							all_products[k].metafields[queryMetafield.key] = queryMetafield.value;
+						}
+						if(objectProduct.variants){
+							for(var l = 0; l < objectProduct.variants.length; l++){
+								var objectVariant = objectProduct.variants[l];
+								var queryVariant = queryProduct.node.variants.edges[l];
+								if(!queryVariant || !queryVariant.node.metafields || ! queryVariant.node.metafields.edges) continue
+								for(var m = 0; m < queryVariant.node.metafields.edges.length; m++){
+									var queryVariantMetafield = queryVariant.node.metafields.edges[m].node;
+									all_products[k].variants[l].metafields[queryVariantMetafield.key] = queryVariantMetafield.value;
+								}
+							}
+						}
+					}
+
+
+				}
+			}
+			$(window).trigger('productLoaded');
+			$(window).trigger('cartLoaded');
+		});
+	}
+
+	setTimeout(function(){
+		populateProducts();
+	}, 500);
+</script>
+
+{% comment %}
+<!--[if (gt IE 9)|!(IE)]><!--><script defer src="{{ 'theme.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lt IE 9]><script src="{{ 'theme.js' | asset_url }}"></script><![endif]-->
+{% endcomment %}
+	<script type="text/javascript">
+		$(function(){
+			CartJS.init({{ cart | json }});
+
+		})
+</script>
+{% if customer %}<script>
+setTimeout(function(){
+	window.gorgiasChatParameters = {"smooch": {"givenName": "{{ customer.name }}","email": "{{ customer.email }}","properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}
+	var s = document.createElement( 'script' );
+	s.setAttribute( 'src', "https://config.gorgias.io/production/Aa90l7E4Gj2JWorj/chat/dY4gQxzbQ1xWnv8l.js" );
+	document.body.appendChild( s );
+}, 5000)
+</script>{% else %}
+<script>
+setTimeout(function(){
+	window.gorgiasChatParameters = {"smooch": {"properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}
+	var s = document.createElement( 'script' );
+	s.setAttribute( 'src', "https://config.gorgias.io/production/Aa90l7E4Gj2JWorj/chat/dY4gQxzbQ1xWnv8l.js" );
+	document.body.appendChild( s );
+}, 5000);
+</script>
+{% endif %}
+</body>
+</html>

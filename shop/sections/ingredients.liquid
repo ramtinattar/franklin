@@ -1,0 +1,155 @@
+{% include 'ingredients' with Settings:section.settings, id:section.id %}
+
+{% schema %}
+{
+	"name": "Ingredients",
+	"settings": [
+	{
+	  "type": "image_picker",
+	  "id": "ingredient_1",
+	  "label": "Ingredient 1"
+  },
+  {
+    "type": "text",
+    "id": "ingredient_speed_1",
+    "label": "Ingredient 1 speed",
+    "default": "0",
+    "info": "En millisecondes"
+},
+  {
+    "type": "image_picker",
+    "id": "ingredient_2",
+    "label": "Ingredient 2"
+},
+{
+  "type": "text",
+  "id": "ingredient_speed_2",
+  "label": "Ingredient 2 speed",
+  "default": "0",
+  "info": "En millisecondes"
+},
+{
+  "type": "image_picker",
+  "id": "image",
+  "label": "Image"
+},
+{
+  "type": "text",
+  "id": "title",
+  "label": "Titre",
+  "default": "La recette idéale contre les allergies alimentaires."
+},
+{
+  "type": "image_picker",
+  "id": "picto_1",
+  "label": "Picto 1"
+},
+{
+  "type": "text",
+  "id": "title_1",
+  "label": "Title 1",
+  "default": "Mono-protéine"
+},
+{
+  "type": "image_picker",
+  "id": "picto_2",
+  "label": "Picto 2"
+},
+{
+  "type": "text",
+  "id": "title_2",
+  "label": "Title 2",
+  "default": "Mono-protéine"
+},
+{
+  "type": "image_picker",
+  "id": "picto_3",
+  "label": "Picto 3"
+},
+{
+  "type": "text",
+  "id": "title_3",
+  "label": "Title 3",
+  "default": "Mono-protéine"
+},
+{
+  "type": "image_picker",
+  "id": "picto_4",
+  "label": "Picto 4"
+},
+{
+  "type": "text",
+  "id": "title_4",
+  "label": "Title 4",
+  "default": "Mono-protéine"
+},
+	{
+		"type":"header",
+		"content" : "Section"
+	},
+	{
+		"type": "select",
+		"id": "section_spacing",
+		"label": "Section bottom spacing",
+		"options": [
+		{
+			"value" : "section--xl-spacing",
+			"label" : "XL Spacing"
+		},{
+			"value" : "section--l-spacing",
+			"label" : "L Spacing"
+		},{
+			"value" : "section--m-spacing",
+			"label" : "M Spacing"
+		},{
+			"value" : "section--s-spacing",
+			"label" : "S Spacing"
+		},{
+			"value" : "section--xs-spacing",
+			"label" : "XS Spacing"
+		},{
+			"value" : "section--no-spacing",
+			"label" : "No Spacing"
+		}
+		]
+	},
+	{
+		"type": "select",
+		"id": "section_spacing_mobile",
+		"label": "Section bottom spacing mobile",
+		"options": [
+		{
+			"value":"",
+			"label":"Same value"
+		},
+		{
+			"value" : "mobile-section--xl-spacing",
+			"label" : "XL Spacing"
+		},{
+			"value" : "mobile-section--l-spacing",
+			"label" : "L Spacing"
+		},{
+			"value" : "mobile-section--m-spacing",
+			"label" : "M Spacing"
+		},{
+			"value" : "mobile-section--s-spacing",
+			"label" : "S Spacing"
+		},{
+			"value" : "mobile-section--xs-spacing",
+			"label" : "XS Spacing"
+		},{
+			"value" : "mobile-section--no-spacing",
+			"label" : "No Spacing"
+		}
+		],
+		"default":""
+	}
+	],
+	"presets": [
+	{
+		"name": "Ingredients",
+		"category": "Deprecated"
+	}
+	]
+}
+{% endschema %}

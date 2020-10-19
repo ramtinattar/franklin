@@ -1,0 +1,462 @@
+<style>
+    .header__logo-image, .header__logo-image svg {
+      max-width: {{ section.settings.logo_max_width }}px;
+      width: {{ section.settings.logo_max_width }}px;
+    }/**/
+    .announcement-bar {
+      background: {{ section.settings.announcement_color }};
+    }
+    .announcement-bar__text,
+    .announcement-bar__close {
+      color: {{ section.settings.announcement_color_text }};
+    }
+      main{
+        padding:0;
+      }
+</style>
+{% assign headerTransparent = '' %}
+{% if section.settings.transparent_handles contains template.suffix or section.settings.transparent_handles contains template.name %}
+  {% assign headerTransparent = 'header--transparent light' %}
+{% else %}
+  {% assign headerTransparent = 'normal-header light' %}
+{% endif %}
+<header class="header {{ headerTransparent }} bg--white">
+  <div class="relative">
+    {% if section.settings.show_announcement_bar == true %}
+    <div class="announcement-bar t-9">
+      <p class="announcement-bar__text">{{ section.settings.announcement_text | replace : '<p>', '' | replace: '</p>', '' }}</p>
+    </div>
+    {% endif %}
+    <div class="header-container full-page-width">
+      <div class="grid grid--middle">
+        <div class="grid__cell 1/5 2/5--desk align-left">
+          <div class="header__mobile-item">
+            <div class="header__toggle-button" data-header-toggle>
+              {% include 'icon-burger' %}
+              {% include 'icon-cross' %}
+            </div>
+
+            <div class="header__mobile-item-search only-mobile" data-search-toggle>
+              {% include 'icon-search' %}
+              {% include 'icon-cross' %}
+            </div>
+          </div>
+
+          <nav role="navigation" class="header__navigation">
+            <ul class="header__menu-items">
+              {% include 'header-linklist' with linklist : section.settings.menu_left %}
+            </ul>
+          </nav>
+        </div>
+        <div class="grid__cell 3/5 1/5--desk align-center">
+          {% if template.name == 'index' %}
+            <div class="no-margin header-h1" itemscope itemtype="http://schema.org/Organization">
+          {% else %}
+            <div class="no-margin header-h1" itemscope itemtype="http://schema.org/Organization">
+          {% endif %}
+              <a href="/" itemprop="url" class="header__logo-image">
+                {% if section.settings.svg_logo != blank %}
+                    {{ section.settings.svg_logo }}
+
+                {% elsif section.settings.logo != blank %}
+                  {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+                  <img src="{{ section.settings.logo | img_url: image_size }}"
+                       srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                       alt="{{ section.settings.logo.alt | default: shop.name }}"
+                       itemprop="logo">
+                {% else %}
+                  {{ shop.name }}
+                {% endif %}
+              </a>
+          {% if template.name == 'index' %}
+        </div>
+          {% else %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="grid__cell 1/5 2/5--desk align-right">
+          <div class="header__mobile-item  header__mobile-item--right">
+            {% assign link_url = '/pages/recharge-customer-portal' %}
+  				  {% if customer != blank %}
+  					<a href="{{ link_url }}" style="margin-right: 15px;margin-top: 5px;">
+  						<div class="header__icon-item">
+  				  		{% include 'icon-account' %}
+  				  	  </div>
+  					</a>
+                    {% else %}
+
+  					<a data-open-account="{{link_url}}" style="margin-right: 15px;margin-top: 5px;">
+  						<div class="header__icon-item">
+  					      {% include 'icon-account' %}
+  					    </div>
+  					</a>
+
+                    {% endif %}
+
+          <a href="/cart">
+            <div {% unless page.url contains 'cart' %}data-cart-toggle{% endunless %}>
+              <div class="header__cart-count"{% if cart.item_count == 0 %}style="display:none;"{% endif %}>
+                <span data-cart-count>2</span>
+              </div>
+              {% if cart.item_count > 0 %}
+                <div class="header__cart-count" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>
+                  <span data-cart-count>{{ cart.item_count }}</span>
+                </div>
+              {% endif %}
+              {% include 'icon-cart' %}
+            </div>
+          </a>
+          </div>
+
+          <nav role="navigation" class="header__navigation">
+            <ul class="header__menu-items">
+              {% include 'header-linklist' with linklist : section.settings.menu_right %}
+              <li class="header__menu-item header__menu-item-icon header__menu-item-icon--search">
+                  <div class="header__icon-item" data-search-toggle-desktop>
+                    {% include 'icon-search' %}
+                  </div>
+                <div class="header__submenu header__submenu--search">
+					{% include 'search-bar' %}
+                </div>
+              </li>
+			  <li class="header__menu-item header__menu-item-icon header__menu-item-icon--search">
+				  {% assign link_url = '/pages/recharge-customer-portal' %}
+				  {% if customer != blank %}
+					<a href="{{ link_url }}">
+						<div class="header__icon-item">
+				  		{% include 'icon-account' %}
+				  	  </div>
+					</a>
+                  {% else %}
+
+					<a data-open-account="{{link_url}}">
+						<div class="header__icon-item">
+					      {% include 'icon-account' %}
+					    </div>
+					</a>
+
+                  {% endif %}
+
+			  </li>
+            <li class="header__menu-item-icon">
+                <a href="/cart">
+                  <div class="header__icon-item" data-cart-toggle>
+                    <div class="header__cart-count" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>
+                      <span data-cart-count>2</span>
+                    </div>
+                    {% if cart.item_count > 0 %}
+                      <div class="header__cart-count" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>
+                        <span data-cart-count>{{ cart.item_count }}</span>
+                      </div>
+                    {% endif %}
+                    {% include 'icon-cart' %}
+                  </div>
+                </a>
+              </li>
+            </ul>
+          <nav>
+        </div>
+      </div>
+  </div>
+	<div data-anchor-header class="header__anchor">
+
+	</div>
+</div>
+</header>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+  {
+    "type": "header",
+    "content": "Announcement bar"
+  },
+  {
+    "type": "checkbox",
+    "id": "show_announcement_bar",
+    "label": "Show annoucement",
+    "default": true
+  },
+  {
+    "type": "richtext",
+    "id": "announcement_text",
+    "label": "Annoucement bar text ",
+    "default": "<p>Livraison et retours gratuits !</p>"
+  },
+  {
+    "type": "color",
+    "id": "announcement_color",
+    "label": "Announcement bar color",
+    "default": "#ffffff"
+  },
+  {
+    "type": "color",
+    "id": "announcement_color_text",
+    "label": "Annoucement bar text color",
+    "default": "#000000"
+  },
+  {
+	"type": "header",
+	"content": "Search bar"
+  },
+  {
+    "type": "header",
+    "content": "Header"
+  },
+  {
+    "type": "text",
+    "id": "transparent_handles",
+    "label": "Handle des pages au header transparent",
+    "default": "index"
+  },
+  {
+     "type": "text",
+     "id": "svg_logo",
+     "label": "Logo SVG",
+     "info" : "Copier coller le SVG (Balises <svg></svg> et leur contenu)"
+   },
+  {
+    "type": "range",
+    "id": "logo_max_width",
+    "min": 50,
+    "max": 450,
+    "step": 5,
+    "unit": "px",
+    "label": "Custom logo width",
+    "default": 250
+  },
+  {
+    "type": "link_list",
+    "id": "menu_left",
+    "label": "Menu",
+    "default": "main-menu"
+  },
+  {
+    "type": "link_list",
+    "id": "menu_right",
+    "label": "2nd menu",
+    "default": "main-menu"
+  }
+  ],
+  "blocks": [
+  {
+       "type": "megamenu-linklist",
+       "name": "megamenu-linklist",
+       "settings": [
+       {
+         "type": "select",
+         "id": "size",
+         "options": [
+         { "value": "1/4", "label": "25%"},
+         { "value": "5/12", "label": "41%"},
+         { "value": "1/3", "label": "33%"},
+         { "value": "1/2", "label": "50%"},
+         { "value": "", "label": "100%"}
+         ],
+         "label": "Taille du menu"
+       },
+       {
+         "type": "text",
+         "id": "title",
+         "label": "Titre",
+         "default": "Nos produits par âge"
+       },
+         {
+           "type": "text",
+           "id": "handle",
+           "label": "Handle du menu"
+         },
+         {
+           "type": "link_list",
+           "id": "linklist",
+           "label": "Menu"
+         },
+         {
+           "type": "url",
+           "id": "logo_1",
+           "label": "Logo 1"
+         },
+         {
+           "type": "url",
+           "id": "logo_2",
+           "label": "Logo 2"
+         },
+         {
+           "type": "url",
+           "id": "logo_3",
+           "label": "Logo 3"
+         },
+         {
+           "type": "url",
+           "id": "logo_4",
+           "label": "Logo 4"
+         },
+         {
+           "type": "url",
+           "id": "logo_5",
+           "label": "Logo 5"
+         }
+       ]
+     },
+  {
+    "type": "megamenu-images",
+    "name": "megamenu images",
+    "settings": [
+    {
+      "type": "select",
+      "id": "size",
+      "options": [
+      { "value": "1/4", "label": "25%"},
+      { "value": "5/12", "label": "41%"},
+      { "value": "1/3", "label": "33%"},
+      { "value": "1/2", "label": "50%"},
+      { "value": "", "label": "100%"}
+      ],
+      "label": "Taille du menu"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "default":"Nos produits chien sans céréales",
+      "label": "Titre du menu"
+    },
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Handle",
+      "default": "chien"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_hover_1",
+      "label": "Image hover 1"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Lien 1"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Titre 1",
+      "default": "Croquettes"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_hover_2",
+      "label": "Image hover 2"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Lien 2"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Titre 2",
+      "default": "Croquettes"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_hover_3",
+      "label": "Image hover 3"
+    },
+    {
+      "type": "url",
+      "id": "link_3",
+      "label": "Lien 3"
+    },
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "Titre 3",
+      "default": "Croquettes"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_hover_4",
+      "label": "Image hover 4"
+    },
+    {
+      "type": "url",
+      "id": "link_4",
+      "label": "Lien 4"
+    },
+    {
+      "type": "text",
+      "id": "title_4",
+      "label": "Titre 4",
+      "default": "Croquettes"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Image 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_hover_5",
+      "label": "Image hover 5"
+    },
+    {
+      "type": "url",
+      "id": "link_5",
+      "label": "Lien 5"
+    },
+    {
+      "type": "text",
+      "id": "title_5",
+      "label": "Titre 5",
+      "default": "Croquettes"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_6",
+      "label": "Image 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_hover_6",
+      "label": "Image hover 6"
+    },
+    {
+      "type": "url",
+      "id": "link_6",
+      "label": "Lien 6"
+    },
+    {
+      "type": "text",
+      "id": "title_6",
+      "label": "Titre 6",
+      "default": "Croquettes"
+    }
+    ]
+  }
+  ]
+}
+{% endschema %}

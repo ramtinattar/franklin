@@ -1,0 +1,57 @@
+<section class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="faq">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div class="page-width relative">
+		{% if Settings.image != blank %}
+		<div class="faq__character-container only-desktop">
+			{% include 'image' with img:Settings.image, classes : 'faq__character' %}
+		</div>
+		{% endif %}
+		<div class="container--small mobile-container--full">
+			<div class="grid">
+				<div class="grid__cell">
+					<div class="faq__heading align-center">
+						<h2 class="z-h3 heading faq__title">{{ Settings.title }}</h2>
+						{% if Settings.text != blank %}
+						<div class="faq__subtitle heading z-h9">
+							{{ Settings.text }}
+						</div>
+						{% endif %}
+
+					</div>
+				</div>
+				<div class="grid__cell">
+					<div class="accordions faq__content" data-accordion data-allow-toggle>
+						{% for i in (0..20) %}
+						{% capture current %}{% cycle 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 %}{% endcapture %}
+						{% assign current = current | plus : 0 %}
+						{% assign questionKey = 'question_' | append : current %}
+						{% assign answerKey = 'answer_' | append : current %}
+						{% unless Settings[questionKey] != blank %}{% continue %}{% endunless %}
+						<div class="faq-group accordion">
+							<h3 class="z-h9 heading faq-group__question"
+							data-accordion-trigger
+							aria-expanded="false"
+							aria-controls="#faq-group-{{ current }}"
+							>
+							{{- Settings[questionKey] -}}
+							<img src="{{ settings.bottom_arrow_green_faq }}" alt="arrow faq" class="accordion--icon" />
+						</h3>
+						<div id="faq-group-{{ current }}"
+						class="faq-group__answer text t-5"
+						data-accordion-panel>
+						{{- Settings[answerKey] -}}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% if Settings.cta_url != blank %}
+			<div class="align-center">
+				{% include 'button' with classes : 'button--primary faq__button', href:Settings.cta_url, text : Settings.cta_text %}
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+</div>
+
+</section>

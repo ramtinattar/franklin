@@ -1,0 +1,309 @@
+{% include 'image-bullets' with Settings : section.settings, id : section.id %}
+
+{% schema %}
+{
+  "name": "Image bullets",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "default"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+		"info":"1000x740px"
+    },
+	{
+	  "type": "image_picker",
+	  "id": "image_mobile",
+	  "label": "Image mobile"
+  },
+    {
+      "type": "header",
+      "content": "Boutons"
+    },
+    {
+    	"type": "select",
+    	"id": "button_type",
+    	"label": "Type de bouton",
+    	"options": [
+    	{
+    		"value" : "",
+    		"label" : "Button primary"
+    	},{
+    		"value" : "button--secondary",
+    		"label" : "Button secondary"
+    	},{
+    		"value" : "button--invert",
+    		"label" : "Button invert"
+    	}
+    	]
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texte bouton",
+      "default": "En savoir plus"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "URL bouton"
+    },
+    {
+      "type": "text",
+      "id": "button_text_2",
+      "label": "Texte bouton 2",
+      "info" : "Laisser vide pour désactiver"
+    },
+    {
+      "type": "url",
+      "id": "button_url_2",
+      "label": "URL bouton 2"
+    },
+    {
+      "type": "header",
+      "content": "Étapes"
+    },
+
+
+    {
+      "type": "checkbox",
+      "id": "numbered_steps",
+      "label": "étapes numérotées",
+      "default": false,
+      "info": "Activer pour avoir des bullets points '1 - 2 -3'. Désactive de facto les bullet points classics et custom"
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+  	{
+  	  "type": "select",
+  	  "id": "section_spacing",
+  	  "label": "Section bottom spacing",
+  	  "options": [
+  	  {
+  		  "value" : "section--xl-spacing",
+  		  "label" : "XL Spacing"
+  	  },{
+  		  "value" : "section--l-spacing",
+  		  "label" : "L Spacing"
+  	  },{
+  		  "value" : "section--m-spacing",
+  		  "label" : "M Spacing"
+  	  },{
+  		  "value" : "section--s-spacing",
+  		  "label" : "S Spacing"
+  	  },{
+  		  "value" : "section--xs-spacing",
+  		  "label" : "XS Spacing"
+  	  },{
+  		  "value" : "section--no-spacing",
+  		  "label" : "No Spacing"
+  	  }
+  	  ]
+    },
+	{
+		"type": "select",
+		"id": "section_spacing_mobile",
+		"label": "Section bottom spacing mobile",
+		"options": [
+		{
+			"value":"",
+			"label":"Same value"
+		},
+		{
+			"value" : "mobile-section--xl-spacing",
+			"label" : "XL Spacing"
+		},{
+			"value" : "mobile-section--l-spacing",
+			"label" : "L Spacing"
+		},{
+			"value" : "mobile-section--m-spacing",
+			"label" : "M Spacing"
+		},{
+			"value" : "mobile-section--s-spacing",
+			"label" : "S Spacing"
+		},{
+			"value" : "mobile-section--xs-spacing",
+			"label" : "XS Spacing"
+		},{
+			"value" : "mobile-section--no-spacing",
+			"label" : "No Spacing"
+		}
+		],
+		"default":""
+	},
+{
+  "type": "select",
+  "id": "background",
+  "label": "Background color",
+  "options": [
+  {
+    "value":"",
+    "label":"No background"
+  },
+  {
+    "value" : "bg--color",
+    "label" : "Background color"
+  },{
+    "value" : "bg--primary",
+    "label" : "Primary color"
+  },
+  {
+    "value" : "bg--white",
+    "label" : "whitecolor"
+  }
+  ],
+  "default":""
+},
+{
+  "type": "header",
+  "content": "Steps"
+},
+{
+  "type": "text",
+  "id": "title_1",
+  "label": "Titre de l'étape",
+  "default": "Étape X"
+},
+{
+  "type": "text",
+  "id": "subtitle_1",
+  "label": "Sous titre de l'étape",
+  "default": "default"
+},
+{
+  "type": "url",
+  "id": "bullet_1",
+  "label": "Bullet point 1",
+  "info": "SVG à uploader dans 'Files'"
+},
+{
+  "type": "richtext",
+  "id": "text_1",
+  "label": "Texte",
+  "default": "<p>Default subtitle</p>"
+},
+{
+  "type": "richtext",
+  "id": "mobile_text_1",
+  "label": "Texte mobile 1"
+},
+{
+  "type": "text",
+  "id": "title_2",
+  "label": "Titre de l'étape 2"
+},
+{
+  "type": "text",
+  "id": "subtitle_2",
+  "label": "Sous titre de l'étape 2"
+},
+{
+  "type": "url",
+  "id": "bullet_2",
+  "label": "Bullet point 2",
+  "info": "SVG à uploader dans 'Files'"
+},
+{
+  "type": "richtext",
+  "id": "text_2",
+  "label": "Texte 2"
+},
+{
+  "type": "richtext",
+  "id": "mobile_text_2",
+  "label": "Texte mobile 2"
+},
+{
+  "type": "text",
+  "id": "title_3",
+  "label": "Titre de l'étape 3"
+},
+{
+  "type": "text",
+  "id": "subtitle_3",
+  "label": "Sous titre de l'étape 3"
+},
+{
+  "type": "url",
+  "id": "bullet_3",
+  "label": "Bullet point 3",
+  "info": "SVG à uploader dans 'Files'"
+},
+{
+  "type": "richtext",
+  "id": "text_3",
+  "label": "Texte 3"
+},
+{
+  "type": "richtext",
+  "id": "mobile_text_3",
+  "label": "Texte mobile 3"
+},
+{
+  "type": "text",
+  "id": "title_4",
+  "label": "Titre de l'étape 4"
+},
+{
+  "type": "text",
+  "id": "subtitle_4",
+  "label": "Sous titre de l'étape 4"
+},
+{
+  "type": "url",
+  "id": "bullet_4",
+  "label": "Bullet point 4",
+  "info": "SVG à uploader dans 'Files'"
+},
+{
+  "type": "richtext",
+  "id": "text_4",
+  "label": "Texte 4"
+},
+{
+  "type": "richtext",
+  "id": "mobile_text_4",
+  "label": "Texte mobile 4"
+},
+{
+  "type": "text",
+  "id": "title_5",
+  "label": "Titre de l'étape 5"
+},
+{
+  "type": "text",
+  "id": "subtitle_5",
+  "label": "Sous titre de l'étape 5"
+},
+{
+  "type": "url",
+  "id": "bullet_5",
+  "label": "Bullet point 5",
+  "info": "SVG à uploader dans 'Files'"
+},
+{
+  "type": "richtext",
+  "id": "text_5",
+  "label": "Texte 5"
+},
+{
+  "type": "richtext",
+  "id": "mobile_text_5",
+  "label": "Texte mobile 5"
+}
+  ],
+	"presets": [
+      {
+		    "name": "Image bullets",
+        "category": "Studio Zerance"
+      }
+  ]
+}
+{% endschema %}

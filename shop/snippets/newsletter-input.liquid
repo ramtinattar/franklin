@@ -1,0 +1,37 @@
+{%- assign formId = 'ContactFooter' -%}
+{% form 'customer', id: formId, novalidate: 'novalidate' %}
+{%- if form.posted_successfully? -%}
+<p class="form-message form-message--success" tabindex="-1" data-form-status>
+	{{ section.settings.newsletter_pre_confirmation }}
+</p>
+{%- endif -%}
+<div class="input-text__container {% if form.errors %} input-arrow--error{% endif %}">
+	{%- if form.errors contains 'email' -%}
+	<p class="form-message" style="margin-bottom: -30px;">
+		{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.
+	</p>
+	{% endif %}
+	<input type="email" name="contact[email]" id="{{ formId }}-email"
+	class="input-text {% if form.errors %} input--error{% endif %}"
+	value="{{ form.email }}" placeholder="
+	{%- if form.posted_successfully? -%}
+		{{ section.settings.newsletter_confirmation }}
+	{%- elsif form.errors contains 'email' -%}
+
+	{%- else -%}
+		{{ section.settings.newsletter_placeholder }}
+	{%- endif -%}
+	" aria-label="{{ section.settings.newsletter_placeholder }}" aria-required="true" required
+	autocorrect="off" autocapitalize="off" {% if form.errors %} aria-invalid="true"
+	aria-describedby="{{ formId }}-email-error" data-form-status {% endif %}>
+		<button type="submit" class="button--disabled button button--large input-text__btn" name="commit" id="Subscribe" disabled>
+			{{ section.settings.button_newsletter }}
+		</button>
+</div>
+{% if form.errors contains 'email' %}
+<span id="{{ formId }}-email-error" class="input-error-message">
+	{{ form.errors.translated_fields['email'] | capitalize }}
+	{{ form.errors.messages['email'] }}.
+</span>
+{% endif %}
+{% endform %}

@@ -1,0 +1,469 @@
+<div class="bg--color only-mobile">
+	<div class="footer__pictos-container footer__pictos-container--mobile page-width">
+		{% for i in (1..4) %}
+		{% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+		{% assign textKey = 'picto_text_' | append : current %}
+		{% assign imageKey = 'picto_image_mobile_' | append : current %}
+		{% assign descriptionKey = 'picto_description_' | append : current %}
+		{% if textKey != blank %}
+		<div class="footer__picto">
+			<img alt="Picto footer {{ i }}" src="{{ section.settings[imageKey] | img_url : '100x' }}" class="footer__picto-image" />
+			<!-- {% include 'image' with img : section.settings[imageKey], classes : 'footer__picto-image' %} -->
+			{% comment %}
+			Si on souhaite avoir le cercle en code
+			<div class="footer__picto-image-container">
+			{% include 'image' with img : section.settings[imageKey], classes : 'footer__picto-image' %}
+		</div>
+		{% endcomment %}
+		<div class="footer__picto-content">
+			<div class="text t-6 uppercase bold footer__picto-title">{{ section.settings[textKey] }}</div>
+			<div class="text t-6 footer__picto-description">
+				{{ section.settings[descriptionKey]}}
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% endfor %}
+</div>
+</div>
+<footer class="footer bg--primary relative">
+	<div class="footer__character-container only-desktop">
+		{% include 'image' with img : section.settings.character_image, classes : 'footer__character-image' %}
+	</div>
+	<div class="footer__contact-container bg--light">
+		<div class="footer__contact-block page-width--mobile">
+			<div class="footer__newsletter-title heading z-h5">{{ section.settings.newsletter_title }}</div>
+			<div class="text t-5 footer__newsletter-text">
+				{{ section.settings.newsletter_text }}
+			</div>
+			{% include 'newsletter-input' %}
+		</div>
+	</div>
+
+	<div class="footer__header page-width">
+		<div class="footer__social-logo-container">
+			<div class="reviews-social__right">
+				{%- assign social_accounts = 'Facebook, Instagram, Twitter, Pinterest, Snapchat, Tumblr, YouTube, Vimeo,' | split: ', ' -%}
+				<ul class="footer__social">
+					{% for social in social_accounts %}
+					{%- assign social_handle = social | handleize -%}
+					{% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+					{% capture social_image %}logo_{{ social_handle }}{% endcapture %}
+					{% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+					{% if settings[social_link] != blank %}
+						{% if social_handle == 'youtube' and section.settings.logo_youtube != blank %}
+						<li><a target="_blank" href="{{ settings[social_link] }}" class="social-media" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">{% include 'image' with img:section.settings.logo_youtube, classes:'footer__social-image' %}</a></li>
+						{% endif %}
+						{% if social_handle == 'facebook' and section.settings.logo_facebook != blank %}
+						<li><a target="_blank" href="{{ settings[social_link] }}" class="social-media" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">{% include 'image' with img:section.settings.logo_facebook, classes:'footer__social-image' %}</a></li>
+						{% endif %}
+						{% if social_handle == 'instagram' and section.settings.logo_instagram != blank %}
+						<li><a target="_blank" href="{{ settings[social_link] }}" class="social-media" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">{% include 'image' with img:section.settings.logo_instagram, classes:'footer__social-image' %}</a></li>
+						{% endif %}
+					{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="flex-grow">
+
+			</div>
+			<div class="footer__logo-container">
+				<a href="/">
+					{% include 'image' with classes:'footer__logo', img:section.settings.logo_image %}
+				</a>
+			</div>
+		</div>
+
+	</div>
+	<div class="footer__pictos-container only-desktop page-width">
+		{% for i in (1..4) %}
+		{% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+		{% assign textKey = 'picto_text_' | append : current %}
+		{% assign imageKey = 'picto_image_' | append : current %}
+		{% assign descriptionKey = 'picto_description_' | append : current %}
+		{% if textKey != blank %}
+		<div class="footer__picto">
+			{% include 'image' with img : section.settings[imageKey], classes : 'footer__picto-image' %}
+			{% comment %}
+			Si on souhaite avoir le cercle en code
+			<div class="footer__picto-image-container">
+			{% include 'image' with img : section.settings[imageKey], classes : 'footer__picto-image' %}
+		</div>
+		{% endcomment %}
+		<div class="text t-6 uppercase bold footer__picto-title">{{ section.settings[textKey] }}</div>
+		<div class="text t-6 footer__picto-description">
+			{{ section.settings[descriptionKey]}}
+		</div>
+	</div>
+	{% endif %}
+	{% endfor %}
+</div>
+<div class="footer__main page-width">
+	{% comment %}
+	<div class="page-width--mobile footer__contact-block">
+	<h2 class="footer__newsletter-title heading z-h3">{{ section.settings.newsletter_title }}</h2>
+	<div class="text text--large footer__newsletter-text">
+	{{ section.settings.newsletter_text }}
+</div>
+{% include 'newsletter-input' %}
+<div class="footer__reviews-container--mobile only-mobile">
+{% include 'footer__reviews-socials' with Settings : section.settings %}
+</div>
+</div>
+{% endcomment %}
+<hr class="no-margin" />
+<div class="footer__navigations container--large">
+	<div class="footer__linklist">
+		<div class="linklist__title heading z-h9">
+			{{ section.settings.contact_title }}
+		</div>
+		<div class="footer__linklist-content text t-6">
+			{{ section.settings.contact_description }}
+			<br />
+			<p>
+				de 9h à 21h par <a onclick="Smooch.open();">Livechat</a>
+			</p>
+			<p>
+				de 9h à 18h30 par téléphone au <br /><a class="only-mobile" href="tel:{{ section.settings.contact_phone }}" target="_blank">{{ section.settings.contact_phone }}</a><span class="only-desktop bold">{{ section.settings.contact_phone }}</span>
+			</p>
+			<br />
+			<p>
+				ou depuis le <a href="/pages/contactez-nous">formulaire de contact</a>
+			</p>
+		</div>
+	</div>
+	{% include 'footer__linklist' with linklist : section.settings.menu_1, title : section.settings.title_1 %}
+	{% include 'footer__linklist' with linklist : section.settings.menu_2, title : section.settings.title_2 %}
+	<div class="footer__linklist">
+		<a target="_blank" href="{{ section.settings.reviews_url }}">
+			<div class="footer__reviews-image-container">
+				{% include 'image' with img:section.settings.reviews_image, classes:'footer__reviews-image' %}
+			</div>
+			<div class="reviews-social__rate-container">
+				<div class="reviews-social__rate">
+					{{ section.settings.reviews_rate }}
+				</div>
+				<div class="reviews-social__rating">
+					{% for i in (1..5) %}
+					{% if i <= section.settings.reviews_range %}
+					{% include 'icon' with classes:'icon-star', src:settings.full_star, alt:'étoile note' %}
+					{% else %}
+					{% include 'icon' with classes:'icon-star', src:settings.empty_star, alt:'étoile note' %}
+					{% endif %}
+					{% endfor %}
+				</div>
+				<div class="reviews-social__text text text--large">
+					{{ section.settings.reviews_text }}
+				</div>
+			</div>
+		</a>
+
+	</div>
+</div>
+
+</div>
+<div class="page-width">
+	<div class="container--large">
+		<div class="relative footer__payments-logo">
+			{% include 'icon-american_express' %}
+			{% include 'icon-apple_pay' %}
+			{% include 'icon-master' %}
+			{% include 'icon-paypal' %}
+			{% include 'icon-visa' %}
+			<div class="align-center footer__copyright text--medium">
+				<small>{{ section.settings.copyright | link_to: '/' }}.</small>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% comment %}
+{% if section.settings.show_payment_icons %}
+{% unless shop.enabled_payment_types == empty %}
+{%- assign payment_icons_available = 'amazon_payments,american_express,apple_pay,bitcoin,cirrus,dankort,diners_club,discover,dogecoin,dwolla,forbrugsforeningen,interac,jcb,litecoin,maestro,master,paypal,visa' | split: ',' -%}
+
+<span class="visually-hidden">{{ 'layout.footer.payment_methods' | t }}</span>
+<ul class="payment-icons">
+{% for type in shop.enabled_payment_types %}
+{% if payment_icons_available contains type %}
+<li>
+{%- assign icon_name = type | prepend: 'icon-' -%}
+{% include icon_name %}
+<span class="visually-hidden">{{ type | capitalize | replace: '_', ' ' }}</span>
+</li>
+{% endif %}
+{% endfor %}
+</ul>
+{% endunless %}
+{% endif %}
+<div>
+<small>{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}. {{ powered_by_link }}</small>
+</div>
+{% endcomment %}
+
+</footer>
+
+{% schema %}
+{
+	"name": "Footer",
+	"settings": [
+	{
+		"type": "image_picker",
+		"id": "character_image",
+		"label": "Image chien"
+	},
+	{
+	  "type": "image_picker",
+	  "id": "logo_image",
+	  "label": "Logo"
+  },
+  {
+    "type": "image_picker",
+    "id": "logo_instagram",
+    "label": "Logo instagram"
+},
+{
+  "type": "image_picker",
+  "id": "logo_youtube",
+  "label": "Logo youtube"
+},
+{
+  "type": "image_picker",
+  "id": "logo_facebook",
+  "label": "Logo facebook"
+},
+	{
+		"type": "text",
+		"id": "copyright",
+		"label": "Texte copyright",
+		"default": "@ Franklin Petfood 2020"
+	},
+	{
+		"type": "header",
+		"content": "reviews"
+	},
+	{
+		"type": "image_picker",
+		"id": "reviews_image",
+		"label": "Reviews image"
+	},
+	{
+	  "type": "text",
+	  "id": "reviews_rate",
+	  "label": "Reviews rate",
+	  "default": "4,9"
+  },
+	{
+		"type": "text",
+		"id": "reviews_title",
+		"label": "Titre reviews",
+		"default": "Vos avis vérifiés"
+	},
+	{
+		"type": "url",
+		"id": "reviews_url",
+		"label": "Lien reviews"
+	},
+	{
+		"type": "text",
+		"id": "reviews_text",
+		"label": "Texte reviews",
+		"default": "+2500 avis"
+	},
+	{
+		"type": "range",
+		"id": "reviews_range",
+		"label": "Note",
+		"default": 5,
+		"min": 0,
+		"max": 5,
+		"step": 1,
+		"unit": "rat"
+	},
+	{
+		"type": "header",
+		"content": "Contact"
+	},
+	{
+		"type": "text",
+		"id": "contact_title",
+		"label": "Contact title",
+		"default": "Contact."
+	},
+	{
+		"type": "richtext",
+		"id": "contact_description",
+		"label": "Contact description"
+	},
+	{
+	  "type": "text",
+	  "id": "contact_email",
+	  "label": "Email contact",
+	  "default": "bertrand@franklinpetfood.com"
+  },
+  {
+	"type": "text",
+	"id": "contact_phone",
+	"label": "Phone contact",
+	"default": "06 19 03 59 30"
+},
+	{
+		"type": "header",
+		"content": "Pictos"
+	},
+	{
+		"type": "text",
+		"id": "picto_text_1",
+		"label": "Picto text 1",
+		"default": "Paiements sécurisés"
+	},
+	{
+		"type": "richtext",
+		"id": "picto_description_1",
+		"label": "Picto description 1",
+		"default": "<p>lorem ipsum doros es lorem ipsum dorode irpso</p>"
+	},
+	{
+		"type": "image_picker",
+		"id": "picto_image_1",
+		"label": "Picto 1"
+	},
+	{
+		"type": "image_picker",
+		"id": "picto_image_mobile_1",
+		"label": "Picto mobile 1"
+	},
+	{
+		"type": "text",
+		"id": "picto_text_2",
+		"label": "Picto text 2",
+		"default": "Paiements sécurisés"
+	},
+	{
+		"type": "richtext",
+		"id": "picto_description_2",
+		"label": "Picto description 2",
+		"default": "<p>lorem ipsum doros es lorem ipsum dorode irpso</p>"
+	},
+	{
+		"type": "image_picker",
+		"id": "picto_image_2",
+		"label": "Picto 2"
+	},
+	{
+		"type": "image_picker",
+		"id": "picto_image_mobile_2",
+		"label": "Picto mobile 2"
+	},
+	{
+		"type": "text",
+		"id": "picto_text_3",
+		"label": "Picto text 3",
+		"default": "Paiements sécurisés"
+	},
+	{
+		"type": "richtext",
+		"id": "picto_description_3",
+		"label": "Picto description 3",
+		"default": "<p>lorem ipsum doros es lorem ipsum dorode irpso</p>"
+	},
+	{
+		"type": "image_picker",
+		"id": "picto_image_3",
+		"label": "Picto 3"
+	},
+	{
+		"type": "image_picker",
+		"id": "picto_image_mobile_3",
+		"label": "Picto mobile 3"
+	},
+	{
+		"type": "text",
+		"id": "picto_text_4",
+		"label": "Picto text 4",
+		"default": "Paiements sécurisés"
+	},
+	{
+		"type": "richtext",
+		"id": "picto_description_4",
+		"label": "Picto description 4",
+		"default": "<p>lorem ipsum doros es lorem ipsum dorode irpso</p>"
+	},
+	{
+		"type": "image_picker",
+		"id": "picto_image_4",
+		"label": "Picto 4"
+	},
+	{
+		"type": "image_picker",
+		"id": "picto_image_mobile_4",
+		"label": "Picto mobile 4"
+	},
+	{
+		"type": "header",
+		"content": "Newsletter"
+	},
+	{
+		"type": "text",
+		"id": "newsletter_title",
+		"label": "Titre newsletter",
+		"default": "On reste en contact ?"
+	},
+	{
+		"type": "richtext",
+		"id": "newsletter_text",
+		"label": "Texte newsletter"
+	},
+	{
+		"type": "text",
+		"id": "newsletter_placeholder",
+		"label": "Placeholder newsletter",
+		"default": "Votre adresse mail"
+	},
+	{
+		"type": "text",
+		"id": "button_newsletter",
+		"label": "Bouton newsletter",
+		"default": "S'inscrire"
+	},
+	{
+		"type": "text",
+		"id": "newsletter_pre_confirmation",
+		"label": "Pré confirmation d'inscription (remplace le titre)",
+		"default": "Vous êtes bien inscrit à la newsletter"
+	},
+	{
+		"type": "text",
+		"id": "newsletter_confirmation",
+		"label": "Confirmation d'inscription",
+		"default": "Merci !"
+	},
+	{
+		"type": "header",
+		"content": "Navigations"
+	},
+	{
+		"type": "text",
+		"id": "title_1",
+		"label": "Titre 1",
+		"default": "Notre univers."
+	},
+	{
+		"type":      "link_list",
+		"id":        "menu_1",
+		"label":     "Menu 1"
+	},
+	{
+		"type": "text",
+		"id": "title_2",
+		"label": "Titre 2",
+		"default": "Notre univers."
+	},
+	{
+		"type":      "link_list",
+		"id":        "menu_2",
+		"label":     "Menu 2"
+	}
+	]
+}
+{% endschema %}

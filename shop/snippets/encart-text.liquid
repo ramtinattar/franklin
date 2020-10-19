@@ -1,0 +1,21 @@
+{% comment %}
+   {% include 'encart-text'
+      , title     : encart_title
+      , text         : encart_text,
+	  , picto	: encart_picto
+	  , color : 'bg--color',
+	  bgColor : xxx
+   %}
+{% endcomment %}
+
+<div class="encart-text border--desktop {{ color }}" {% if bgColor != blank %}style="background-color:{{ bgColor }} !important;"{% endif %}>
+	<h2 class="heading z-h6 encart-text__title">{{ title }}</h2>
+	{% if text != blank %}
+	<div class="text--large">
+		{{ text }}
+	</div>
+	{% endif %}
+	{% if picto != blank %}
+		{% include 'image' with img : picto, classes:'encart__picto' %}
+	{% endif %}
+</div>

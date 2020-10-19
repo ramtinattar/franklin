@@ -1,0 +1,304 @@
+{% include 'featured-reviews' with Settings:section.settings, id:section.id %}
+
+{% schema %}
+{
+  "name": "featured reviews",
+  "settings": [
+  {
+    "type": "text",
+    "id": "title",
+    "label": "Titre",
+    "default": "Ils ont testé Frankiln."
+  },
+  {
+    "type": "range",
+    "id": "reviews_range",
+    "label": "Note",
+    "default": 5,
+    "min": 0,
+    "max": 5,
+    "step": 1,
+    "unit": "rat"
+  },
+  {
+    "type": "url",
+    "id": "reviews_url",
+    "label": "Reviews url"
+  },
+  {
+    "type": "text",
+    "id": "reviews_text",
+    "label": "Texte reviews",
+    "default": "+2500 avis"
+  },
+  {
+    "type": "image_picker",
+    "id": "image",
+    "label": "Image",
+  "info":"275x330px"
+},
+  {
+    "type": "richtext",
+    "id": "text",
+    "label": "Description",
+    "default": "<p>Qu'ils soient propriétaires de chat, de chien, ou des deux, ils nous parlent de leur expérience gustative avec Franklin ! </p>"
+  },
+  {
+    "type": "text",
+    "id": "cta_text",
+    "label": "Texte CTA",
+    "default": "Vous aussi ?"
+  },
+  {
+    "type": "url",
+    "id": "cta_url",
+    "label": "URL CTA"
+  },
+  {
+  "type":"header",
+  "content" : "Reviews"
+},
+{
+  "type": "text",
+  "id": "name_1",
+  "label": "Nom 1",
+  "default": "Camille H."
+},
+{
+  "type": "text",
+  "id": "subtitle_1",
+  "label": "Sous titre 1",
+  "default": "Croquettes chiot"
+},
+{
+  "type": "range",
+  "id": "rate_1",
+  "label": "Note 1",
+  "default": 5,
+  "min": 0,
+  "max": 5,
+  "step": 1,
+  "unit": "rat"
+},
+{
+  "type": "image_picker",
+  "id": "source_image_1",
+  "label": "Image source 1",
+"info":"95x46px"
+},
+{
+  "type": "url",
+  "id": "source_link_1",
+  "label": "Lien source 1"
+},
+{
+  "type": "richtext",
+  "id": "review_1",
+  "label": "Review 1",
+  "default": "<p>Mon chiot mange des croquettes Franklin depuis son adoption avec bon appétit. Il est en bonne santé et son poil et brillant. La Livraison flexible et les sacs en papier sont des plus ! Un des meilleurs rapport qualité que je recherchais / prix du marché.</p>"
+},
+{
+  "type": "text",
+  "id": "name_2",
+  "label": "Nom2",
+  "default": "Camille H."
+},
+{
+  "type": "text",
+  "id": "subtitle_2",
+  "label": "Sous titre 2",
+  "default": "Croquettes chiot"
+},
+{
+  "type": "range",
+  "id": "rate_2",
+  "label": "Note 2",
+  "default": 5,
+  "min": 0,
+  "max": 5,
+  "step": 1,
+  "unit": "rat"
+},
+{
+  "type": "image_picker",
+  "id": "source_image_2",
+  "label": "Image source 2"
+},
+{
+  "type": "url",
+  "id": "source_link_2",
+  "label": "Lien source 2"
+},
+{
+  "type": "richtext",
+  "id": "review_2",
+  "label": "Review 2",
+  "default": "<p>Mon chiot mange des croquettes Franklin depuis son adoption avec bon appétit. Il est en bonne santé et son poil et brillant. La Livraison flexible et les sacs en papier sont des plus ! Un des meilleurs rapport qualité que je recherchais / prix du marché.</p>"
+},
+{
+  "type": "text",
+  "id": "name_3",
+  "label": "Nom3",
+  "default": "Camille H."
+},
+{
+  "type": "text",
+  "id": "subtitle_3",
+  "label": "Sous titre 3",
+  "default": "Croquettes chiot"
+},
+{
+  "type": "range",
+  "id": "rate_3",
+  "label": "Note 3",
+  "default": 5,
+  "min": 0,
+  "max": 5,
+  "step": 1,
+  "unit": "rat"
+},
+{
+  "type": "image_picker",
+  "id": "source_image_3",
+  "label": "Image source 3"
+},
+{
+  "type": "url",
+  "id": "source_link_3",
+  "label": "Lien source 3"
+},
+{
+  "type": "richtext",
+  "id": "review_3",
+  "label": "Review 3",
+  "default": "<p>Mon chiot mange des croquettes Franklin depuis son adoption avec bon appétit. Il est en bonne santé et son poil et brillant. La Livraison flexible et les sacs en papier sont des plus ! Un des meilleurs rapport qualité que je recherchais / prix du marché.</p>"
+},
+{
+  "type": "text",
+  "id": "name_4",
+  "label": "Nom 4",
+  "default": "Camille H."
+},
+{
+  "type": "text",
+  "id": "subtitle_4",
+  "label": "Sous titre 4",
+  "default": "Croquettes chiot"
+},
+{
+  "type": "range",
+  "id": "rate_4",
+  "label": "Note 4",
+  "default": 5,
+  "min": 0,
+  "max": 5,
+  "step": 1,
+  "unit": "rat"
+},
+{
+  "type": "image_picker",
+  "id": "source_image_4",
+  "label": "Image source 4"
+},
+{
+  "type": "url",
+  "id": "source_link_4",
+  "label": "Lien source 4"
+},
+{
+  "type": "richtext",
+  "id": "review_4",
+  "label": "Review 4",
+  "default": "<p>Mon chiot mange des croquettes Franklin depuis son adoption avec bon appétit. Il est en bonne santé et son poil et brillant. La Livraison flexible et les sacs en papier sont des plus ! Un des meilleurs rapport qualité que je recherchais / prix du marché.</p>"
+},
+  {
+  "type":"header",
+  "content" : "Section"
+},
+{
+  "type": "select",
+  "id": "section_spacing",
+  "label": "Section bottom spacing",
+  "options": [
+  {
+	"value" : "section--xl-spacing",
+	"label" : "XL Spacing"
+  },{
+	"value" : "section--l-spacing",
+	"label" : "L Spacing"
+  },{
+	"value" : "section--m-spacing",
+	"label" : "M Spacing"
+  },{
+	"value" : "section--s-spacing",
+	"label" : "S Spacing"
+  },{
+	"value" : "section--xs-spacing",
+	"label" : "XS Spacing"
+  },{
+	"value" : "section--no-spacing",
+	"label" : "No Spacing"
+  }
+  ]
+},
+{
+  "type": "select",
+  "id": "section_spacing_mobile",
+  "label": "Section bottom spacing mobile",
+  "options": [
+  {
+	"value":"",
+	"label":"Same value"
+  },
+  {
+	"value" : "mobile-section--xl-spacing",
+	"label" : "XL Spacing"
+  },{
+	"value" : "mobile-section--l-spacing",
+	"label" : "L Spacing"
+  },{
+	"value" : "mobile-section--m-spacing",
+	"label" : "M Spacing"
+  },{
+	"value" : "mobile-section--s-spacing",
+	"label" : "S Spacing"
+  },{
+	"value" : "mobile-section--xs-spacing",
+	"label" : "XS Spacing"
+  },{
+	"value" : "mobile-section--no-spacing",
+	"label" : "No Spacing"
+  }
+  ],
+  "default":""
+},
+{
+  "type": "select",
+  "id": "section_bg",
+  "label": "Couleur du fond",
+  "options": [
+  {
+    "value" : "bg--white",
+    "label" : "BG white"
+  },
+  {
+    "value" : "bg--color",
+    "label" : "BG Color"
+  },{
+    "value" : "bg--primary",
+    "label" : "BG Primary"
+  },{
+    "value" : "bg--secondary",
+    "label" : "BG secondary"
+  }
+  ]
+}
+],
+"presets": [
+{
+  "name": "Featuredreviews ",
+  "category": "Studio Zerance"
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,28 @@
+{%- assign featuredBlog = blogs[Settings.blog] -%}
+
+<section class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section {% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="featured-articles">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div class="featured-articles">
+		<div class="page-width featured-articles__header">
+			<h2 class="z-h3 heading featured-articles__title">{{ Settings.title }}</h2>
+			{% include 'arrow-button' with href:Settings.cta_url, text:Settings.cta_text, classes:'featured-articles__button secondary' %}
+		</div>
+		<div data-carousel-container class="featured-articles__container">
+			<div class="featured-articles__carousel carousel"  data-flickity='{"freeScroll": true, "adaptiveHeight" : false, "groupCells" : true, "pageDots" : false, "watchCSS" : true, "prevNextButtons" : false, "wrapAround" : false}'>
+				{% for blogArticle in featuredBlog.articles limit : Settings.article_number %}
+					<div class="carousel-cell featured-article">
+						{% include 'article-card' with cardArticle : blogArticle, cardDescription : false %}
+					</div>
+				{% endfor %}
+			</div>
+			<div class="carousel__prev-next-container featured-articles__prev-next-container only-desktop">
+				<div data-carousel-prev class="carousel__prev-button">
+					{% include 'icon-right-arrow' %}
+				</div>
+				<div data-carousel-next class="carousel__next-button">
+					{% include 'icon-right-arrow' %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

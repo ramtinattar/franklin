@@ -1,0 +1,412 @@
+<div data-account-popup style="display:none;">
+  <div class="background-overlay quickview">
+    <div data-account-state class="account-popup relative">
+		<div data-account-loader class="cart__loader-container">
+		  <div class="lds-dual-ring"></div>
+		</div>
+      <div data-close-account class="account-popup__close pointer">{% include 'icon-croix' %}</div>
+      <div data-account-container class="account-popup__container">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<template data-email-template>
+  <div class="account-popup__container">
+    <img class="account-popup__image" src="{{ section.settings.email_image | img_url : 'master' }}" />
+    <div class="account-popup__title z-h4 heading">
+      {{ section.settings.email_title }}
+    </div>
+    <div class="account-popup__subtitle text t-4">
+      {{ section.settings.email_subtitle }}
+    </div>
+	<div class="account-popup__error" data-account-error></div>
+    <div class="account-popup__inputs-container ">
+      <input data-email-input type="email" class="input-text" placeholder="{{ section.settings.email_placeholder }}"/>
+    </div>
+    <div class="account-popup__button">
+      <button data-email-button disabled class="button button--full button--secondary button--disabled">{{ section.settings.email_button_text }}</button>
+    </div>
+  </div>
+</template>
+
+<template data-register-template>
+  <div class="account-popup__container">
+	  <img class="account-popup__image" src="{{ section.settings.register_image | img_url : 'master' }}" />
+	  <div class="account-popup__title z-h4 heading">
+	    {{ section.settings.register_title }}
+	  </div>
+	  <div class="account-popup__subtitle text t-4">
+	    {{ section.settings.register_subtitle }}
+	  </div>
+	  <div class="account-popup__error" data-account-error></div>
+	  <form data-register-form class="account-popup__inputs-container ">
+	    <input data-register-mail name="email" type="email" class="input-text" placeholder="{{ section.settings.register_mail_placeholder }}"/>
+		<input name="first_name" type="text" class="input-text" placeholder="{{ section.settings.register_first_name_placeholder }}"/>
+		<input name="last_name" type="text" class="input-text" placeholder="{{ section.settings.register_last_name_placeholder }}"/>
+		<input data-register-password name="password" type="password" class="input-text" placeholder="{{ section.settings.register_password_placeholder }}"/>
+		<input data-register-confirmation name="confirm_password" type="password" class="input-text" placeholder="{{ section.settings.register_confirm_placeholder }}"/>
+
+	</form>
+	  <div class="account-popup__button">
+	    <button data-register-button disabled class="button button--full button--secondary button--disabled">{{ section.settings.register_button_text }}</button>
+	  </div>
+	  <div class="account-popup__checkbox-container">
+		  <input data-register-newscheck class="account-popup__checkbox" type="checkbox" name="accepts_marketing" />
+		  <div data-register-newstext class="text t-5 uppercase pointer">
+			  {{ section.settings.register_newsletter_text }}
+		  </div>
+	  </div>
+	  <div class="account-popup__mandatory-container align-right">
+		  <div class="text t-6 italic">
+			{{ section.settings.mandatory_text }}
+		  </div>
+	  </div>
+  </div>
+</template>
+
+<template data-signin-template>
+  <div class="account-popup__container">
+	  <img class="account-popup__image" src="{{ section.settings.signin_image | img_url : 'master' }}" />
+	  <div class="account-popup__title z-h4 heading">
+	    {{ section.settings.signin_title }}
+	  </div>
+	  <div class="account-popup__subtitle text t-4">
+	    {{ section.settings.signin_subtitle }}
+	  </div>
+	  <div class="account-popup__error" data-account-error></div>
+	  <form data-signin-form class="account-popup__inputs-container">
+	    <input data-signin-mail name="email" type="email" class="input-text" placeholder="{{ section.settings.signin_mail_placeholder }}"/>
+		<input data-signin-password name="password" type="password" class="input-text" placeholder="{{ section.settings.signin_password_placeholder }}"/>
+	</form>
+	  <div class="account-popup__button">
+		<button data-signin-button disabled class="button button--full button--secondary button--disabled">{{ section.settings.signin_button_text }}</button>
+	  </div>
+	  <div class="account-popup__mandatory-container align-left">
+		  <div data-signin-forgot class="text t-6 underline pointer">
+			{{ section.settings.signin_forgot }}
+		  </div>
+	  </div>
+  </div>
+</template>
+
+<template data-forgot-template>
+  <div class="account-popup__container">
+	  <img class="account-popup__image" src="{{ section.settings.forgot_image | img_url : 'master' }}" />
+	  <div class="account-popup__title z-h4 heading">
+	    {{ section.settings.forgot_title }}
+	  </div>
+	  <div class="account-popup__error" data-account-error></div>
+	  <div class="account-popup__final-message text t-4">
+		  {{ section.settings.forgot_final }}
+	  </div>
+	  <div class="account-popup__initial-message">
+		  <div class="account-popup__subtitle text t-4">
+		  {{ section.settings.forgot_subtitle }}
+		</div>
+		  <form data-forgot-form class="account-popup__inputs-container ">
+		    <input data-forgot-mail name="email" type="email" class="input-text" placeholder="{{ section.settings.forgot_mail_placeholder }}"/>
+		</form>
+		  <div class="account-popup__button">
+			<button data-forgot-button class="button button--full button--secondary">{{ section.settings.forgot_button_text }}</button>
+		  </div>
+	  </div>
+
+  </div>
+</template>
+
+
+<template data-activate-template>
+  <div class="account-popup__container">
+	  <img class="account-popup__image" src="{{ section.settings.activate_image | img_url : 'master' }}" />
+	  <div class="account-popup__title z-h4 heading">
+	    {{ section.settings.activate_title }}
+	  </div>
+	  <div class="account-popup__subtitle text t-4">
+	    {{ section.settings.activate_subtitle }}
+	  </div>
+	  <div class="account-popup__error" data-account-error></div>
+
+	  <div class="account-popup__final-message">
+		 {{ section.settings.activate_final }}
+	 </div>
+	 <div class="account-popup__initial-message">
+		 <form data-activate-form class="account-popup__inputs-container ">
+		   <input data-activate-mail name="email" type="email" class="input-text" placeholder="{{ section.settings.activate_mail_placeholder }}"/>
+		 </form>
+		 <div class="account-popup__button">
+		   <button data-activate-button  class="button button--full button--secondary">{{ section.settings.activate_button_text }}</button>
+		 </div>
+	 </div>
+  </div>
+</template>
+
+<template data-pending-template>
+	<div class="account-popup__container">
+   	 <img class="account-popup__image" src="{{ section.settings.signin_image | img_url : 'master' }}" />
+   	 <div class="account-popup__title z-h4 heading">
+   	   {{ section.settings.signin_title }}
+   	 </div>
+   	 <div class="account-popup__subtitle text t-4">
+   	   {{ section.settings.pending_text }}
+   	 </div>
+    </div>
+</template>
+
+
+{% schema %}
+{
+  "name": "Account popup",
+  "settings":[
+  {
+    "type": "text",
+    "id": "mandatory_text",
+    "label": "Champs obligatoire",
+    "default": "Champ obligatoire"
+  },
+    {
+      "type":"header",
+      "content":"Email popup"
+    },
+    {
+      "type": "image_picker",
+      "id": "email_image",
+      "label": "Image popup email",
+      "info":"300x350px"
+    },
+    {
+      "type": "text",
+      "id": "email_title",
+      "label": "Titre",
+      "default": "Connexion / Inscription."
+    },
+    {
+      "type": "richtext",
+      "id": "email_subtitle",
+      "label": "Sous-titre"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Placeholder input mail",
+      "default": "Votre email"
+    },
+    {
+      "type": "text",
+      "id": "email_button_text",
+      "label": "Button text",
+      "default": "Valider"
+    },
+	{
+      "type":"header",
+      "content":"Forgot popup"
+    },
+	{
+      "type": "image_picker",
+      "id": "forgot_image",
+      "label": "Image popup forgot",
+      "info":"300x350px"
+    },
+    {
+      "type": "text",
+      "id": "forgot_title",
+      "label": "Titre",
+      "default": "Inscription."
+    },
+    {
+      "type": "richtext",
+      "id": "forgot_subtitle",
+      "label": "Sous-titre"
+    },
+    {
+      "type": "text",
+      "id": "forgot_mail_placeholder",
+      "label": "Email placeholder",
+      "default": "Votre email"
+    },
+	{
+      "type": "text",
+      "id": "forgot_button_text",
+      "label": "Button text",
+      "default": "Réinitialiser le mot de passe"
+    },
+	{
+	  "type": "richtext",
+	  "id": "forgot_final",
+	  "label": "Message final",
+	  "default": "<p>Votre demande a bien été prise en compte, rendez-vous sur votre messagerie pour créer un mot de passe. À tout de suite !   </p>"
+  },
+    {
+      "type":"header",
+      "content":"Register popup"
+    },
+    {
+      "type": "image_picker",
+      "id": "register_image",
+      "label": "Image popup register",
+      "info":"300x350px"
+    },
+    {
+      "type": "text",
+      "id": "register_title",
+      "label": "Titre",
+      "default": "Inscription."
+    },
+    {
+      "type": "richtext",
+      "id": "register_subtitle",
+      "label": "Sous-titre"
+    },
+    {
+      "type": "text",
+      "id": "register_mail_placeholder",
+      "label": "Email placeholder",
+      "default": "Votre email"
+    },
+    {
+      "type": "text",
+      "id": "register_first_name_placeholder",
+      "label": "Surname placeholder",
+      "default": "Votre prénom"
+    },
+    {
+      "type": "text",
+      "id": "register_last_name_placeholder",
+      "label": "Name placeholder",
+      "default": "Votre nom"
+    },
+    {
+      "type": "text",
+      "id": "register_phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "Votre téléphone"
+    },
+    {
+      "type": "text",
+      "id": "register_password_placeholder",
+      "label": "Password placeholder",
+      "default": "Votre mot de passe"
+    },
+    {
+      "type": "text",
+      "id": "register_confirm_placeholder",
+      "label": "Confirm placeholder",
+      "default": "Confirmez votre mot de passe"
+    },
+    {
+      "type": "text",
+      "id": "register_newsletter_text",
+      "label": "Text newsletter",
+      "default": "Je m'inscris à la newsletter Franklin"
+    },
+    {
+      "type": "text",
+      "id": "register_button_text",
+      "label": "Button text",
+      "default": "S'inscrire"
+    },
+    {
+      "type":"header",
+      "content":"Signin popup"
+    },
+    {
+      "type": "image_picker",
+      "id": "signin_image",
+      "label": "Image popup signin",
+      "info":"300x350px"
+    },
+    {
+      "type": "text",
+      "id": "signin_title",
+      "label": "Titre",
+      "default": "Connexion."
+    },
+    {
+      "type": "richtext",
+      "id": "signin_subtitle",
+      "label": "Sous-titre"
+    },
+    {
+      "type": "text",
+      "id": "signin_mail_placeholder",
+      "label": "Placeholder input mail",
+      "default": "Votre email*"
+    },
+    {
+      "type": "text",
+      "id": "signin_password_placeholder",
+      "label": "Placeholder input password",
+      "default": "Votre mot de passe*"
+    },
+    {
+      "type": "text",
+      "id": "signin_button_text",
+      "label": "Button text",
+      "default": "Se connecter"
+    },
+	{
+	  "type": "text",
+	  "id": "signin_forgot",
+	  "label": "Forgot text",
+	  "default": "Mot de passe oublié"
+  },
+    {
+      "type":"header",
+      "content":"Pending popup"
+    },
+    {
+      "type": "image_picker",
+      "id": "pending_image",
+      "label": "Image popup pending",
+      "info":"300x350px"
+    },
+	{
+	  "type": "richtext",
+	  "id": "pending_text",
+	  "label": "Message compte pending",
+	  "default": "<p>Vous avez reçu un mail d'activation du compte, merci de cliquer sur le bouton d'activation. En cas de problème, vous pouvez contacter notre support. À tout de suite !</p>"
+  },
+    {
+      "type":"header",
+      "content":"Activate popup"
+    },
+	{
+	  "type": "text",
+	  "id": "activate_title",
+	  "label": "Titre",
+	  "default": "Connexion."
+	},
+	{
+	  "type": "richtext",
+	  "id": "activate_subtitle",
+	  "label": "Sous-titre"
+	},
+	{
+	  "type": "text",
+	  "id": "activate_mail_placeholder",
+	  "label": "Placeholder input mail",
+	  "default": "Votre email*"
+	},
+	{
+      "type": "text",
+      "id": "activate_button_text",
+      "label": "Button text",
+      "default": "Se connecter"
+    },
+    {
+      "type": "image_picker",
+      "id": "activate_image",
+      "label": "activate image",
+      "info":"300x350px"
+  },
+  {
+    "type": "richtext",
+    "id": "activate_final",
+    "label": "Message confirmation",
+    "default": "<p>Votre demande a bien été prise en compte. Rendez vous sur votre messagerie pour créer un mot de passe. À tout de suite !</p>"
+}
+
+  ]
+}
+{% endschema %}

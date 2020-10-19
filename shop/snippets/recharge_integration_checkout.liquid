@@ -1,0 +1,1284 @@
+<script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript" src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script type="text/javascript" src="https://js.braintreegateway.com/web/3.39.0/js/client.min.js"></script>
+<script type="text/javascript" src="https://js.braintreegateway.com/web/3.39.0/js/paypal-checkout.min.js"></script>
+<script type="text/javascript" src="https://js.braintreegateway.com/js/braintree-2.32.1.min.js"></script>
+
+<script>
+var theme = theme || {};
+theme.checkoutSettings = {
+	custom_recharge: {
+		is_active: true // {{ settings.integrate_checkout }}
+	}
+}
+
+/**
+* @param {String} HTML representing a single element
+* @return {Element}
+*/
+function htmlToElement(html) {
+	var template = document.createElement('template');
+	html = html.trim(); // Never return a text node of whitespace as the result
+	template.innerHTML = html;
+	return template.content.firstChild;
+}
+
+function populateTemplate(templateId, data) {
+	var template = document.getElementById(templateId);
+	var populatedTemplate = template.innerHTML.trim();
+	var dataKeys = Object.keys(data);
+	for (var j=0; j < dataKeys.length; j++) {
+		var key = dataKeys[j];
+		var regex = new RegExp("##" + key + "##", "g");
+		populatedTemplate = populatedTemplate.replace(regex, data[key]);
+	}
+
+	return populatedTemplate;
+}
+
+var Loader = function () { }
+Loader.prototype = {
+	load: function (scripts, callback) {
+		scripts = Array.isArray(scripts)? scripts: [scripts];
+
+		this.loadCount      = 0;
+		this.totalRequired  = scripts.length;
+		this.callback       = callback;
+
+		for (var i = 0; i < scripts.length; i++) {
+			this.writeScript(scripts[i]);
+		}
+	},
+	loaded: function (evt) {
+		this.loadCount++;
+
+		if (this.loadCount == this.totalRequired && typeof this.callback == 'function') this.callback.call();
+	},
+	writeScript: function (src) {
+		var self = this;
+		var s = document.createElement('script');
+		s.type = "text/javascript";
+		s.async = true;
+		s.src = src;
+		s.addEventListener('load', function (e) { self.loaded(e); }, false);
+		var head = document.getElementsByTagName('head')[0];
+		head.appendChild(s);
+	}
+}
+
+function loadScript( url, callback ) {
+	var script = document.createElement( "script" )
+	script.type = "text/javascript";
+	if(script.readyState) {  // only required for IE <9
+		script.onreadystatechange = function() {
+			if ( script.readyState === "loaded" || script.readyState === "complete" ) {
+				script.onreadystatechange = null;
+				callback();
+			}
+		};
+	} else {  //Others
+		script.onload = function() {
+			callback();
+		};
+	}
+
+	script.src = url;
+	document.getElementsByTagName( "head" )[0].appendChild( script );
+}
+
+// polyfills .closest()\
+if (!Element.prototype.matches)
+Element.prototype.matches = Element.prototype.msMatchesSelector ||
+Element.prototype.webkitMatchesSelector;
+
+if (!Element.prototype.closest)
+Element.prototype.closest = function(s) {
+	var el = this;
+	if (!document.documentElement.contains(el)) return null;
+	do {
+		if (el.matches(s)) return el;
+		el = el.parentElement || el.parentNode;
+	} while (el !== null && el.nodeType == 1);
+	return null;
+};
+
+theme.RechargeController = (function (customerId) {
+	var self = this;
+	var $ = Checkout.$;
+	var stripe;
+
+	// const API_ROOT = "https://cldw0t4rik.execute-api.eu-west-1.amazonaws.com/prod";
+	const API_ROOT = "https://bhnnil1dh2.execute-api.eu-west-1.amazonaws.com/dev";
+	const STRIPE_KEY = "pk_live_idXYbDBYWxPjxtT6wmSrFqTJ";
+
+	var paymentContentBox;
+
+	var selectors = {
+		"default_payment_options": "sz-default-payment-options",
+		"custom_payment_options": "sz-custom-payment-options"
+	};
+
+	/* Determines whether init was already called. */
+	// => In case the customer applies a discount at the payment step, the payment block will be reloaded & reinit() should be called instead of init().
+	self.loaded = false;
+
+	/* recharge */
+	self.rechargeCheckoutId = null;
+	/* stripe */
+	self.customerId      = null;
+	self.cardNumberField = null;
+	self.stripeIntent    = null;
+	self.paypalIntent    = null;
+	self.customerName 	 = null;
+
+	var API = {
+		trackEvents : function(){
+			var checkoutObj = getShopifyCheckoutInfo();
+			//console.log('Checkout obj', checkoutObj);
+			var lineItems = checkoutObj.line_items;
+			var isEchantillon = true;
+			var isSubscription = true;
+			for (var i=0; i<lineItems.length; i++) {
+				var item = lineItems[i];
+				if(item.title.toLowerCase().indexOf('echantillon') == -1){
+					isEchantillon = false;
+				}
+				if(!item.properties || !item.properties.recharge_variant_id){
+					isSubscription = false;
+				}
+			}
+			if(isEchantillon){
+				console.log('IS ECHANTILLON ');
+				{% comment %}
+				//   gtag('event', 'conversion', {'send_to': '812378069/_hnvCIqPl9UBENXPr4MD',
+				//   'value': checkoutObj.total_price,
+				//   'currency': 'EUR'
+				// });
+				{% endcomment %}
+			}else if(isSubscription){
+				console.log('IS SUBSCRIPTION ORDER', checkoutObj);
+			}else{
+				console.log('IS CLASSIC ORDER');
+			}
+			fbq('track', 'Purchase', {currency: "EUR", value: checkoutObj.total_price});
+			console.log('Sent');
+		},
+		initCheckout: function(options, success, error) {
+			var request = $.ajax({
+				url     : API_ROOT + "/subscription/recharge",
+				method  : "POST",
+				dataType: "json",
+				data: {
+					action: 'create',
+					// shopify_checkout: options.shopify_checkout
+					shopify_checkout_token: options.shopifyCheckoutToken
+				}
+			});
+
+			request.done(function( res ) {
+				return apiSuccessHandler(res, success, error);
+			});
+
+			request.fail(function( jqXHR, textStatus ) {
+				return apiErrorHandler(jqXHR, textStatus, error)
+			});
+
+		},
+		getIntents: function (options, success, error) {
+			var request = $.ajax({
+				url     : API_ROOT + "/subscription/intents",
+				method: "POST",
+				dataType: "json",
+				contentType: "application/json",
+				data: JSON.stringify({
+					// shopify_checkout: options.shopify_checkout
+					"shopify_checkout_token": options.shopifyCheckoutToken,
+					"targets": ["stripe", "paypal"]
+				})
+			});
+
+			request.done(function( res ) {
+				return apiSuccessHandler(res, success, error);
+			});
+
+			request.fail(function( jqXHR, textStatus ) {
+				return apiErrorHandler(jqXHR, textStatus, error)
+			});
+		},
+		processCheckout: function (options, success, error) {
+			var request = $.ajax({
+				url     : API_ROOT + "/subscription/recharge",
+				method  : "POST",
+				dataType: "json",
+				data: {
+					action: "process",
+					shopify_checkout_token: options.shopifyToken,
+					checkout_token: options.checkoutToken,
+					payment_processor: options.pp,
+					payment_token: options.pt
+				}
+			});
+
+			request.done(function( res ) {
+				return apiSuccessHandler(res, success, error);
+			});
+
+			request.fail(function( jqXHR, textStatus ) {
+				return apiErrorHandler(jqXHR, textStatus, error)
+			});
+		}
+	}
+
+	var STRIPE = {
+		confirmIntent: function (options, success, error) {
+			// https://stripe.com/docs/js/setup_intents/confirm_card_setup
+			var secret = options.clientSecret;
+
+			// New card.
+			var cardNumber = options.cardNumber;
+			var holderName = options.holderName;
+			//         var data = {
+			//           // save_payment_method: true,
+			//           // setup_future_usage: 'off_session',
+			//           payment_method: {
+			//             card: cardNumber,
+			//             billing_details: {
+			//               name: holderName,
+			//             }
+			//           }
+			//         }
+
+
+			// Confirme card
+			stripe.createToken(cardNumber, {
+				name: holderName
+			}).then(function(result) {
+				if (result.error) {
+					typeof error === 'function' ? error(result.error) : alert("Une erreur s'est produite");
+					$('[data-checkout-loader]').hide();
+				} else {
+					typeof success === 'function' ? success(result.token) : alert("Something went wrong while confirming your order, however, your card is successfully debited. Please contact support to create your order");
+				}
+			});
+			//         stripe.confirmCardSetup(secret, data)
+			//         .then(function(result) {
+			//           if (result.error) {
+			//             typeof error === 'function' ? error(result.error) : alert("Une erreur s'est produite");
+			//           } else {
+			//             typeof success === 'function' ? success(result.setupIntent) : alert("Something went wrong while confirming your order, however, your card is successfully debited. Please contact support to create your order");
+			//           }
+			//         });
+		},
+		init: function () {
+			/** Get stripe & mount elements. **/
+			stripe = Stripe(STRIPE_KEY);/*('{{ token | strip }}');*/
+
+			var elements = stripe.elements({
+				fonts: []
+			});
+
+			var elementStyles = {
+				style: {
+					base: {
+						color: "#32325D",
+						fontWeight: 500,
+						fontFamily: "Avenir, Lucida Grande ,Tahoma, Sans-Serif",
+						fontSize: "16px",
+						fontSmoothing: "antialiased",
+
+						"::placeholder": {
+							color: "rgba(0,0,0,0.5)"
+						}
+					},
+					invalid: {
+						color: "#E25950"
+					}
+				}
+			};
+
+			var elementClasses = {
+				focus: 'focus',
+				empty: 'empty',
+				invalid: 'invalid',
+			};
+
+			var cardNumber = elements.create('cardNumber', {
+				style: elementStyles,
+				classes: elementClasses,
+			});
+			cardNumber.mount('#card-number');
+
+			var cardExpiry = elements.create('cardExpiry', {
+				style: elementStyles,
+				classes: elementClasses,
+			});
+			cardExpiry.mount('#card-expiry');
+
+			var cardCvc = elements.create('cardCvc', {
+				style: elementStyles,
+				classes: elementClasses,
+			});
+			cardCvc.mount('#card-cvc');
+
+			/** Remove loader **/
+			document.getElementById('new-card-form').classList.add("card-fields-container--loaded", "card-fields-container--transitioned");
+
+			/** Dispatch event to inform stripe is loaded. **/
+			//         var event = new CustomEvent('stripeLoaded', { 'detail': { cardNumber: cardNumber, cardExpiry: cardExpiry, cardCvc: cardCvc } });
+			//         document.dispatchEvent(event);
+			self.cardNumberField = cardNumber;
+		}
+	}
+
+	var PAYPAL = {
+		init: function () {
+			if (typeof braintree !== "object") return;
+
+			var checkoutObj = getShopifyCheckoutInfo();
+			var address = checkoutObj.customer.shipping_address;
+
+			braintree.setup(self.paypalIntent.clientToken, "custom", {
+				paypal: {
+					container: "test-paypal-b",
+					singleUse: false,
+					billingAgreementDescription: 'Your agreement description',
+					locale: 'en_US',
+					enableShippingAddress: true,
+					shippingAddressOverride: {
+						recipientName: address.full_name,
+						streetAddress: address.address1,
+						extendedAddress: address.address2,
+						locality: address.city,
+						countryCodeAlpha2: address.country_code,
+						postalCode: address.zip,
+						region: null,
+						phone: address.phone,
+						editable: false
+					}
+				},
+				dataCollector: {
+					paypal: true
+				},
+				onPaymentMethodReceived: function (payload) {
+					submitPaypalPayment(payload.nonce);
+				}
+			});
+		}
+	}
+
+	/* UI Payment form helpers */
+	/* ----------------------- */
+	function initPaymentForms (onPaymentFormsLoaded) {
+		// Hide the default shopify payment form to be replaced by custom options.
+		hideDefaultPaymentForm();
+		// Populate new payment options.
+		// 1. Stripe
+		addNewCardForm(self.customerId);
+		STRIPE.init();
+		// 2. Paypal
+		addPaypalPayment();
+		PAYPAL.init();
+
+		// Trigger payment forms loaded.
+		setTimeout(onPaymentFormsLoaded, 800);
+
+		$('body').on('DOMNodeInserted', '#braintree-paypal-button', function () {
+			$("#braintree-paypal-button").css({"width": "262px", "background": "#ffc439", "height": "42px", "min-height": "42px", "max-height": "42px", "border-radius": "4px"});
+			$("#braintree-paypal-button").empty();
+			$("#braintree-paypal-button").append('<div class="paypal-button-label-container"><img class="paypal-button-logo paypal-button-logo-pp paypal-button-logo-gold" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICAgIDxwYXRoIGZpbGw9IiMwMDljZGUiIGQ9Ik0gMjAuOTA1IDkuNSBDIDIxLjE4NSA3LjQgMjAuOTA1IDYgMTkuNzgyIDQuNyBDIDE4LjU2NCAzLjMgMTYuNDExIDIuNiAxMy42OTcgMi42IEwgNS43MzkgMi42IEMgNS4yNzEgMi42IDQuNzEgMy4xIDQuNjE1IDMuNiBMIDEuMzM5IDI1LjggQyAxLjMzOSAyNi4yIDEuNjIgMjYuNyAyLjA4OCAyNi43IEwgNi45NTYgMjYuNyBMIDYuNjc1IDI4LjkgQyA2LjU4MSAyOS4zIDYuODYyIDI5LjYgNy4yMzYgMjkuNiBMIDExLjM1NiAyOS42IEMgMTEuODI1IDI5LjYgMTIuMjkyIDI5LjMgMTIuMzg2IDI4LjggTCAxMi4zODYgMjguNSBMIDEzLjIyOCAyMy4zIEwgMTMuMjI4IDIzLjEgQyAxMy4zMjIgMjIuNiAxMy43OSAyMi4yIDE0LjI1OCAyMi4yIEwgMTQuODIxIDIyLjIgQyAxOC44NDUgMjIuMiAyMS45MzUgMjAuNSAyMi44NzEgMTUuNSBDIDIzLjMzOSAxMy40IDIzLjE1MyAxMS43IDIyLjAyOSAxMC41IEMgMjEuNzQ4IDEwLjEgMjEuMjc5IDkuOCAyMC45MDUgOS41IEwgMjAuOTA1IDkuNSI+PC9wYXRoPgogICAgPHBhdGggZmlsbD0iIzAxMjE2OSIgZD0iTSAyMC45MDUgOS41IEMgMjEuMTg1IDcuNCAyMC45MDUgNiAxOS43ODIgNC43IEMgMTguNTY0IDMuMyAxNi40MTEgMi42IDEzLjY5NyAyLjYgTCA1LjczOSAyLjYgQyA1LjI3MSAyLjYgNC43MSAzLjEgNC42MTUgMy42IEwgMS4zMzkgMjUuOCBDIDEuMzM5IDI2LjIgMS42MiAyNi43IDIuMDg4IDI2LjcgTCA2Ljk1NiAyNi43IEwgOC4yNjcgMTguNCBMIDguMTczIDE4LjcgQyA4LjI2NyAxOC4xIDguNzM1IDE3LjcgOS4yOTYgMTcuNyBMIDExLjYzNiAxNy43IEMgMTYuMjI0IDE3LjcgMTkuNzgyIDE1LjcgMjAuOTA1IDEwLjEgQyAyMC44MTIgOS44IDIwLjkwNSA5LjcgMjAuOTA1IDkuNSI+PC9wYXRoPgogICAgPHBhdGggZmlsbD0iIzAwMzA4NyIgZD0iTSA5LjQ4NSA5LjUgQyA5LjU3NyA5LjIgOS43NjUgOC45IDEwLjA0NiA4LjcgQyAxMC4yMzIgOC43IDEwLjMyNiA4LjYgMTAuNTEzIDguNiBMIDE2LjY5MiA4LjYgQyAxNy40NDIgOC42IDE4LjE4OSA4LjcgMTguNzUzIDguOCBDIDE4LjkzOSA4LjggMTkuMTI3IDguOCAxOS4zMTQgOC45IEMgMTkuNTAxIDkgMTkuNjg4IDkgMTkuNzgyIDkuMSBDIDE5Ljg3NSA5LjEgMTkuOTY4IDkuMSAyMC4wNjMgOS4xIEMgMjAuMzQzIDkuMiAyMC42MjQgOS40IDIwLjkwNSA5LjUgQyAyMS4xODUgNy40IDIwLjkwNSA2IDE5Ljc4MiA0LjYgQyAxOC42NTggMy4yIDE2LjUwNiAyLjYgMTMuNzkgMi42IEwgNS43MzkgMi42IEMgNS4yNzEgMi42IDQuNzEgMyA0LjYxNSAzLjYgTCAxLjMzOSAyNS44IEMgMS4zMzkgMjYuMiAxLjYyIDI2LjcgMi4wODggMjYuNyBMIDYuOTU2IDI2LjcgTCA4LjI2NyAxOC40IEwgOS40ODUgOS41IFoiPjwvcGF0aD4KPC9zdmc+Cg=="> <img class="paypal-button-logo paypal-button-logo-paypal paypal-button-logo-gold" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMTAwIDMyIiB4bWxucz0iaHR0cDomI3gyRjsmI3gyRjt3d3cudzMub3JnJiN4MkY7MjAwMCYjeDJGO3N2ZyIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pbllNaW4gbWVldCI+PHBhdGggZmlsbD0iIzAwMzA4NyIgZD0iTSAxMiA0LjkxNyBMIDQuMiA0LjkxNyBDIDMuNyA0LjkxNyAzLjIgNS4zMTcgMy4xIDUuODE3IEwgMCAyNS44MTcgQyAtMC4xIDI2LjIxNyAwLjIgMjYuNTE3IDAuNiAyNi41MTcgTCA0LjMgMjYuNTE3IEMgNC44IDI2LjUxNyA1LjMgMjYuMTE3IDUuNCAyNS42MTcgTCA2LjIgMjAuMjE3IEMgNi4zIDE5LjcxNyA2LjcgMTkuMzE3IDcuMyAxOS4zMTcgTCA5LjggMTkuMzE3IEMgMTQuOSAxOS4zMTcgMTcuOSAxNi44MTcgMTguNyAxMS45MTcgQyAxOSA5LjgxNyAxOC43IDguMTE3IDE3LjcgNi45MTcgQyAxNi42IDUuNjE3IDE0LjYgNC45MTcgMTIgNC45MTcgWiBNIDEyLjkgMTIuMjE3IEMgMTIuNSAxNS4wMTcgMTAuMyAxNS4wMTcgOC4zIDE1LjAxNyBMIDcuMSAxNS4wMTcgTCA3LjkgOS44MTcgQyA3LjkgOS41MTcgOC4yIDkuMzE3IDguNSA5LjMxNyBMIDkgOS4zMTcgQyAxMC40IDkuMzE3IDExLjcgOS4zMTcgMTIuNCAxMC4xMTcgQyAxMi45IDEwLjUxNyAxMy4xIDExLjIxNyAxMi45IDEyLjIxNyBaIj48L3BhdGg+PHBhdGggZmlsbD0iIzAwMzA4NyIgZD0iTSAzNS4yIDEyLjExNyBMIDMxLjUgMTIuMTE3IEMgMzEuMiAxMi4xMTcgMzAuOSAxMi4zMTcgMzAuOSAxMi42MTcgTCAzMC43IDEzLjYxNyBMIDMwLjQgMTMuMjE3IEMgMjkuNiAxMi4wMTcgMjcuOCAxMS42MTcgMjYgMTEuNjE3IEMgMjEuOSAxMS42MTcgMTguNCAxNC43MTcgMTcuNyAxOS4xMTcgQyAxNy4zIDIxLjMxNyAxNy44IDIzLjQxNyAxOS4xIDI0LjgxNyBDIDIwLjIgMjYuMTE3IDIxLjkgMjYuNzE3IDIzLjggMjYuNzE3IEMgMjcuMSAyNi43MTcgMjkgMjQuNjE3IDI5IDI0LjYxNyBMIDI4LjggMjUuNjE3IEMgMjguNyAyNi4wMTcgMjkgMjYuNDE3IDI5LjQgMjYuNDE3IEwgMzIuOCAyNi40MTcgQyAzMy4zIDI2LjQxNyAzMy44IDI2LjAxNyAzMy45IDI1LjUxNyBMIDM1LjkgMTIuNzE3IEMgMzYgMTIuNTE3IDM1LjYgMTIuMTE3IDM1LjIgMTIuMTE3IFogTSAzMC4xIDE5LjMxNyBDIDI5LjcgMjEuNDE3IDI4LjEgMjIuOTE3IDI1LjkgMjIuOTE3IEMgMjQuOCAyMi45MTcgMjQgMjIuNjE3IDIzLjQgMjEuOTE3IEMgMjIuOCAyMS4yMTcgMjIuNiAyMC4zMTcgMjIuOCAxOS4zMTcgQyAyMy4xIDE3LjIxNyAyNC45IDE1LjcxNyAyNyAxNS43MTcgQyAyOC4xIDE1LjcxNyAyOC45IDE2LjExNyAyOS41IDE2LjcxNyBDIDMwIDE3LjQxNyAzMC4yIDE4LjMxNyAzMC4xIDE5LjMxNyBaIj48L3BhdGg+PHBhdGggZmlsbD0iIzAwMzA4NyIgZD0iTSA1NS4xIDEyLjExNyBMIDUxLjQgMTIuMTE3IEMgNTEgMTIuMTE3IDUwLjcgMTIuMzE3IDUwLjUgMTIuNjE3IEwgNDUuMyAyMC4yMTcgTCA0My4xIDEyLjkxNyBDIDQzIDEyLjQxNyA0Mi41IDEyLjExNyA0Mi4xIDEyLjExNyBMIDM4LjQgMTIuMTE3IEMgMzggMTIuMTE3IDM3LjYgMTIuNTE3IDM3LjggMTMuMDE3IEwgNDEuOSAyNS4xMTcgTCAzOCAzMC41MTcgQyAzNy43IDMwLjkxNyAzOCAzMS41MTcgMzguNSAzMS41MTcgTCA0Mi4yIDMxLjUxNyBDIDQyLjYgMzEuNTE3IDQyLjkgMzEuMzE3IDQzLjEgMzEuMDE3IEwgNTUuNiAxMy4wMTcgQyA1NS45IDEyLjcxNyA1NS42IDEyLjExNyA1NS4xIDEyLjExNyBaIj48L3BhdGg+PHBhdGggZmlsbD0iIzAwOWNkZSIgZD0iTSA2Ny41IDQuOTE3IEwgNTkuNyA0LjkxNyBDIDU5LjIgNC45MTcgNTguNyA1LjMxNyA1OC42IDUuODE3IEwgNTUuNSAyNS43MTcgQyA1NS40IDI2LjExNyA1NS43IDI2LjQxNyA1Ni4xIDI2LjQxNyBMIDYwLjEgMjYuNDE3IEMgNjAuNSAyNi40MTcgNjAuOCAyNi4xMTcgNjAuOCAyNS44MTcgTCA2MS43IDIwLjExNyBDIDYxLjggMTkuNjE3IDYyLjIgMTkuMjE3IDYyLjggMTkuMjE3IEwgNjUuMyAxOS4yMTcgQyA3MC40IDE5LjIxNyA3My40IDE2LjcxNyA3NC4yIDExLjgxNyBDIDc0LjUgOS43MTcgNzQuMiA4LjAxNyA3My4yIDYuODE3IEMgNzIgNS42MTcgNzAuMSA0LjkxNyA2Ny41IDQuOTE3IFogTSA2OC40IDEyLjIxNyBDIDY4IDE1LjAxNyA2NS44IDE1LjAxNyA2My44IDE1LjAxNyBMIDYyLjYgMTUuMDE3IEwgNjMuNCA5LjgxNyBDIDYzLjQgOS41MTcgNjMuNyA5LjMxNyA2NCA5LjMxNyBMIDY0LjUgOS4zMTcgQyA2NS45IDkuMzE3IDY3LjIgOS4zMTcgNjcuOSAxMC4xMTcgQyA2OC40IDEwLjUxNyA2OC41IDExLjIxNyA2OC40IDEyLjIxNyBaIj48L3BhdGg+PHBhdGggZmlsbD0iIzAwOWNkZSIgZD0iTSA5MC43IDEyLjExNyBMIDg3IDEyLjExNyBDIDg2LjcgMTIuMTE3IDg2LjQgMTIuMzE3IDg2LjQgMTIuNjE3IEwgODYuMiAxMy42MTcgTCA4NS45IDEzLjIxNyBDIDg1LjEgMTIuMDE3IDgzLjMgMTEuNjE3IDgxLjUgMTEuNjE3IEMgNzcuNCAxMS42MTcgNzMuOSAxNC43MTcgNzMuMiAxOS4xMTcgQyA3Mi44IDIxLjMxNyA3My4zIDIzLjQxNyA3NC42IDI0LjgxNyBDIDc1LjcgMjYuMTE3IDc3LjQgMjYuNzE3IDc5LjMgMjYuNzE3IEMgODIuNiAyNi43MTcgODQuNSAyNC42MTcgODQuNSAyNC42MTcgTCA4NC4zIDI1LjYxNyBDIDg0LjIgMjYuMDE3IDg0LjUgMjYuNDE3IDg0LjkgMjYuNDE3IEwgODguMyAyNi40MTcgQyA4OC44IDI2LjQxNyA4OS4zIDI2LjAxNyA4OS40IDI1LjUxNyBMIDkxLjQgMTIuNzE3IEMgOTEuNCAxMi41MTcgOTEuMSAxMi4xMTcgOTAuNyAxMi4xMTcgWiBNIDg1LjUgMTkuMzE3IEMgODUuMSAyMS40MTcgODMuNSAyMi45MTcgODEuMyAyMi45MTcgQyA4MC4yIDIyLjkxNyA3OS40IDIyLjYxNyA3OC44IDIxLjkxNyBDIDc4LjIgMjEuMjE3IDc4IDIwLjMxNyA3OC4yIDE5LjMxNyBDIDc4LjUgMTcuMjE3IDgwLjMgMTUuNzE3IDgyLjQgMTUuNzE3IEMgODMuNSAxNS43MTcgODQuMyAxNi4xMTcgODQuOSAxNi43MTcgQyA4NS41IDE3LjQxNyA4NS43IDE4LjMxNyA4NS41IDE5LjMxNyBaIj48L3BhdGg+PHBhdGggZmlsbD0iIzAwOWNkZSIgZD0iTSA5NS4xIDUuNDE3IEwgOTEuOSAyNS43MTcgQyA5MS44IDI2LjExNyA5Mi4xIDI2LjQxNyA5Mi41IDI2LjQxNyBMIDk1LjcgMjYuNDE3IEMgOTYuMiAyNi40MTcgOTYuNyAyNi4wMTcgOTYuOCAyNS41MTcgTCAxMDAgNS42MTcgQyAxMDAuMSA1LjIxNyA5OS44IDQuOTE3IDk5LjQgNC45MTcgTCA5NS44IDQuOTE3IEMgOTUuNCA0LjkxNyA5NS4yIDUuMTE3IDk1LjEgNS40MTcgWiI+PC9wYXRoPjwvc3ZnPg=="></div>');
+			$(".paypal-button-label-container").css({"height": "20px", "min-height": "17px", "max-height": "25px", "position": "relative", "top": "50%", "transform": "translateY(-50%)", "text-align": "center"});
+			$(".paypal-button-logo").css({"vertical-align": "top", "text-align": "left", "height": "100%", "padding": "0", "max-height": "42px", "border-radius": "4px"});
+
+		});
+	}
+
+	var hideDefaultPaymentForm = function () {
+		var defaultRadios = paymentContentBox.querySelectorAll('.radio-wrapper');
+		for (var i=0; i<defaultRadios.length; i++) {
+			var radio = defaultRadios[i];
+			radio.classList.add(selectors.default_payment_options);
+			radio.style.display = 'none';
+		}
+	}
+
+	var addNewCardForm = function (customerId, expanded) {
+		var template = document.getElementById("new-card"),
+		radio = template.content.cloneNode(true);
+
+		paymentContentBox.insertBefore(
+			radio
+			, document.getElementsByClassName(selectors.default_payment_options)[0]
+		);
+	}
+
+	var addPaypalPayment = function () {
+		var template = document.getElementById("paypal-button-custom"),
+		radio = template.content.cloneNode(true);
+
+		paymentContentBox.insertBefore(
+			radio
+			, document.getElementsByClassName(selectors.default_payment_options)[0]
+		);
+
+	}
+
+	var loadEffect = function (status) {
+		var verb = "remove";
+		if (status) verb = "add";
+
+		document.getElementById("continue_button").classList[verb]("btn--loading");
+	}
+
+	var paymentLoader = function(status) {
+		var paymentContainer = document.querySelector('[data-payment-method]');
+		var paymentSection = paymentContainer.querySelector(".section__content");
+
+		if (status) {
+			paymentContainer.insertBefore(
+				htmlToElement('<div class="lds-dual-wrapper"><div id="payment-loader" class="lds-dual-ring"></div></div>')
+				, paymentSection
+			);
+
+			paymentSection.style.display = "none";
+		} else {
+			document.getElementById("payment-loader").style.display = "none";
+			paymentSection.style.display = "block";
+		}
+	}
+
+	/* Internal helpers */
+	/* ---------------- */
+	var apiSuccessHandler = function(res, success, error) {
+		var status = res.status,
+		msg    = res.message,
+		data   = res.data,
+		target = res.target;
+
+		if (status != 'ok') {
+			var errorMessage = target + " " + msg;
+			console.error("[STUDIO ZERANCE] API Endpoint returned an error: " + target + msg);
+			return typeof error === 'function'? error(errorMessage): '';
+		} else {
+			return typeof success === 'function'? success(data): '';
+		}
+	}
+
+	var apiErrorHandler = function ( jqXHR, textStatus, error) {
+		// handleError("Unable to generate intent, ajax fail. " + textStatus, false, true);
+		console.error("[STUDIO ZERANCE] API Endpoint failed to execute? :" + textStatus);
+		return typeof error === 'function'? error(): '';
+	}
+
+	var handleError = function (message, explicitMessage, revertToDefault) {
+		if (explicitMessage) {
+			//         var errorPopup = checkout_popup({
+			//           show_close: true,
+			//           image: "https://image.flaticon.com/icons/svg/2883/2883263.svg",
+			//           title: "Erreur",
+			//           content: message
+			//         });
+
+			//         errorPopup.open();
+			alert(message);
+			$('[data-checkout-loader]').hide();
+		}
+		else console.error('[SZ] ' + message);
+
+		if (revertToDefault) {
+			var defaultElements = document.getElementsByClassName(selectors.default_payment_options),
+			customElelements = document.getElementsByClassName(selectors.custom_payment_options),
+			i = 0;
+
+			for (;i<defaultElements.length;i++) {
+				defaultElements[i].style.display = "block";
+			}
+
+			for (i=0;i<customElelements.length;i++) {
+				customElelements[i].style.display = "none";
+			}
+		}
+
+		loadEffect(false);
+	}
+
+	var hasRechargeProducts = function () {
+		var __checkout = getShopifyCheckoutInfo();
+		for (var i=0; i < __checkout.line_items.length; i++) {
+			var item = __checkout.line_items[i];
+			var properties = item.properties;
+			if (
+				!properties
+				|| typeof properties != 'object'
+				|| Array.isArray(properties)
+				|| !properties.subscription_id
+			) continue
+			return true;
+		}
+		return false;
+	}
+
+	var getShopifyCheckoutInfo = function () {
+		var total_price = 0;
+		{% for line_item in checkout.line_items %}
+		{%- if line_item.variant.metafields.subscriptions and line_item.variant.metafields.subscriptions.discount_variant_price -%}
+		total_price += {{ line_item.variant.metafields.subscriptions.discount_variant_price }};
+		{%- else -%}
+		total_price += {{ line_item.final_line_price | money_without_currency }};
+		{%- endif -%}
+		{% endfor %}
+		total_price += {{ checkout.shipping_price | money_without_currency }};
+
+		return {
+			customer: {
+				first_name: {{ checkout.customer.first_name | json }},
+				last_name: {{ checkout.customer.last_name | json }},
+				name: {{ checkout.customer.name | json }},
+				email: {{ checkout.customer.email | json }},
+				addresses: {{ checkout.customer.addresses | json }},
+				default_address: {
+					id: {{ checkout.customer.default_address.id | json }},
+					first_name: {{ checkout.customer.default_address.first_name | json }},
+					last_name: {{ checkout.customer.default_address.lastname | json }},
+					phone: {{ checkout.customer.default_address.phone | json }},
+					address1: {{ checkout.customer.default_address.address1 | json }},
+					address2: {{ checkout.customer.default_address.address2 | json }},
+					city: {{ checkout.customer.default_address.city | json }},
+					province: {{ checkout.customer.default_address.province | json }},
+					province_code: {{ checkout.customer.default_address.province_code | json }},
+					street: {{ checkout.customer.default_address.street | json }},
+					zip: {{ checkout.customer.default_address.zip | json }},
+					company: {{ checkout.customer.default_address.company | json }},
+					country: {{ checkout.customer.default_address.country | json }},
+					country_code: {{ checkout.customer.default_address.country_code | json }}
+
+				},
+				shipping_address: {
+					id: {{ checkout.shipping_address.id | json }},
+					first_name: {{ checkout.shipping_address.first_name | json }},
+					last_name: {{ checkout.shipping_address.lastname | json }},
+					phone: {{ checkout.shipping_address.phone | json }},
+					address1: {{ checkout.shipping_address.address1 | json }},
+					address2: {{ checkout.shipping_address.address2 | json }},
+					city: {{ checkout.shipping_address.city | json }},
+					province: {{ checkout.shipping_address.province | json }},
+					province_code: {{ checkout.shipping_address.province_code | json }},
+					street: {{ checkout.shipping_address.street | json }},
+					zip: {{ checkout.shipping_address.zip | json }},
+					company: {{ checkout.shipping_address.company | json }},
+					country: {{ checkout.shipping_address.country | json }},
+					country_code: {{ checkout.shipping_address.country_code | json }}
+
+				}
+			},
+			line_items: [
+				{% for line_item in checkout.line_items %}
+				{
+					title: "{{ line_item.title }}",
+					quantity: {{ line_item.quantity }},
+					product_id: {{ line_item.product_id }},
+					product_type : "{{ line_item.product.type }}",
+					product_vendor : "{{ line_item.product.vendor }}",
+					product_title : "{{ line_item.product.title }}",
+					variant_id: {{ line_item.variant_id }},
+					final_line_price: {{ line_item.final_line_price | money_without_currency }},
+
+					{%- if line_item.variant.metafields.subscriptions and line_item.variant.metafields.subscriptions.discount_variant_price -%}
+					subscription_price: {{ line_item.variant.metafields.subscriptions.discount_variant_price }},
+					{%- endif -%}
+
+					{%- unless line_item.properties == empty -%}
+					properties: {
+						{%- for property in line_item.properties -%}
+						"{{ property.first }}": "{{ property.last }}"{% unless forloop.last %},{% endunless %}
+						{%- endfor -%}
+					}
+					{%- endunless -%}
+				},
+				{%- endfor %}
+			],
+			total_price : total_price,
+			shipping_price: {{ checkout.shipping_price | money_without_currency }},
+			shipping_method: {{ checkout.shipping_method.handle | json }}
+		}
+	}
+
+	/* Submit */
+	/* ------ */
+	var submitStripePayment = function () {
+		$('[data-checkout-loader]').show();
+
+		loadEffect(true);
+
+		// Prepare stripe's payment confirmation params.
+		var holderName = document.getElementById('cardholder-name').value;
+
+		if (!holderName || holderName == "")
+		return handleError("Le nom du titulaire de la carte est obligatoire.", true, false);
+
+		var confirmationOptions = {
+			clientSecret: self.stripeIntent.clientSecret,
+			cardNumber: self.cardNumberField,
+			holderName: holderName,
+		};
+
+		// Confrime payment from stripe
+		STRIPE.confirmIntent(
+			confirmationOptions
+
+			// On success.
+			, function (setupIntent) {
+				var token = setupIntent.id;
+
+				API.trackEvents();
+
+
+
+				// Create order.
+				API.processCheckout({pp: 'stripe', pt: token, shopifyToken: Shopify.Checkout.token, checkoutToken: self.rechargeCheckoutId}, function (res) {
+					onSubmitSuccess(res.url , res);
+				}, function (msg) {
+					var errorMsg = "Une erreur s'est produite suite à la creation de votre abonnement, veuillez contacter notre support pour confirmer la creation de votre abonnement. <br /> Log de l'erreur : " + msg;
+					console.error("[Franklin]" + msg);
+					handleError(errorMsg, true, false);
+				});
+			}
+
+			// On failure.
+			, function (e) {
+				var msg = e.message;
+				var declineCode = e.decline_code;
+				if (msg) { // stripe errors come with a message.
+					console.log("[" + declineCode + "] " + msg);
+					alert(msg);
+					$('[data-checkout-loader]').hide();
+				} else { // Unexpected case.
+					handleError("Une erreur s'est produit", true, true);
+				}
+				loadEffect(false);
+			}
+		);
+	}
+
+	var submitPaypalPayment = function (nonce) {
+		$('[data-checkout-loader]').show();
+		API.trackEvents();
+		API.processCheckout({pp: 'braintree', pt: nonce, shopifyToken: Shopify.Checkout.token, checkoutToken: self.rechargeCheckoutId}, function (res) {
+			onSubmitSuccess(res.url , res);
+		}, function (msg) {
+			var errorMsg = "Une erreur s'est produite suite à la creation de votre abonnement, veuillez contacter notre support pour confirmer la creation de votre abonnement. <br /> Log de l'erreur : " + msg;
+			console.error("[Franklin]" + msg);
+			handleError(errorMsg, true, false);
+		});
+	}
+
+	function fireAnalytics () {
+		ga('require', 'ec')
+
+		var checkoutInfos = getShopifyCheckoutInfo()
+		console.log('Checkout infos ', checkoutInfos);
+		var total_price = 0;
+		var fb_contents = [];
+
+		for(var i = 0; i < checkoutInfos.line_items.length; i++){
+			var line_item = checkoutInfos.line_items[i];
+			var price = line_item.final_line_price / line_item.quantity;
+			if(line_item.properties && line_item.properties.subscription_id ){
+				price = line_item.subscription_price;
+			}
+			total_price += price;
+
+			var gaObject = {
+				'id': line_item.variant_id,                   // Product ID (string).
+				'name': line_item.product_title, // Product name (string).
+				'category': line_item.product_type,            // Product category (string).
+				'brand': line_item.product_vendor,                // Product brand (string).
+				'variant': line_item.title,               // Product variant (string).
+				'price': price,                 // Product price (number).
+				'quantity': line_item.quantity                     // Product quantity (number).
+			}
+			console.log('GA Object', gaObject)
+			ga('ec:addProduct', gaObject)
+			ga('ec:setAction', 'checkout', {'step': 1});
+
+			var fbContent = {
+					id : line_item.variant_id,
+					quantity : line_item.quantity
+			}
+			console.log('Fb content ', fbContent);
+			fb_contents.push(fbContent);
+		}
+
+		var gaPurchase = {
+			'id': {{ checkout.id | json }},
+			'revenue': total_price,
+			'tax': {{ checkout.tax_price | money_without_currency | json }},
+			'shipping': {{ checkout.shipping_price | money_without_currency | json }}
+		}
+		console.log('Ga purchase ', gaPurchase);
+		ga('ec:setAction', 'purchase', gaPurchase);
+		// FB
+		var fbPurchase = {
+			value: total_price,
+			currency: 'EUR',
+			contents: fb_contents,
+			content_type: 'product'
+		}
+		console.log('FB track', fbPurchase);
+		fbq('track', 'Purchase', fbPurchase);
+
+		ga('send', 'event', 'subscription_checkout', 'completed');
+
+
+		// // Google | ref: https://developers.google.com/analytics/devguides/collection/analyticsjs/enhanced-ecommerce
+		// {% for item in checkout.line_items %}
+		// ga('ec:addProduct', {               // Provide product details in an productFieldObject.
+		// 	'id': {{ line_item.variant_id | json }},                   // Product ID (string).
+		// 	'name': {{ line_item.product.title | json }}, // Product name (string).
+		// 	'category': {{ line_item.product.type | json }},            // Product category (string).
+		// 	'brand': {{ line_item.product.vendor | json }},                // Product brand (string).
+		// 	'variant': {{ line_item.variant.title | json }},               // Product variant (string).
+		// 	'price': {{ line_item.final_price | money_without_currency | json }},                 // Product price (number).
+		// 	'quantity': {{ line_item.quantity | json }}                     // Product quantity (number).
+		// });
+		// {% endfor %}
+		//
+		//
+		// ga('ec:setAction', 'purchase', {
+		// 	'id': {{ checkout.id | json }},
+		// 	'revenue': {{ checkout.total_price | money_without_currency | json }},
+		// 	'tax': {{ checkout.tax_price | money_without_currency | json }},
+		// 	'shipping': {{ checkout.shipping_price | money_without_currency | json }}
+		// });
+		//
+		// // FB
+		// fbq('track', 'Purchase',
+		// {
+		// 	value: {{ checkout.total_price | money_without_currency | json }},
+		// 	currency: 'EUR',
+		// 	contents: [
+		// 		{% for item in checkout.line_items %}
+		// 		{
+		// 			id: {{ line_item.variant_id | json }},
+		// 			quantity: {{ line_item.quantity | json }}
+		// 		}{%- unless forloop.last -%},{%- endunless -%}
+		// 		{% endfor %}
+		// 	],
+		// 	content_type: 'product'
+		// }
+		// end parameter object data
+	// );
+}
+
+var onSubmitSuccess = function (orderConfirmationURL, response) {
+	// TODO : add conversion tracking
+	try{
+		fireAnalytics();
+	}catch(e){
+		console.log('Erreur ANALYTICS ', e);
+	}
+
+	// clear cart.
+	$.post('/cart/clear.js');
+
+	// Redirection
+	window.location.replace(orderConfirmationURL);
+}
+/* Start */
+/* ----- */
+if (!theme.checkoutSettings.custom_recharge.is_active) return;
+if (!hasRechargeProducts()) return;
+//     $('.radio__input').click(function(){
+//       setTimeout(preinit, 500);
+//     })
+$('[data-checkout-shipping-rate]').on('change', function (e) {
+	preinit();
+});
+
+$(document).on('page:load page:change', function() {
+	paymentContentBox = document.querySelector('.section--payment-method .content-box');
+
+	preinit();
+	setInterval(preinit, 200);
+
+	if (Shopify.Checkout.step != "payment_method") return;
+
+	if (self.loaded)
+	return reinit();
+	else
+	/* Get kickoff data from the backend */
+	/* --------------------------------- */
+	paymentLoader(true);
+
+	return API.initCheckout(
+		// params
+		{shopifyCheckoutToken: Shopify.Checkout.token}
+		//           { shopify_checkout: getShopifyCheckoutInfo() }
+
+		// on success
+		, function (res) {
+			var rechargeCheckoutId = res.recharge_checkout_id;
+			if (!rechargeCheckoutId)
+			return handleError("Runtime error : coudln't init checkout", false, true);
+
+			init(rechargeCheckoutId, function () {
+				paymentLoader(false);
+			});
+		}
+		// on failure
+		, function (msg) {
+			return handleError(msg || "Une erreur s'est produite, veuillez contacter notre support.", true, true);
+		}
+	);
+});
+
+/*
+* Pure front modifications.
+* - Update recharge line-item prices, subtotal, taxes etc..
+* - Hide subscription line-item properties.
+*/
+
+//     $('[data-checkout-shipping-rate]').on('change', function (e) {
+//       preinit ();
+//     });
+
+function preinit () {
+
+	try {
+		var checkoutObj = getShopifyCheckoutInfo();
+		//       console.log('Checkout obj ', checkoutObj);
+		var lineItems = checkoutObj.line_items;
+		var shippingPrice = checkoutObj.shipping_price;
+		// console.log('Shipping price before ', shippingPrice);
+		shippingPrice = $('[data-checkout-total-shipping-target]').attr('data-checkout-total-shipping-target') / 100;
+		// console.log('Shipping price after ', shippingPrice);
+		var newSubtotal = 0;
+		// Hide paypal if subscription
+		$('[data-alternative-payments]').hide();
+
+		for (var i=0; i<lineItems.length; i++) {
+			var item = lineItems[i];
+			var subscriptionPrice = (item.subscription_price * item.quantity).toFixed(2);
+
+			// continue if this item is not a subscription item.
+			if (!item.properties || !item.properties.recharge_variant_id) {
+				newSubtotal += item.final_line_price;
+				continue;
+			}
+
+			var itemsSummary = document.querySelectorAll('[data-order-summary-section="line-items"]');
+			for (var j=0; j <itemsSummary.length; j++) {
+				var summary = itemsSummary[j];
+				var concernedLineItemSummary = summary.querySelector("[data-product-id]:nth-child(" + (i+1) + ")");
+
+				// Hide subscription properties.
+				var propertiesParent = concernedLineItemSummary.querySelector(".product__description");
+				var propertyNodes = concernedLineItemSummary.querySelectorAll(".product__description__property");
+				for (var k=0; k < propertyNodes.length; k++) {
+					var propertyNode = propertyNodes[k];
+					var prpertyContent = propertyNode.textContent;
+					if (
+						prpertyContent.indexOf("subscription_variant_id") < 0
+						&& prpertyContent.indexOf("subscription_id") < 0
+						&& prpertyContent.indexOf("shipping_interval_unit_type") < 0
+						&& prpertyContent.indexOf("shipping_interval_frequency") < 0
+						&& prpertyContent.indexOf("recharge_variant_id") < 0
+					) continue;
+
+					propertyNode.style.display = "none";
+				}
+
+				// Add a descreptive line to the subscription.
+				var frequencyUnitFr = "mois";
+				var accordArticle = "tous";
+
+				switch(item.properties.shipping_interval_unit_type.toLowerCase()) {
+					case "day":
+					frequencyUnitFr = "jour";
+					break;
+					case "days":
+					frequencyUnitFr = "jours";
+					break;
+					case "week":
+					frequencyUnitFr = "semaine";
+					accordArticle = "toutes"
+					break;
+					case "weeks":
+					frequencyUnitFr = "semaines";
+					accordArticle = "toutes"
+					break;
+					default:
+					// code block
+				}
+				var newPropertyHtml = populateTemplate("subscription-description-item-property", {
+					frequency: item.properties.shipping_interval_frequency,
+					frequency_unit: frequencyUnitFr,
+					frequency_accord_article: accordArticle
+				});
+				if(propertiesParent.innerHTML.indexOf('livraison tous les') == -1){
+					propertiesParent.append(htmlToElement(newPropertyHtml));
+				}
+
+				// Update line item price
+				var priceNode = concernedLineItemSummary.querySelector('.product__price .order-summary__emphasis');
+				var currentyPriceText = parseFloat(priceNode.textContent).toFixed(2);
+				if (subscriptionPrice && !isNaN(subscriptionPrice)) {
+					// update product prices in Shopify.
+					priceNode.textContent = priceNode.textContent.replace(currentyPriceText, subscriptionPrice);
+					// update subtotal value.
+					newSubtotal += parseFloat(subscriptionPrice);
+				} else {
+					// update subtotal value.
+					newSubtotal += currentyPriceText;
+				}
+			}
+		}
+
+		// update the subtotal value.
+		var subtotalNodes = document.querySelectorAll('[data-checkout-subtotal-price-target]');
+		for (var i=0; i < subtotalNodes.length; i++)  {
+			var subtotalNode = subtotalNodes[i];
+			var currentSubtotal = parseFloat(subtotalNode.textContent).toFixed(2);
+			subtotalNode.textContent = subtotalNode.textContent.replace(currentSubtotal, newSubtotal.toFixed(2));
+		}
+
+		//          if (newSubtotal.toFixed(2) >= 45) {
+		//              var shippingOption = checkoutObj.shipping_method.toLowerIndex();
+		//              var shippingRate = 0;
+		//              if ($('[data-checkout-shipping-rate]').length) {
+		//                shippingOption = $('[data-checkout-shipping-rate]:checked')
+		//                   .closest('.radio-wrapper')
+		//                   .find('[data-shipping-method-label-title]')
+		//                   .text().trim().toLowerIndex();
+		//              }
+
+		//              if (shippingOption.indexOf("mondial relay") > -1 || shippingOption.indexOf("dpd") > -1) {
+		//                shippingRate = 'offert';
+		//              } else if (shippingOption.indexOf("colissimo") > -1) {
+		//                shippingRate = 6.00.toFixed(2);
+		//              } else if (shippingOption.indexOf("chronopost") > -1) {
+		//                shippingRate = 12.00.toFixed(2);
+		//              }
+
+		//              $('[data-checkout-total-shipping-target]').text(shippingRate);
+		//          }
+
+
+		var discountNode = document.querySelector('[data-checkout-discount-amount-target]');
+		var discount = 0;
+		if (discountNode) {
+			discount = parseFloat((parseInt(discountNode.getAttribute('data-checkout-discount-amount-target'))/100).toFixed(2));
+		}
+
+
+
+		// update the total value.
+		var totalNodes = document.querySelectorAll('[data-checkout-payment-due-target]');
+		for (var i=0; i < totalNodes.length; i++)  {
+			var totalNode = totalNodes[i];
+			var currentTotal = parseFloat(totalNode.textContent).toFixed(2);
+			// console.log('New subtotal ', newSubtotal, ' new shipping price ', shippingPrice);
+			var newTotal = (parseFloat(newSubtotal) + parseFloat(shippingPrice) - discount).toFixed(2);
+			// console.log('New total ', newTotal);
+			totalNode.textContent = totalNode.textContent.replace(currentTotal, newTotal);
+		}
+
+
+		// update the VAT value.
+		var taxNodes = document.querySelectorAll('[data-checkout-total-taxes-target]');
+		for (var i=0; i < taxNodes.length; i++)  {
+			var taxNode = taxNodes[i];
+			var currentTax = parseFloat(taxNode.textContent).toFixed(2);
+			taxNode.textContent = taxNode.textContent.replace(currentTax, parseFloat(newSubtotal - discount - newSubtotal/1.2).toFixed(2));
+		}
+	} catch (e) {
+		console.log(e)
+	}
+}
+
+// Init the payment step.
+function init (rechargeCheckoutId, onPaymentFormsLoaded) {
+	console.log('hola');
+	$('body').on('coucou', function(){
+		console.log('wesh');
+		fireAnalytics();
+	});
+	window.firefire = fireAnalytics;
+
+	if (!rechargeCheckoutId || typeof rechargeCheckoutId != "string" || rechargeCheckoutId.trim() == '')
+	return console.log("[Franklin] Missing or invalide parameter 'customerId", {customerId: customerId});
+
+	// setup authorization header.
+	//           $.ajaxSetup({
+	//             {% assign checkoutId = checkout.id %}
+	//             {% assign customerId = customer.id %}
+	//             {% assign authString = checkoutId | append: '+' | append: customerId %}
+	//             {% assign secret     = authString | hmac_sha256: "lafourchesecret" %}
+
+	//             headers: { 'authorization': '{{secret}}' }
+	//           });
+
+	self.rechargeCheckoutId = rechargeCheckoutId;
+
+	/* Get intents */
+	/* ----------------------- */
+	API.getIntents(
+		// params
+		{shopifyCheckoutToken: Shopify.Checkout.token}
+		//           { shopify_checkout: getShopifyCheckoutInfo() }
+
+		// on success
+		, function (res) {
+			if (!res.intents) {
+				return handleError("Endpoint error: Coudln't get intents", false, true);
+			} else if (res.intents.stripe || res.intents.paypal) {
+				if (res.intents.stripe) {
+					self.stripeIntent = {
+						id:res.intents.stripe.intent_id,
+						clientSecret: res.intents.stripe.client_secret
+					}
+					//                 self.clientSecret = res.client_secret;
+					//                 self.intentId = res.intent_id;
+				}
+
+				if (res.intents.paypal) {
+					self.paypalIntent = {
+						clientToken: res.intents.paypal.client_token
+					}
+				}
+
+				initPaymentForms(onPaymentFormsLoaded);
+			} else {
+				console.log("[STUDIO ZERANCE] received intents", res.intents);
+				return handleError("Endpoint error: Coudln't recognise any intents", false, true);
+			}
+		}
+		// on failure
+		, function () {
+			return handleError("Endpoint error: Coudln't get intent", false, true);
+		}
+	);
+
+	// On checkout confirmation.
+	var paymentButton = document.getElementById("continue_button");
+	paymentButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		submitStripePayment();
+	});
+
+	self.loaded = true;
+}
+
+// re-Init the payment step.
+function reinit() {
+	// On checkout confirmation.
+	var paymentButton = document.getElementById("continue_button");
+	paymentButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		submitStripePayment();
+	});
+
+	// setup stripe with the custom form
+	//         document.addEventListener('stripeLoaded', function (e) {
+	//           self.cardNumberField = e.detail.cardNumber;
+	//         });
+
+
+	initPaymentForms (onPaymentFormsLoaded);
+}
+})({{ customer.id | json }});
+</script>
+
+<template id="subscription-description-item-property">
+	<span class="product__description__property order-summary__small-text">
+		Abonnement, livraison ##frequency_accord_article## les ##frequency## ##frequency_unit##
+	</span>
+</template>
+
+<template id="new-card">
+	<style>
+	.sz-custom-payment-options div.__PrivateStripeElement {
+		transform: translateY(-50%);
+		top: 21px;
+		left: 10px;
+		height: 100%;
+		line-height: 100%;
+	}
+
+	.sz-custom-payment-options .fieldset {
+		width: 100%;
+	}
+
+	#cardholder-name {
+		color: #32325D;
+	}
+	#cardholder-name::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+		color: rgb(0,0,0,0.5);
+		opacity: 1; /* Firefox */
+	}
+
+	#cardholder-name:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		color: rgba(0,0,0,0.5);
+	}
+
+	#cardholder-name::-ms-input-placeholder { /* Microsoft Edge */
+		color: rgba(0,0,0,0.5);
+	}
+
+	/*.form__input, .input-group .input-group__input, .quantity-group .quantity-group__input, .form__textarea { */
+	.form__input {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		-ms-transition: all 0.3s ease-in-out;
+		-webkit-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+		display: block;
+		padding: 11px 16px;
+		border-radius: 4px;
+		border: 1px solid;
+		width: 100%;
+		line-height: normal;
+		resize: none;
+	}
+	</style>
+
+	<div class="radio-wrapper content-box__row sz-custom-payment-options" data-new-card-radio>
+		<div class="radio__input">
+			<input id="new-cart-input" type="hidden" value="" class="input-radio" name="custom_payments">
+		</div>
+
+		<div class="radio__label  ">
+			<label for="new-cart-input" class="radio__label__primary content-box__emphasis">
+				Carte de crédit
+			</label>
+			<span class="radio__label__accessory">
+				<span class="visually-hidden">
+					Payez avec :
+				</span>
+
+				<span data-brand-icons-for-gateway="9589227562">
+					<span class="payment-icon payment-icon--visa" data-payment-icon="visa">
+						<span class="visually-hidden">
+							Visa,
+						</span>
+					</span>              <span class="payment-icon payment-icon--master" data-payment-icon="master">
+						<span class="visually-hidden">
+							Mastercard,
+						</span>
+					</span>              <span class="payment-icon payment-icon--american-express" data-payment-icon="american-express">
+						<span class="visually-hidden">
+							American Express,
+						</span>
+					</span>
+				</span>
+			</span>
+		</div>
+
+		<!--     <label for="new-cart-input" class="radio__label  radio__label--inactive">
+		<h3 class="radio__label__primary content-box__emphasis">
+		Carte de credit
+	</h3>
+</label> -->
+</div>
+
+<div id="new-card-form"
+class="radio-wrapper content-box__row content-box__row--secondary sz-custom-payment-options"
+data-new-card-form
+style="background-color: transparent;">
+<div class="fieldset" data-credit-card-fields="" data-slate="" dir="ltr">
+	<div class="field">
+		<div class="field__input-wrapper field__input-wrapper--icon-right"><label class="field__label field__label--visible" for="checkout_credit_card_number">Numéro de carte</label>
+			<div id="card-number" class="field__input field__input--iframe-container" data-card-fields="number" data-card-field-placeholder="Numéro de carte" data-card-field-prefix="Cadre pour le champ :">
+			</div>
+			<div id="credit_card_number_tooltip" class="field__icon"><div class="field__icon-svg"><svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-16 icon-svg--block" role="img" aria-labelledby="lock-943f422dfa4ea22804b88c114ecee277-title"><title id="lock-943f422dfa4ea22804b88c114ecee277-title">Toutes les transactions sont sécurisées et chiffrées.</title> <use xlink:href="#lock"></use> </svg></div></div>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="field__input-wrapper field__input-wrapper--icon-right">
+			{% assign customerName = customer.name | default: blank %}
+			<div id="holder-name" class="field__input">
+				<input id="cardholder-name"
+				name="customer[name]"
+				type="text"
+				value="{{ customerName }}"
+				placeholder="{%- if customerName == blank -%}NOM SUR LA CARTE{%- endif -%}"
+				style="background-color: white; color: #333333; border-color: #d9d9d9; font-weight: 400; width: 100%;">
+			</div>
+		</div>
+	</div>
+
+	<div class="field--half field field--required" data-credit-card-expiry="true">
+		<div class="field__input-wrapper"><label class="field__label field__label--visible" for="checkout_credit_card_expiry">Date d'expiration (M/ AA)</label>
+			<div id="card-expiry" class="field__input field__input--iframe-container" data-card-fields="expiry" data-card-field-placeholder="Date d'expiration (MM/AA)" data-card-field-prefix="Cadre pour le champ :" data-card-field-tooltip="Date d'expiration de la carte dans le format : mois, mois, année, année">
+			</div>
+		</div>
+	</div>
+
+
+	<div class="field--half field field--required">
+		<div class="field__input-wrapper field__input-wrapper--icon-right"><label class="field__label field__label--visible" for="checkout_credit_card_verification_value">Code de sécurité</label>
+			<div id="card-cvc" class="field__input field__input--iframe-container" data-card-fields="verification_value" data-card-field-placeholder="Code de sécurité" data-card-field-prefix="Cadre pour le champ :" data-card-field-tooltip="Code de sécurité à 3 chiffres généralement situé à l'endos de votre carte. Le code de sécurité pour les cartes American Express se compose de 4 chiffre et est situé à l'avant de votre carte.">
+			</div>
+
+			<div id="credit_card_verification_value_tooltip" role="tooltip" class="field__icon has-tooltip">
+				<span id="tooltip-for-verification_value" class="tooltip">
+					<span data-cvv-tooltip="unknown">
+						Code de sécurité à 3 chiffres généralement situé à l'endos de votre carte. Le code de sécurité pour les cartes American Express se compose de 4 chiffre et est situé à l'avant de votre carte.
+					</span>
+					<span data-cvv-tooltip="amex" class="hidden">
+						Le code de sécurité à 4 chiffres à l'avant de votre carte
+					</span>
+					<span data-cvv-tooltip="other" class="hidden">
+						Le code de sécurité à 3 chiffres à l'arrière de votre carte
+					</span>
+				</span>
+				<div class="field__icon-svg"><svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-16 icon-svg--block" role="presentation" aria-hidden="true" focusable="false"> <use xlink:href="#question"></use> </svg></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</template>
+
+<template id="paypal-button-custom">
+	<div class="alternative-payment-separator paypal-button">
+      <span class="alternative-payment-separator__content">
+        OU
+      </span>
+    </div>
+	<div class="radio-wrapper">
+		<div id="test-paypal-b"></div>
+	</div>
+</template>
+
+<template id="line-item">
+	<tr class="product"
+	data-product-id="##product_id##"
+	data-variant-id="##variant_id##"
+	data-product-type="##product_type##"
+	data-customer-ready-visible="">
+	<td class="product__image">
+		<div class="product-thumbnail ">
+			<div class="product-thumbnail__wrapper">
+				<img alt="Poulet, patate douce, herbes - 2.5 kg"
+				class="product-thumbnail__image"
+				src="##product_image_url##">
+			</div>
+			<span class="product-thumbnail__quantity" aria-hidden="true">##quantity##</span>
+		</div>
+
+	</td>
+	<th class="product__description" scope="row">
+		<span class="product__description__name order-summary__emphasis">##product_title##</span>
+		<span class="product__description__variant order-summary__small-text">##product_options##</span>
+		<span class="product__description__property order-summary__small-text">##properties##</span>
+	</th>
+	<td class="product__quantity visually-hidden">
+		##quantity##
+	</td>
+	<td class="product__price">
+		<span class="order-summary__emphasis">##price##</span>
+	</td>
+</tr>
+</template>

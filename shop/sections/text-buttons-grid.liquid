@@ -1,0 +1,218 @@
+{% include 'text-buttons-grid' with Settings:section.settings, id:section.id %}
+
+{% schema %}
+{
+  "name": "text buttons grid",
+  "settings": [
+      {
+        "type":"header",
+        "content" : "Content left"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "image_picker",
+        "id": "gif_1",
+        "label": "gif_1 (laisser vide pour désactiver)"
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "title_1"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_1",
+        "label": "subtitle_1"
+      },
+      {
+        "type": "image_picker",
+        "id": "gif_2",
+        "label": "gif_2 (laisser vide pour désactiver)"
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "title_2"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_2",
+        "label": "subtitle_2"
+      },
+      {
+        "type": "image_picker",
+        "id": "gif_3",
+        "label": "gif_3 (laisser vide pour désactiver)"
+      },
+      {
+        "type": "text",
+        "id": "title_3",
+        "label": "title_3"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_3",
+        "label": "subtitle_3"
+      },
+	  {
+        "type": "image_picker",
+        "id": "gif_4",
+        "label": "gif_4 (laisser vide pour désactiver)"
+      },
+      {
+        "type": "text",
+        "id": "title_4",
+        "label": "title_4"
+      },
+      {
+        "type": "text",
+        "id": "subtitle_4",
+        "label": "subtitle_4"
+      },
+      {
+        "type":"header",
+        "content" : "Content right"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_1",
+        "label": "Image_1"
+      },
+      {
+        "type": "text",
+        "id": "title_box_1",
+        "label": "Titre_1"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_1",
+        "label": "cta_text_1"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_1",
+        "label": "cta_url_1"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "Image_2"
+      },
+      {
+        "type": "text",
+        "id": "title_box_2",
+        "label": "Titre_2"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_2",
+        "label": "cta_text_2"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_2",
+        "label": "cta_url_2"
+      },
+      {
+        "type":"header",
+        "content" : "Section"
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section bottom spacing",
+        "options": [
+        {
+          "value" : "section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "section_spacing_mobile",
+        "label": "Section bottom spacing mobile",
+        "options": [
+        {
+          "value":"",
+          "label":"Same value"
+        },
+        {
+          "value" : "mobile-section--xxxl-spacing",
+          "label" : "XXL Spacing"
+        },
+        {
+          "value" : "mobile-section--xl-spacing",
+          "label" : "XL Spacing"
+        },{
+          "value" : "mobile-section--l-spacing",
+          "label" : "L Spacing"
+        },{
+          "value" : "mobile-section--m-spacing",
+          "label" : "M Spacing"
+        },{
+          "value" : "mobile-section--s-spacing",
+          "label" : "S Spacing"
+        },{
+          "value" : "mobile-section--xs-spacing",
+          "label" : "XS Spacing"
+        },{
+          "value" : "mobile-section--no-spacing",
+          "label" : "No Spacing"
+        }
+        ],
+        "default":""
+      },
+      {
+        "type": "select",
+        "id": "section_bg",
+        "label": "Couleur du fond",
+        "options": [
+        {
+          "value" : "bg--white",
+          "label" : "BG white"
+        },
+        {
+          "value" : "bg--color",
+          "label" : "BG Color"
+        },{
+          "value" : "bg--primary",
+          "label" : "BG Primary"
+        },{
+          "value" : "bg--secondary",
+          "label" : "BG secondary"
+        }
+        ]
+      }
+      ],
+      "presets": [
+      {
+        "name": "text buttons grid",
+        "category": "Studio Zerance"
+      }
+      ]
+    }
+    {% endschema %}

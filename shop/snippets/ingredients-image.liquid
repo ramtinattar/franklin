@@ -1,0 +1,32 @@
+
+<section class="{% if Settings.hide_desktop == true %}hide-desktop {% endif %}{% if Settings.hide_mobile == true %}hide-mobile {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section ingredients-image" id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="ingredients-image">
+	{% if Settings.title_mobile != blank %}
+	<div class="page-width">
+		<h2 class="z-h4 heading ingredients-image__title-mobile only-mobile">{{ Settings.title_mobile }}</h2>
+	</div>
+	{% endif %}
+	<div class="ingredients-image__custom-container">
+		<div class="ingredients-image__frame">
+			<h3 class="heading z-h3 ingredients-image__title">{{ Settings.title }}</h3>
+			<div class="container--medium mobile-container--full ingredients-image__container">
+				<div class="grid">
+					{% for i in (1..5) %}
+					{% capture current %}{% cycle 1, 2, 3, 4, 5, 6, 7 %}{% endcapture %}
+					{% assign imageKey = 'image_' | append : current %}
+					{% assign textKey = 'text_' | append : current %}
+					{% if Settings[textKey] == blank %}{% continue %}{% endif %}
+					<div class="grid__cell 1/2 1/4--desk">
+						<div class="picto-text__container">
+							{% include 'image' with img : Settings[imageKey], classes:'picto-text__image', dimensions : '100x' %}
+							<h4 class="text t-6 picto-text__title uppercase">{{ Settings[textKey] }}</h4>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="only-desktop ingredients-image__image-container {% if Settings.image.src contains 'gif' %}ingredients-image__image-container--gif{% endif %}">
+			{% include 'image' with img : Settings.image, classes:'ingredients-image__image' %}
+		</div>
+	</div>
+</section>

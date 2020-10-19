@@ -1,0 +1,140 @@
+{% unless page.url contains '/cart' %}
+<div data-cart-close data-cart-background-overlay class="side-cart-overlay
+{% if section.settings.cart_mode == 'below' %}
+  side-cart-overlay--below-header
+{% endif %}">
+</div>
+<div data-side-cart class="side-cart
+  {% if section.settings.cart_mode == 'below' %}
+    side-cart--below-header
+  {% endif %}">
+  {% assign title = section.settings.title %}
+  {% assign aff_cart_close = section.settings.aff_cart_close %}
+    <form action="/cart" method="post" novalidate class="side-cart__form">
+      <div class="cart" {% if settings.cart_active_free_shipping %}data-minimum-shipping="{{ settings.cart_free_shipping }}"{% endif %}>
+        <div class="cart-header">
+          <div class="container--large relative">
+            {% unless title == blank %}
+            <div class="heading z-h7 cart__title">{{ title }}</div>
+            {% endunless %}
+            <div class="cart-close {% unless aff_cart_close == true %}only-mobile{% endunless%}" data-cart-close>
+              {% include 'icon-cross' %}
+            </div>
+          </div>
+        </div>
+        <div class="cart-progress">
+            <div data-progress-container class="container--small cart-progress__container align-center">
+                <div class="cart-progress">
+                  {% comment %}
+                    {% if settings.cart_progress_icon != blank %}
+                        <div class="cart-progress__image-container">
+                            {% include 'image' with classes : 'cart-progress__image', img:settings.cart_progress_icon %}
+                        </div>
+                    {% endif %}
+                    {% endcomment %}
+                    <div class="cart-progress__text text t-8">
+                        <span class="cart-progress__plusque">{{ settings.cart_progress_prefix }}</span>
+                        <span data-progress-price data-progress-goal="{{ settings.cart_progress_goal | remove : '.' | remove : ',' }}" class="bold cart-progress__price">{{ settings.cart_progress_goal }}</span><strong>€</strong>
+                        <span class="cart-progress__plusque">{{ settings.cart_progress_sufix }}</span>
+                    </div>
+                    <div data-progress-bar-container class="cart-progress__bar-container">
+                        <div data-progress-bar class="cart-progress__bar">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-progress--reached">
+                    <div class="cart-progress__text text t-8">
+                        {{ settings.cart_progress_offer }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container--large cart__items-container">
+          <div class="relative">
+            <div data-cart-loader class="cart__loader-container">
+              <div class="lds-dual-ring"></div>
+            </div>
+            <div class="cart__items relative" data-cart-items>
+
+                {% for item in cart.items %}
+                  {% include 'cart-item' with item : item %}
+                {% endfor %}
+              </div>
+          </div>
+
+          <div class="cart__payment-container">
+            <div class="container--large">
+              <div data-gobelet-container data-gobelet-id="{{ all_products[settings.gobelet_product].variants[0].id }}" data-gobelet-min="{{ settings.gobelet_min }}" class="cart__gobelet-container">
+                <div class="cart__gobelet-image-container">
+                  {% include 'image' with img : settings.gobelet_image, classes : 'cart__gobelet-image' %}
+                </div>
+                <div class="cart__gobelet-text text t-10">
+                  {{ settings.gobelet_text }}
+                </div>
+                <div class="cart__gobelet-switch-container">
+                  <label class="switch">
+                    <input class="switch-input" data-gobelet-switch type="checkbox" {% if gobeletAdded %}checked{% endif %}>
+                    <span class="switch-round"></span>
+                  </label>
+                </div>
+              </div>
+			  <a data-checkout-button class="cart__payment-button button button--secondary button--full button--add-to-cart" href="/checkout">
+            {{ settings.cart_payment_button }}<span class="button__product-price" data-cart-price>{{ cart.total_price | money_without_currency }}</span>€
+			  </a>
+              <div data-continue-shopping class="cart__continue-shopping">
+                  <div class="z-h7 align-center heading">{{ settings.cart_continue_shopping }}</div>
+                  <div class="cart__continue-button-container">
+                    <a href="{{ settings.cart_continue_url_1 }}" class="button button--primary cart__continue-button">{{ settings.cart_continue_text_1 }}</a>
+                    <a href="{{ settings.cart_continue_url_2 }}" class="button button--primary cart__continue-button">{{ settings.cart_continue_text_2 }}</a>
+                  </div>
+              </div>
+            </div>
+					</div>
+        </div>
+        <div class="cart-footer cart__upsell-container" data-cart-footer>
+
+        </div>
+      </div>
+    </form>
+</div>
+{% include 'cart-item-handlebar--subscribe-on' %}
+{% include 'cart-item-handlebar--subscribe-off' %}
+{% include 'cart-item-handlebar--no-subscribe' %}
+{% include 'cart-item-handlebar--echantillon' %}
+{% endunless %}
+
+{% schema %}
+{
+  "name": "Side cart",
+  "settings": [
+    {
+      "type":      "select",
+      "id":        "cart_mode",
+      "label":     "Side cart mode",
+      "options": [
+        {
+          "value": "",
+          "label": "Full height"
+        },
+        {
+          "value": "below",
+          "label": "Below header"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Panier"
+    },
+    {
+      "type": "checkbox",
+      "id": "aff_cart_close",
+      "label": "Afficher la croix pour close le panier",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

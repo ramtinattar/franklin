@@ -1,0 +1,33 @@
+{% include 'product' with _product : product %}
+{% schema %}
+{
+	"name": "Product pages",
+	"settings": [
+	{
+		"type": "checkbox",
+		"id": "show_share_buttons",
+		"label": "Show social sharing buttons",
+		"default": true
+	},
+	{
+		"type": "checkbox",
+		"id": "enable_quickbar",
+		"label": "Enable quickbar",
+		"default": true
+	},
+	{
+		"type": "text",
+		"id": "up_arrow",
+		"label": "Lien SVG flèche haut",
+		"default": "https://cdn.shopify.com/s/files/1/0069/1067/2978/files/up.svg?v=1583239289",
+		"info": "à uploader dans les files"
+	},
+	{
+		"type": "text",
+		"id": "quickbar_text",
+		"label": "Texte quickbar",
+		"default": "Économisez 15% par abonnement"
+	}
+	]
+}
+{% endschema %}

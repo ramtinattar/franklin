@@ -1,0 +1,888 @@
+<!-- SCRIPTS -->
+<!-------------------------------------------------------------->
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="//unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" type="text/css" href="//unpkg.com/leaflet/dist/leaflet.css" />
+<script type="text/javascript" src="https://widget.mondialrelay.com/parcelshop-picker/jquery.plugin.mondialrelay.parcelshoppicker.min.js"></script>
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+
+
+
+<!-- TEMPLATES -->
+<!-------------------------------------------------------------->
+<template id="service-point-trigger">
+  <div class="link"
+       style="margin-left: calc(18px + 0.75em); cursor: pointer; display: none;"
+       data-service-point-button="##carrier##">
+    <span class="btn__content" data-select>##non_selected_label##</span>
+    <span class="btn__content" data-modify style="display: none;">##modify_label##</span>
+    <svg class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon" aria-hidden="true" focusable="false"> <use xlink:href="#chevron-right"></use> </svg>
+  </div>
+</template>
+
+<template id="service-point-selection-summary-shipping">
+  <div style="display: none;margin-left:calc(18px + 0.75em);"
+       data-service-point-result> <!-- id="temp-shipping-option-selection-wrapper" -->
+    <div data-empty>
+      Vous n'avez pas encore sélectionné votre point de livraison.
+    </div>
+    <div data-summary>
+      <!-- summary goes here -->
+    </div>
+    <br>
+  </div>
+</template>
+
+<template id="service-point-selection-summary-payment">
+  <div role="row" class="review-block">
+    <div class="review-block__inner">
+      <div role="rowheader" class="review-block__label">
+        Point relais :
+      </div>
+      <div role="cell" class="review-block__content">
+        ##content##
+      </div>
+    </div>
+    <div role="cell" class="review-block__link">
+      <a data-trekkie-id="change_shipping_method_link" href="/checkout?step=shipping_method">
+        <span aria-hidden="true">Modifier</span>
+        <span class="visually-hidden">Modifier</span>
+      </a>
+    </div>
+  </div>
+</template>
+
+<template id="custom-shipping-option">
+  <div class="content-box__row content-box__relay">
+     <div class="radio-wrapper">
+        <div class="radio__input">
+        <input
+   			##checked_status##
+   			class="input-radio" type="radio" name="checkout[shipping_rate][id]" id="temp-shipping-option-input"
+   		 >
+         </div>
+         <label class="radio__label" aria-hidden="true" for="temp-shipping-option-input">
+            <span class="radio__label__primary">
+               ##title##
+            </span>
+            <span class="radio__label__accessory">
+                <span class="content-box__emphasis">
+                  ##price##
+                </span>
+            </span>
+         </label>
+       </div> <!-- /radio-wrapper-->
+       <div id="temp-shipping-option-selection-wrapper" style="display: none;margin-left:calc(18px + 0.75em);">
+          <div id="temp-shipping-option-details" style=""></div>
+  		 <br>
+       </div>
+       <div id="temp-shipping-option-update" class="btn btn--primary"><span class="btn__content">Sélectionner un point relais</span><svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button" aria-hidden="true" focusable="false"> <use xlink:href="#spinner-button"></use> </svg></div>
+  </div>
+</template>
+
+<template id="test-shipping-option">
+  <div class="content-box__row content-box__relay">
+    <div class="radio-wrapper">
+      <div class="radio__input">
+        <input
+               data-checkout-total-shipping="2€"
+               data-checkout-total-shipping-cents="200"
+               data-checkout-shipping-rate="2€"
+               data-checkout-original-shipping-rate="2€"
+               data-checkout-total-price="91,90€"
+               data-checkout-total-price-cents="9190"
+               data-checkout-payment-due="91,90€"
+               data-checkout-payment-due-cents="9190"
+               data-checkout-payment-subform="required"
+               data-checkout-subtotal-price="89,90€"
+               data-checkout-subtotal-price-cents="8990"
+               data-checkout-total-taxes="14,98€"
+               data-checkout-total-taxes-cents="1498"
+               data-backup="shopify-Colissimo%20Domicile-0.00"
+               aria-label="Colissimo Domicile. Gratuit"
+               value="##title##"
+               ##checked_status##
+               class="input-radio" type="radio" name="checkout[shipping_rate][id]"
+               >
+
+
+      </div>
+      <label class="radio__label" aria-hidden="true" for="temp-shipping-option-input">
+        <span class="radio__label__primary" data-shipping-method-label-title="##title##">
+          ##title##
+        </span>
+        <span class="radio__label__accessory">
+          <span class="content-box__emphasis">
+            ##price##
+          </span>
+        </span>
+      </label>
+    </div> <!-- /radio-wrapper-->
+  </div>
+</template>
+
+<template id="mondialrelay">
+  <style>
+    .sz-mr-container {
+      display: none;
+
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      z-index: 10000;
+
+      background-color: rgba(0,0,0,0.7);
+    }
+
+    .sz-mr-container--open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sz-mr-container__target {
+      position: relative;
+      z-index: 5;
+    }
+
+    .sz-mr-container__close {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      z-index: 10;
+      line-height: 1rem;
+      height: 25px;
+      width: 25px;
+    }
+  </style>
+  <div class="sz-mr-container" data-mr-root>
+    <div class="sz-mr-container__validate">
+      <button data-mr-close class="sz-mr-container__validate-button button button--primary">Valider mon point relais</button>
+    </div>
+    <div class="sz-mr-container__target" data-mr-target></div>
+    <div class="sz-mr-container__close" data-mr-close>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 511.999 511.999" style="enable-background:new 0 0 511.999 511.999;max-width: 25px;" xml:space="preserve">
+        <path style="fill:#093128;" d="M384.955,256l120.28-120.28c9.019-9.019,9.019-23.642,0-32.66L408.94,6.765  c-9.019-9.019-23.642-9.019-32.66,0l-120.28,120.28L135.718,6.765c-9.019-9.019-23.642-9.019-32.66,0L6.764,103.058  c-9.019,9.019-9.019,23.642,0,32.66l120.28,120.28L6.764,376.28c-9.019,9.019-9.019,23.642,0,32.66l96.295,96.294  c9.019,9.019,23.642,9.019,32.66,0l120.28-120.28l120.28,120.28c9.019,9.019,23.642,9.019,32.66,0l96.295-96.294  c9.019-9.019,9.019-23.642,0-32.66L384.955,256z"/>
+      </svg>
+    </div>
+  </div>
+  <input type="hidden" id="ParcelShopCode">
+</template>
+
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+
+<script>
+  var custom_checkout = custom_checkout || {};
+   custom_checkout.service_points = {
+    active: true, // {{ settings.custom_checkout_service_points_active | json }}
+    custom_option: undefined,
+
+    // Meta data about the different available relaies options
+    providers : [
+      {
+    	// Indicates whether the option is selected by the user.
+    	selected: false,
+
+    	// The option's matching dom node.
+    	node: undefined,
+
+    	// An option is active once its price is found.
+    	active: false,
+
+    	// Text in the original shipping option set by the merchant.
+        option_hint: 'point relais',
+
+    	// service point carrier/type according to the service point map provider.
+        carrier: 'mondialrelay',
+
+    	// The label of the button that will trigger the service-point picker for this option.
+    	trigger_non_selected_label: "Sélectionner votre point relais.",
+     	trigger_selected_label: "Modifier",
+
+    	// If a new single/custom option is to be added instead of having multiple options with point pickers,
+    	// this represents the label that will be displayed to the user beside the price
+        label: "Mondial Relais (2j)"
+      }
+//    ,
+//       {
+//         selected: false,
+//         node: undefined,
+//         active: false,
+//         option_hint: 'chronopost',
+//         carrier: 'chronopost',
+//         trigger_non_selected_label: "Sélectionner votre point relais.",
+//      	trigger_selected_label: "Modifier",
+//         label: "Chronopost relais (1j)"
+//       },
+//       {
+//         selected: false,
+//         node: undefined,
+//         active: false,
+//         option_hint: 'dom',
+//         carrier: 'colissimo',
+//         trigger_non_selected_label: "Sélectionner votre point relais.",
+//      	trigger_selected_label: "Modifier",
+//         label: "Chronopost relais (1j)"
+//       }
+  	],
+
+    // Relais options that are available on the page now.
+    available_options: [],
+
+    {% assign persistant_keys = "ID,Nom,Pays,Ville,CP,Adresse1,Adresse2" %}
+    {% assign persistant_keys_array = persistant_keys | split: ',' %}
+    checkout_attributes: {
+      {% assign point_id = checkout.attributes.point_ID | default: false %}
+      {% unless point_id %}
+      	point: false
+      {% else %}
+        point: {
+          id: {{ point_id }},
+            {% for key in persistant_keys_array %}
+             {% assign attributeKey = 'point_' | append: key %}
+             '{{ key }}': {{ checkout.attributes[attributeKey] | default: false | json }}{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        }
+      {% endunless %}
+    },
+
+    CONSTANTS: {
+      EVENTS: {
+        ON_PICKER_OPEN: 'openPicker',
+        ON_POINT_PICKED: 'onPointPicked',
+        ON_FATAL_ERROR: 'onFatalError'
+      }
+
+    },
+
+    /**
+     * Maper to allow B to extract point info from A.
+     * A: ServicePointPickerController
+     * B: ServicePointCheckoutController
+     */
+    point_translator: function (point) {
+      return {
+        id           : point.ID,
+        title        : point.Nom,
+        carrier      : 'mondialrelay',
+        country_code : point.Pays,
+        city         : point.Ville,
+        address1     : point.Adresse1,
+        zip          : point.CP
+      }
+    },
+
+    /**
+     * Prints selected point info in the shipping options page
+     * @param (Object) point as received from A (ServicePointPickerController)
+     * @return (String) the html that should be printed.
+     */
+    shipping_summary_printer: function (point) {
+      var html =  point.Nom;
+      	  html += "<br>";
+          html += point.Adresse1;
+      	  html += "<br>";
+      	  html += point.CP + " " + point.Ville;
+
+      return html;
+    },
+
+    /**
+     * Prints selected point info in all steps following the shipping page
+     * @param (Object) point as received from A (ServicePointPickerController)
+     * @return (String) the html that should be printed.
+     */
+    next_summary_printer: function (point) {
+      var html =  point.Nom;
+      	  html += ", ";
+      	  html += point.Adresse1;
+      	  html += ", ";
+      	  html += point.CP;
+
+      return html;
+    },
+
+    /**
+     * If point is selected, prints checkout[attribute] inputs on the page when step is validated.
+     * @param (Object) point as received from A (ServicePointPickerController)
+     * @return (String) the html that should be printed.
+     */
+    checkout_attributes_selected_printer: function (point) {
+      var keys = {{ persistant_keys_array | json }};
+
+      var html = "";
+      for (var i=0; i<keys.length; i++) {
+        var key = keys[i];
+        var attributeKey = 'point_' + key;
+        var value = point[key];
+        html += '<input type="hidden" name="checkout[attributes][' + attributeKey + ']" value="' + value + '">'
+      }
+      html += '<input type="hidden" name="checkout[attributes][free_shipping]" value="active">'
+
+      return html;
+    },
+
+    /**
+     * If no point is selected, prints empty checkout[attribute] inputs on the page when step is validated.
+     * @param (Object) point as received from A (ServicePointPickerController)
+     * @return (String) the html that should be printed.
+     */
+    checkout_attributes_reset_printer: function () {
+      var keys = {{ persistant_keys_array | json }};
+      var html = "";
+      for (var i=0; i<keys.length; i++) {
+        var key = 'point_' + keys[i];
+        html += '<input type="hidden" name="checkout[attributes][' + key + ']" value="">'
+      }
+      html += '<input type="hidden" name="checkout[attributes][free_shipping]" value="active">'
+
+      return html;
+    }
+  };
+
+  /* X. Helpers */
+  /* ---------- */
+
+  //=> polyfills .closest()
+  if (!Element.prototype.matches)
+    Element.prototype.matches = Element.prototype.msMatchesSelector ||
+      Element.prototype.webkitMatchesSelector;
+
+  if (!Element.prototype.closest)
+    Element.prototype.closest = function(s) {
+      var el = this;
+      if (!document.documentElement.contains(el)) return null;
+      do {
+        if (el.matches(s)) return el;
+        el = el.parentElement || el.parentNode;
+      } while (el !== null && el.nodeType == 1);
+      return null;
+    };
+
+  //=> template populator
+  function getRenderedHtml(templateId, data) {
+    var template = document.getElementById(templateId),
+        html = template.innerHTML;
+
+    var dataKeys = Object.keys(data);
+    for (var j=0; j < dataKeys.length; j++) {
+      var key = dataKeys[j];
+      var regex = new RegExp("##" + key + "##", "g");
+      html = html.replace(regex, data[key]);
+    }
+
+    return html;
+  }
+
+  var jquery = null;
+
+  if (window.jQuery) {
+    jquery = window.jQuery;
+  } else if (window.Checkout && window.Checkout.$) {
+    jquery = window.Checkout.$;
+  }
+
+
+  /* Y. ADD TEST OPTIONS */
+  /* ------------------- */
+  var addTestOptions = function () {
+    var testOptions = "";
+
+    testOptions += getRenderedHtml('test-shipping-option', {
+      checked_status: '',
+      title: 'Livraison en Chronopost Relais',
+      price: '3€'
+    });
+
+    testOptions += getRenderedHtml('test-shipping-option', {
+      checked_status: '',
+      title: 'Livraison en Colissimo Point Retrait',
+      price: '4€'
+    });
+
+
+    document.querySelector('.section--shipping-method .content-box').insertAdjacentHTML( 'beforeend', testOptions );
+  }
+
+
+  custom_checkout.ServicePointPickerController = (function ($) {
+    var selectors = {
+      popup_root: "[data-mr-root]",
+      popup_mr: "[data-mr-target]",
+      popup_close: "[data-mr-close]"
+    };
+
+    function init () {
+      /* inject widget div */
+      $('body').append(getRenderedHtml('mondialrelay',{}));
+
+
+      $(selectors.popup_mr).MR_ParcelShopPicker({
+        Target: "#ParcelShopCode",// obligatoire
+        Brand: "BDTEST  ",
+        NbResults: 15,
+        ShowResultsOnMap: true,
+        MapScrollWheel: true,
+        Responsive: true,
+        OnNoResultReturned: function () {
+
+        },
+        OnParcelShopSelected: function (point) {
+          console.table(point);
+
+          var event = new CustomEvent(custom_checkout.service_points.CONSTANTS.EVENTS.ON_POINT_PICKED, {
+            detail : {
+              point: point
+            }
+          });
+          var body = document.getElementsByTagName('body')[0];
+          body.dispatchEvent(event);
+        }
+      });
+
+      /* event listners */
+      $(selectors.popup_close).on('click', close);
+
+      $('body').on(custom_checkout.service_points.CONSTANTS.EVENTS.ON_PICKER_OPEN, function (e) {
+        var address = e.detail.address;
+        var carrier = e.detail.service_carrier;
+        $(selectors.popup_mr).trigger("MR_DoSearch",[address.zip, address.country_code]);
+        open();
+      });
+    }
+    function positionButtons () {
+      $('[data-mr-close].sz-mr-container__close').css('top',$('.MR-Widget').offset().top - $('[data-mr-root]').offset().top + 40 + 'px');
+      $('[data-mr-close].sz-mr-container__close').css('left',$('.MR-Widget').offset().left + $('.MR-Widget').width() - 35 + 'px');
+      if ( matchMedia('screen and (min-width: 787px)').matches ) {
+        $('.sz-mr-container__validate').css('top',$('.MRW-Container.MRW-ButtonContainer .MRW-BtGo').offset().top - $('.sz-mr-container').offset().top + 'px');
+        $('.sz-mr-container__validate').css('left',$('.MR-Widget').offset().left + $('.MR-Widget').width() - $('.sz-mr-container__validate').width() + 5 + 'px');
+	}else{
+		$('.sz-mr-container__validate').css('top', $('.MR-Widget').height() + 5 + 'px');
+	}
+  $('.MRW-BtGo').html('Chercher un point relais');
+    }
+    function open () {
+      $(selectors.popup_root).addClass('sz-mr-container--open');
+	     positionButtons();
+		 setTimeout(positionButtons, 500);
+	  setTimeout(positionButtons, 1000);
+	  setTimeout(positionButtons, 2000);
+	  setTimeout(positionButtons, 4000);
+	  setTimeout(positionButtons, 6000);
+    }
+
+    function close () {
+      $(selectors.popup_root).removeClass('sz-mr-container--open');
+    }
+    init();
+  })(jquery);
+
+  /* Modify checkout's shipping options */
+  custom_checkout.ServicePointCheckoutController = (function ($) {
+    if (!custom_checkout.service_points.active) return;
+
+    var customer_shipping_address = {{ checkout.shipping_address | json }};
+    var checkoutAttributes        = {{ checkout.attributes | json }} || {};
+
+    var selectors = {
+      trigger: '[data-service-point-button]',
+      triggerDataset: 'servicePointButton'
+    }
+
+    var templateIDs = {
+      trigger             : "service-point-trigger",
+      shippingStepSummary : "service-point-selection-summary-shipping",
+      paymentStepSummary  : "service-point-selection-summary-payment",
+      fullCustomOption    : "custom-shipping-option"
+    }
+
+    var shippingOptionsLooper = function (nodes, options) {
+      var defaults = {
+        onRelaiOptionFound: function (node, label, price, provider) {},
+        onNonRelaiOptionFound: function (node, label, price) {},
+        always: function (node, label, price) {}
+      }
+
+      var settings = {
+        onRelaiOptionFound: options.onRelaiOptionFound
+        				 && typeof options.onRelaiOptionFound === "function"?
+        					options.onRelaiOptionFound: defaults.onRelaiOptionFound,
+        onNonRelaiOptionFound: options.onNonRelaiOptionFound
+        				 && typeof options.onNonRelaiOptionFound === "function"?
+        					options.onNonRelaiOptionFound: defaults.onNonRelaiOptionFound,
+        always: options.always
+        				 && typeof options.always === "function"?
+        					options.always: defaults.always,
+      };
+
+      nodes.forEach(function(option) {
+        var shippingOptionRoot  = option.closest('.content-box__row');
+
+        var shippingOptionLabel = option.getAttribute('data-shipping-method-label-title') || "";
+        var shippingOptionLabelLowerCase = shippingOptionLabel.trim().toLowerCase();
+
+        var priceNode = shippingOptionRoot.querySelector('.content-box__emphasis');
+        var price = priceNode.textContent && !isNaN(priceNode.textContent)? parseFloat(priceNode.textContent):0;
+
+        var providers = custom_checkout.service_points.providers;
+        for (var x=0; x<providers.length; x++) {
+          var provider = providers[x];
+          if (shippingOptionLabelLowerCase.indexOf(provider.option_hint) > -1)
+            settings.onRelaiOptionFound(option, shippingOptionLabelLowerCase, price, provider);
+          else
+            settings.onNonRelaiOptionFound(option, shippingOptionLabelLowerCase, price);
+          settings.always(option, shippingOptionLabelLowerCase, price);
+        }
+      });
+    };
+
+
+
+    // temp deprication
+    function hideRelayOptions () {
+      shippingOptionsLooper({
+        onRelaiOptionFound: function (node, label, price) {
+          node.closest('.content-box__row').style.display = "none";
+        }
+      });
+    }
+
+    // temp deprication
+    function addGenericRelayOption (title, price, isSelected) {
+      var html = getRenderedHtml(templateIDs.fullCustomOption, {
+        title: title,
+        price: price,
+        checked_status:isSelected? ' checked="checked" ' : ''
+      });
+      shippingOptionsContainer.querySelector('.content-box').insertAdjacentHTML( 'beforeend', html );
+    }
+
+    // uptodate.
+    function formSubmit (event) {
+      var form = document.querySelector('[data-shipping-method-form="true"]');
+
+      // Validate selection, 3 cases :
+      // 1. service point option selected, but no point selected.
+      // 2. service point option selected, point selected.
+      // 3. non-servicepoint selected.
+      var service_point_option_selected = false;
+      var service_point_point_picked = false;
+      var selected_point = false;
+
+      var providers = custom_checkout.service_points.providers;
+      for (var x=0; x<providers.length; x++) {
+        var provider = providers[x];
+        if (!provider.selected) continue;
+
+        service_point_option_selected = true;
+        if (provider.point) {
+          service_point_point_picked = true;
+          selected_point = provider.point;
+        }
+
+        break;
+      }
+
+      if (service_point_option_selected && service_point_point_picked) {
+        var attributes =  custom_checkout.service_points.checkout_attributes_selected_printer(selected_point),
+            stringifiedPoint = JSON.stringify(selected_point);
+        attributes += '<textarea style="display:none" name="checkout[attributes][point]">' + stringifiedPoint + '</textarea>';
+
+        form.insertAdjacentHTML( 'beforeend', attributes );
+	} else if (service_point_option_selected && !$('input[data-checkout-total-shipping-cents="320"]:checked').val()) {
+        // Prevent form from submitting.
+        event.preventDefault();
+
+        // Enable submit button.
+        var submit = form.querySelector('[type=submit]');
+        submit.classList.remove('btn--loading');
+        submit.disabled = false;
+        submit.setAttribute('aria-busy', true)
+
+        // Show error message
+        // TODO: If only one option is available & error repeated x times, allow submit ?
+        return alert("Une erreur s'est produit, veuillez re-sélectionner votre point de service");
+      } else {
+        var attributes =  custom_checkout.service_points.checkout_attributes_reset_printer();
+        attributes += '<input type="hidden" name="checkout[attributes][point]" value="">'
+        form.insertAdjacentHTML( 'beforeend', attributes );
+      }
+
+      form.submit();
+    }
+
+    function toggleShippingSummary(node, options) {
+      var root = node.closest('.content-box__row');
+
+      // cta
+      var cta = root.querySelector('[data-service-point-button]');
+      var cta_text_select = cta.querySelector('[data-select]');
+      var cta_text_modify = cta.querySelector('[data-modify]');
+
+      // summary
+      var infoWrapper = root.querySelector('[data-service-point-result]');
+      var emptyInformer = infoWrapper.querySelector('[data-empty]');
+      var summaryInformer = infoWrapper.querySelector('[data-summary]');
+
+      var eclipse = options.eclipse;
+      var content = options.content;
+
+      if (eclipse) {
+        infoWrapper.style.display = "none";
+        cta.style.display = "none";
+      } else {
+        infoWrapper.style.display = "block";
+        cta.style.display = "block";
+      }
+
+      if (content) {
+        emptyInformer.style.display = "none";
+        summaryInformer.style.display = "block";
+        summaryInformer.innerHTML = content;
+
+        cta_text_select.style.display = "none";
+        cta_text_modify.style.display = "unset";
+      } else {
+        emptyInformer.style.display = "block";
+        summaryInformer.style.display = "none";
+        summaryInformer.innerHTML = "";
+
+        cta_text_select.style.display = "unset";
+        cta_text_modify.style.display = "none";
+      }
+    }
+
+    // uptodate.
+    function onPointPicked (point) {
+      var translatedPoint = custom_checkout.service_points.point_translator(point);
+
+      var providers = custom_checkout.service_points.providers;
+      for (var x=0; x<providers.length; x++) {
+        var provider = providers[x];
+        provider.selected = false;
+        provider.point = false;
+
+        if (provider.carrier != translatedPoint.carrier) continue;
+
+        provider.selected = true;
+        provider.point = point;
+
+        toggleShippingSummary(provider.node, {
+          eclipse: false,
+          content: custom_checkout.service_points.shipping_summary_printer(point) });
+      }
+    }
+
+    function onRelaieSelected (node) {
+      var shippingOptionRoot  = node.querySelector('[data-shipping-method-label-title]');
+      var shippingOptionLabel = shippingOptionRoot.getAttribute('data-shipping-method-label-title') || "";
+      var shippingOptionLabelLowerCase = shippingOptionLabel.trim().toLowerCase();
+
+      var providers = custom_checkout.service_points.providers;
+      var selectedRelay = false;
+      for (var x=0; x<providers.length; x++) {
+        var provider = providers[x];
+        if (shippingOptionLabelLowerCase.indexOf(provider.option_hint) > -1) {
+          provider.selected = true;
+          provider.point = false;
+          toggleShippingSummary(provider.node, {eclipse: false, content: false });
+        }
+      }
+    }
+
+    // uptodate.
+    function onRelaieUnselected () {
+      var providers = custom_checkout.service_points.providers;
+      var selectedRelay = false;
+      for (var x=0; x<providers.length; x++) {
+        var provider = providers[x];
+        if (!provider.selected) continue;
+        provider.selected = false;
+        provider.point = false;
+        toggleShippingSummary(provider.node, {eclipse: true, content: false });
+      }
+    }
+
+    // uptodate.
+    function triggerServicePicker(carrier) {
+      var event = new CustomEvent(custom_checkout.service_points.CONSTANTS.EVENTS.ON_PICKER_OPEN, {
+        detail : {
+          address: customer_shipping_address,
+          service_carrier: carrier,
+        }
+      });
+      var body = document.getElementsByTagName('body')[0];
+      body.dispatchEvent(event);
+    }
+
+    function reset() {
+      console.log("{reset}");
+    }
+
+    // uptodate.
+    function initShippingStep () {
+      var parent = document.querySelector('.section--shipping-method');
+      var shippingOptions = parent.querySelectorAll('[data-shipping-method-label-title]');
+
+      // TODO: fix.
+      // hideRelayOptions ();
+      // addGenericRelayOption(newShippingOption.title, newShippingOption.price, newShippingOption.isSelected);
+
+      // TODO: loop over the map object to check if one of them is selected.
+      // if (shouldSelectRelaiOption()) custom_checkout.service_points.custom_option.checked = "checked";
+
+      /* 1. Loop over shipping options.*/
+      /* ----------------------------- */
+      shippingOptionsLooper(shippingOptions, {
+        /* 1.1 Relais option callback */
+      	/* -------------------------- */
+        onRelaiOptionFound: function (node, label, price, provider) {
+          var root = node.closest('.content-box__row'),
+          	  radio = root.querySelector('.input-radio');
+
+          /* 1.1.1 Set meta shipping-option object*/
+      	  /* ---------------------------------- */
+          provider.node = node;
+          provider.active = true;
+          provider.price = price;
+
+          provider.selected = radio.checked;
+
+          /* 1.1.2 Add all available service-point types to an array */
+      	  /* ------------------------------------------------------- */
+          custom_checkout.service_points.available_options.push(provider.carrier);
+
+          /* 1.1.3 Add service-points selector trigger & summary field */
+      	  /* ---------------------------------------------------------------------- */
+          var triggerHTML = getRenderedHtml(templateIDs.trigger, {
+            non_selected_label: provider.trigger_non_selected_label,
+            modify_label: provider.trigger_selected_label,
+            carrier: provider.carrier
+          });
+
+    	  var summaryHTML = getRenderedHtml(templateIDs.shippingStepSummary, {});
+
+          var customContent = summaryHTML + triggerHTML;
+
+          root.insertAdjacentHTML( 'beforeend', customContent );
+
+          /* 1.1.4 If a service-point option is already selected => fill attributes */
+      	  /* ---------------------------------------------------------------------- */
+          if (provider.selected) {
+            var checkoutAttributes = custom_checkout.service_points.checkout_attributes;
+            onRelaieSelected(root);
+            if (checkoutAttributes.point) {
+              var point = checkoutAttributes.point;
+              onPointPicked(point);
+            }
+          }
+
+        },
+
+        /* 1.2 Options callback */
+      	/* ------------------------------ */
+        always (node, label, price) {
+          var root = node.closest('.content-box__row');
+          var radio = root.querySelector('.input-radio');
+          $("[data-checkout-total-shipping=' 3.20 €']").click();
+          radio.addEventListener('change', function(e) {
+            var root = e.target.closest('.content-box__row');
+            var triggers = root.querySelectorAll('[data-service-point-button]');
+
+            onRelaieUnselected();
+            if (triggers.length)
+              onRelaieSelected(root);
+          });
+        }
+      });
+
+      /* 2. Set event listners.*/
+      /* ----------------------------- */
+      // - On service point is selected.
+      // - On fatal error takes place.
+      // - On form/page submit.
+      // - On service picker button.
+
+      document.getElementsByTagName('body')[0].addEventListener
+      (
+        custom_checkout.service_points.CONSTANTS.EVENTS.ON_POINT_PICKED
+        , function (e,t) {
+          var point = e.detail.point;
+          onPointPicked(point);
+      });
+
+      document.getElementsByTagName('body')[0].addEventListener
+      (
+        custom_checkout.service_points.CONSTANTS.EVENTS.ON_FATAL_ERROR
+        , function () {
+//           var relayOptionRoot = document.querySelector('.content-box__relay');
+//           if (relayOptionRoot) relayOptionRoot.style.display = "none";
+//           document.getElementById('temp-shipping-option-input').checked;
+
+          alert('Erreur fatale. Veuillez sélectionner une autre option de livraison et informer notre support de cet incident');
+      });
+
+      document.getElementById('continue_button').addEventListener(
+        'click'
+        , function (e) {
+          formSubmit (e);
+        }
+      );
+
+
+      var pickerTriggers = document.querySelectorAll(selectors.trigger);
+      pickerTriggers.forEach(function(trigger) {
+        trigger.addEventListener('click', function (e) {
+          var carrier = false;
+          try {
+            carrier = e.target.closest(selectors.trigger).dataset[selectors.triggerDataset];
+            if (!carrier || carrier.trim() == "") throw new Error("carrier not found");
+          } catch(e) {
+          	console.error("[Custom service picker] Couldn't find service point type in the trigger's dataset, error below.");
+            console.error(e);
+
+            return alert("Une erreur s'est produite, veuillez Sélectionner une autre option de livraison ou contacter nous");
+          }
+
+          triggerServicePicker(carrier);
+        });
+      });
+    }
+
+    function initStepsAfterShipping () {
+
+      var checkoutAttributes = custom_checkout.service_points.checkout_attributes;
+      if (!checkoutAttributes.point) return;
+
+      var point = checkoutAttributes.point;
+      var html = custom_checkout.service_points.next_summary_printer(point);
+
+      var summaryHTML = getRenderedHtml(templateIDs.paymentStepSummary, {
+          content: html
+      });
+
+      var reviewBlock = document.querySelector('.review-block');
+      return reviewBlock.parentElement.insertAdjacentHTML( 'beforeend', summaryHTML );
+    }
+
+    $(document).on(`page:load`, function() {
+      if (Shopify.Checkout.step == "shipping_method") {
+        // addTestOptions();
+        initShippingStep();
+      }
+      else if (Shopify.Checkout.step == "payment_method") initStepsAfterShipping();
+    });
+
+    $(document).on(`page:change`, function() {
+      if (Shopify.Checkout.step == "shipping_method") {
+        // addTestOptions();
+        reset();
+        initShippingStep();
+      }
+    });
+
+  })(jquery);
+
+</script>

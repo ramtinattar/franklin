@@ -1,0 +1,84 @@
+<section class="{% if Settings.section_bg %}{{ Settings.section_bg }} {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section complex-faq" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="complex-faq">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+
+	<div class="page-width relative">
+		{% if Settings.image != blank %}
+		<div class="faq__character-container only-desktop">
+			{% include 'image' with img:Settings.image, classes : 'faq__character' %}
+		</div>
+		{% endif %}
+		<div class="container--small mobile-container--large">
+			<div class="grid">
+				{%- if Settings.title != blank or Settings.text != blank -%}
+					<div class="grid__cell">
+						<div class="faq__heading align-center">
+							<h2 class="z-h3 heading faq__title">{{ Settings.title }}</h2>
+							{% if Settings.text != blank %}
+							<div class="faq__subtitle heading z-h9">
+								{{ Settings.text }}
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				{%- endif -%}
+
+				<div class="grid__cell">
+					{% for i in (0..20) %}
+					{% capture current %}{% cycle 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 %}{% endcapture %}
+					{% assign current = current | plus : 0 %}
+					{% assign headerFaqKey = 'question_header_' | append : current %}
+					{% assign awnserFaqKey = 'answer_header_' | append : current %}
+
+					{% if Settings[headerFaqKey] != blank %}
+					<div class="accordions faq__content" data-accordion data-allow-multiple>
+						<div class="faq-group-parent accordion">
+							<h3 class="z-h6 heading faq-group__question faq-group__question-parent"
+								data-accordion-trigger
+								aria-expanded="false"
+								aria-controls="#faq-group-parent-{{ current }}"
+								>
+								{{- Settings[headerFaqKey] -}}
+								<img src="{{ settings.bottom_arrow_green_faq }}" alt="arrow faq" class="accordion--icon" />
+							</h3>
+							<div id="faq-group-parent-{{ current }}"
+								class="faq-group__answer text t-5"
+								data-accordion-panel>
+								<div class="accordions faq__content" data-inside-accordion data-allow-multiple>
+									{% for i in (0..20) %}
+									{% capture current %}{% cycle 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 %}{% endcapture %}
+									{% assign current = current | plus : 0 %}
+									{% assign questionKey = headerFaqKey | append : '_' | append : current %}
+									{% assign answerKey = awnserFaqKey | append : '_' | append : current %}
+									{% unless Settings[questionKey] != blank %}{% continue %}{% endunless %}
+									<div class="faq-group accordion">
+										<h3 class="z-h10 heading faq-group__question faq-group__question-inside"
+											data-inside-accordion-trigger
+											aria-expanded="false"
+											aria-controls="#faq-group-{{headerFaqKey}}-{{ current }}"
+											>
+											{{- Settings[questionKey] -}}
+											<img src="{{ settings.bottom_arrow_green_faq }}" alt="arrow faq" class="accordion--icon" />
+										</h3>
+										<div id="faq-group-{{headerFaqKey}}-{{ current }}"
+											class="faq-group__answer faq-group__answer-inside text t-5"
+											data-inside-accordion-panel>
+											{{- Settings[answerKey] -}}
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					{% endfor %}
+				</div>
+				{% if Settings.cta_url != blank %}
+				<div class="grid__cell align-center">
+				{% include 'button' with classes : 'button--primary faq__button', href:Settings.cta_url, text : Settings.cta_text %}
+			</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</section>

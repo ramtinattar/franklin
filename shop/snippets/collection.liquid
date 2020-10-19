@@ -1,0 +1,40 @@
+<section {% if Settings.anchor_id %}data-anchor-id="{{ Settings.anchor_id }}" {% endif %}class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section" id="section-{{ id }}" data-section-id="{{ id }}" data-section-type="collection">
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}"></div>
+	<div class="collection page-width--desktop">
+		<div class="grid">
+			{% if Settings.encart_title != blank %}
+			<div class="only-desktop grid__cell 1/4--desk collection-sticky-encart">
+				{% include 'encart-text' with title : Settings.encart_title, text : Settings.encart_text, picto : Settings.encart_picto, color : Settings.encart_color, bgColor : Settings.encart_text_color %}
+			</div>
+			{% endif %}
+			{% if Settings.encart_image != blank %}
+			<div class="grid__cell only-desktop 1/4--desk">
+				<div class="encart-image__container align-center">
+					{% include 'image' with classes : 'encart-image', img : Settings.encart_image %}
+				</div>
+			</div>
+			{% endif %}
+			<div class="grid__cell {% if Settings.encart_title != blank or Settings.encart_image != blank %}3/4--desk{% endif %}">
+				<div class="page-width--mobile">
+					<div class="grid grid--middle grid--collection {% if sectionCollection.products_count < 3 %}grid--center{% endif %}">
+						{% for cardProduct in sectionCollection.products %}
+							<div class="grid__cell {% if Settings.encart_title != blank %}1/3--desk{% else %}1/4--desk{% endif %} 1/2">
+								{% include 'product-card' with _collection:sectionCollection, cardProduct:cardProduct, classes:'collection__product-card' %}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% if Settings.border_bottom_all %}
+		<div class="page-width--mobile">
+			<div class="collection--bordered"></div>
+		</div>
+		 {% elsif Settings.border_bottom == true%}
+		 	<div class="collection--bordered--desktop">
+
+			</div>
+		{% endif %}
+	</div>
+</section>

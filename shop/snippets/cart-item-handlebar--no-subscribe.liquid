@@ -1,0 +1,58 @@
+{% comment %}
+ copy the content in the snippet cart-item and paste inside script tag
+{% endcomment %}
+
+{% raw %}
+<script data-cart-item--no-subscribe type="text/x-handlebars-template">
+	<div data-cart-item data-item-status="NO-SUBSCRIBE" class="cart-item cart-item--no-subscribe">
+      <div class="cart-item__grid">
+        <div class="cart-item__image-container">
+          <a href="{{ item_url }}">
+            <img src="{{ item_image }}" alt="{{ item_product_title }} - {{ item_variant_title }}" />
+          </a>
+        </div>
+        <div class="cart-item__content">
+          <div class="cart-item__header">
+            <div class="z-h8 heading cart-item__title">{{ item_product_title }} (x<span data-item-quantity data-quantity="{{ item_quantity }}" >{{ item_quantity }}</span>)</div>
+            <div class="z-h8 heading cart-item__price">
+              <span>{{ item_price }}</span>
+            </div>
+          </div>
+          <div class="cart-item__infos">
+            <div class="cart-item__info-left">
+              <div class="text t-11 uppercase">{{ item_vendor }}</div>
+              <div class="text t-11 uppercase">{{ item_variant_title }}</div>
+            </div>
+            <div class="cart-item__info-right uppercase text t-13 cart-item__delete" data-item-update="{{ item_key }}" data-item-quantity="0">Supprimer</div>
+          </div>
+          <div class="cart-item__oneshot-container">
+            <div class="cart-item__oneshot-title-quantity">
+              <!-- <div class="text t-4 uppercase bold cart-item__subscription-title">
+                Produit unique
+              </div> -->
+              <div class="cart-item__quantity-container product__qty-container">
+                <div data-item-update="{{ item_key }}" data-item-quantity="{{ item_quantity_minus }}" class="product__qty-btn">
+                  -
+                </div>
+                <div data-item-quantity data-quantity="{{ item_quantity }}" class="product__qty bold t-11">
+                  {{ item_quantity }}
+                </div>
+                <div data-item-update="{{ item_key }}" data-item-quantity="{{ item_quantity_plus }}" class="product__qty-btn">
+                  +
+                </div>
+              </div>
+            </div>
+    		<div class="flex-grow">
+
+            </div>
+            <div class="cart-item__subscription-right">
+              <div data-item-popup-toggle data-item-popup-key="{{ item_key }}" data-item-popup class="text t-13 cart-item__delete">
+                Modifier
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</script>
+{% endraw %}

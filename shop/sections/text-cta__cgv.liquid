@@ -1,0 +1,316 @@
+{% include 'text-cta' with Settings:section.settings, id : section.id %}
+
+{% schema %}
+{
+	"name": "Texts title CTA",
+	"settings": [
+	{
+	  "type": "checkbox",
+	  "id": "transparency_height",
+	  "label": "Transparency height",
+	  "default": false,
+	  "info": "Activer l'apparition du header sticky après cette section"
+  },
+	{
+		"type":"header",
+		"content":"Heading"
+	},
+	{
+	  "type": "checkbox",
+	  "id": "breadcrumb",
+	  "label": "Activer le breadcrumb",
+	  "default": false
+  },
+	{
+		"type": "select",
+		"id": "heading_tag",
+		"label": "Tag du heading",
+		"options": [
+		{
+			"value" : "h1",
+			"label" : "H1"
+		},
+		{
+			"value" : "h2",
+			"label" : "H2"
+		},
+		{
+			"value" : "h3",
+			"label" : "H3"
+		},
+		{
+			"value" : "h4",
+			"label" : "H4"
+		},
+		{
+			"value" : "h5",
+			"label" : "H5"
+		}
+		]
+	},
+	{
+		"type": "select",
+		"id": "heading_class",
+		"label": "Classe du heading",
+		"options": [
+		{
+			"value" : "z-h1",
+			"label" : "z-H1"
+		},
+		{
+			"value" : "z-h2",
+			"label" : "z-H2"
+		},
+		{
+			"value" : "z-h3",
+			"label" : "z-H3"
+		},
+		{
+			"value" : "z-h4",
+			"label" : "z-H4"
+		},
+		{
+			"value" : "z-h5",
+			"label" : "z-H5"},{
+  "value" : "z-h6",
+  "label" : "z-H6"
+},{
+  "value" : "z-h7",
+  "label" : "z-H7"
+},{
+  "value" : "z-h8",
+  "label" : "z-H8"
+},{
+  "value" : "z-h9",
+  "label" : "z-H9"
+},{
+  "value" : "z-h10",
+  "label" : "z-H10"
+},{
+  "value" : "z-h11",
+  "label" : "z-H11"
+
+		}
+		]
+	},
+	{
+	  "type": "text",
+	  "id": "title",
+	  "label": "Title",
+	  "default": "Le retour à l'essentiel."
+  },
+  {
+    "type": "richtext",
+    "id": "text",
+    "label": "Texte"
+},
+{
+  "type": "richtext",
+  "id": "text_mobile",
+  "label": "Texte mobile"
+},
+{
+  "type": "checkbox",
+  "id": "text_hide_mobile",
+  "label": "Cacher le texte sur mobile",
+  "default": false
+},
+{
+	"type": "select",
+	"id": "text_width",
+	"label": "Largeur du texte",
+	"options": [
+		{
+			"value":"text-cta__text--small",
+			"label":"Small"
+		},
+		{
+			"value":"text-cta__text--medium",
+			"label":"medium"
+		},
+		{
+			"value":"text-cta__text--large",
+			"label":"large"
+		},
+		{
+			"value":"text-cta__text--xlarge",
+			"label":"xlarge"
+		},
+		{
+			"value":"text-cta__text--full",
+			"label":"full"
+		}
+	],
+	"default" : "text-cta__text--medium"
+},
+{
+  "type": "text",
+  "id": "button_text",
+  "label": "Button text",
+  "default": "Découvrir",
+  "info": "Laisser vide pour désactiver le bouton"
+},
+{
+  "type": "url",
+  "id": "url",
+  "label": "URL du bouton"
+},
+{
+  "type": "checkbox",
+  "id": "arrow_button",
+  "label": "Bouton flèche ?",
+  "default": true
+},
+{
+  "type": "text",
+  "id": "button_width",
+  "label": "Arrow button width",
+  "default": "250",
+  "info": "En px."
+},
+{
+	"type": "select",
+	"id": "button_type",
+	"label": "Type de bouton",
+	"options": [
+	{
+		"value" : "",
+		"label" : "Button primary"
+	},{
+		"value" : "button--secondary",
+		"label" : "Button secondary"
+	},{
+		"value" : "button--invert",
+		"label" : "Button invert"
+	}
+	]
+},
+{
+  "type": "image_picker",
+  "id": "background_mobile",
+  "label": "Background mobile (laisser vide pour désactiver)"
+},
+{
+  "type": "image_picker",
+  "id": "background_desktop",
+  "label": "Background_desktop (laisser vide pour désactiver)"
+},
+{
+  "type": "color",
+  "id": "background_color_mobile",
+  "label": "Background color mobile"
+},
+{
+  "type": "checkbox",
+  "id": "border_top",
+  "label": "Border top ?",
+  "default": false
+},
+
+	{
+		"type": "select",
+		"id": "align",
+		"label": "Text alignement",
+		"options": [
+		{
+			"value" : "align-center",
+			"label" : "Align center"
+		},{
+			"value" : "align-left",
+			"label" : "align left"
+		},{
+			"value" : "align-right",
+			"label" : "align right"
+		}
+		]
+	},
+	{
+      "type": "header",
+      "content": "Section"
+    },
+	{
+		"type": "select",
+		"id": "section_spacing",
+		"label": "Section bottom spacing",
+		"options": [
+		{
+			"value" : "section--xxxl-spacing",
+			"label" : "XXXL Spacing"
+		},
+		{
+			"value" : "section--xl-spacing",
+			"label" : "XL Spacing"
+		},{
+			"value" : "section--l-spacing",
+			"label" : "L Spacing"
+		},{
+			"value" : "section--m-spacing",
+			"label" : "M Spacing"
+		},{
+			"value" : "section--s-spacing",
+			"label" : "S Spacing"
+		},{
+			"value" : "section--xs-spacing",
+			"label" : "XS Spacing"
+		},{
+			"value" : "section--no-spacing",
+			"label" : "No Spacing"
+		}
+		]
+	},
+	{
+		"type": "select",
+		"id": "section_spacing_mobile",
+		"label": "Section bottom spacing mobile",
+		"options": [
+		{
+			"value":"",
+			"label":"Same value"
+		},
+		{
+			"value" : "mobile-section--xxxl-spacing",
+			"label" : "XXXL Spacing"
+		},
+		{
+			"value" : "mobile-section--xl-spacing",
+			"label" : "XL Spacing"
+		},{
+			"value" : "mobile-section--l-spacing",
+			"label" : "L Spacing"
+		},{
+			"value" : "mobile-section--m-spacing",
+			"label" : "M Spacing"
+		},{
+			"value" : "mobile-section--s-spacing",
+			"label" : "S Spacing"
+		},{
+			"value" : "mobile-section--xs-spacing",
+			"label" : "XS Spacing"
+		},{
+			"value" : "mobile-section--no-spacing",
+			"label" : "No Spacing"
+		}
+		],
+		"default":""
+	},
+	{
+	  "type": "checkbox",
+	  "id": "hide_desktop",
+	  "label": "Hide desktop",
+	  "default": false
+	},
+	{
+	  "type": "checkbox",
+	  "id": "hide_mobile",
+	  "label": "Hide_mobile",
+	  "default": false
+	}
+	],
+  	"presets": [
+        {
+  		    "name": "Texts title CTA",
+          "category": "Studio Zerance"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,124 @@
+<script>
+document.getElementsByTagName("BODY")[0].style.display = "none";
+window.location.href='pages/recharge-customer-portal';
+  {% if customer.metafields.subscriptions.customer_string %}
+	  document.getElementsByTagName("BODY")[0].style.display = "none";
+	  setTimeout(function(){
+		  $(function(){
+		   if(getCookie('login')){
+			 deleteCookie('login');
+			 window.location.href='pages/recharge-customer-portal';
+		   }else{
+			 $('body').show();
+		   }
+		})
+	  }, 300);
+
+  {% endif %}
+</script>
+<div class="myaccount">
+  <div class="section-header account__header text-center cart__title page-width">
+	  {% if customer.metafields.subscriptions.customer_string%}
+		<p class="myaccount__backlink--account"><a href="/tools/recurring/customer_portal/{{ customer.metafields.subscriptions.customer_string }}/subscriptions/" ><< Retour aux détails de l'abonnement</a></p>
+	  {% endif %}
+  <h1>
+	  {% if customer.metafields.subscriptions.customer_string%}
+		  Historique des commandes
+	  {% else %}
+		  {{ 'customer.account.title' | t }}
+	  {% endif %}
+	  </h1>
+  <div class="myaccount__logout underline">
+	{{ 'layout.customer.log_out' | t | customer_logout_link }}
+  </div>
+</div>
+
+<div class="page-width account">
+  <div class="grid">
+	<div class="grid__item  {% unless customer.metafields.subscriptions.customer_string %} medium-up--three-quarters {% endunless %}">
+	  <div class="account__orders-list account__container">
+		<h2 class="h4">
+		  {% unless customer.metafields.subscriptions.customer_string%}
+			  {{ 'customer.orders.title' | t }}
+		  {% endunless %}
+		</h2>
+
+		{% paginate customer.orders by 20 %}
+		  {% if customer.orders.size != 0 %}
+
+			<table class="responsive-table account__orders-table">
+			  <thead>
+				<tr>
+				  <th>{{ 'customer.orders.order_number' | t }}</th>
+				  <th>{{ 'customer.orders.date' | t }}</th>
+				{% comment %}  <th>{{ 'customer.orders.payment_status' | t }}</th>{% endcomment %}
+				  <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+				  <th>{{ 'customer.orders.total' | t }}</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				{% for order in customer.orders %}
+				  <tr>
+					<td data-label="{{ 'customer.orders.order_number' | t }} :">
+					  <a href="{{ order.customer_url }}" class="h6 underline btn--secondary">{{ order.name }}</a>
+					</td>
+					<td data-label="{{ 'customer.orders.date' | t }} :">{{ order.created_at | date: '%m/%d/%Y' }}</td>
+					{% comment %}
+					  <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+					{% endcomment %}
+					<td data-label="{{ 'customer.orders.fulfillment_status' | t }} :">
+					  {% case order.fulfillment_status_label %}
+						{% when 'En préparation' %}
+						  <div class="account__order-status">
+							<img class="account__order-status-image" src="https://cdn.shopify.com/s/files/1/2598/9270/files/enprepatation.png?513" alt="En préparation" />
+							<h6 class="noMargin">{{ order.fulfillment_status_label }}</h6>
+						  </div>
+						{% when 'En cours de livraison' %}
+						  <div class="account__order-status">
+							<img class="account__order-status-image" src="https://cdn.shopify.com/s/files/1/2598/9270/files/enlivraison.png?513" alt='En cours de livraison' />
+							<h6 class="noMargin">{{ order.fulfillment_status_label }}</h6>
+							<a class="underline tracking-button" href="{{ order.order_status_url }}" title="Suivre ma commande" target="_blank">Suivre ma commande</a>
+
+						  </div>
+						{% when 'Livré' %}
+						  <div class="account__order-status">
+							<img class="account__order-status-image" src="https://cdn.shopify.com/s/files/1/2598/9270/files/livre.png?516" alt="Livré" />
+							<h6 class="noMargin">{{ order.fulfillment_status_label }}</h6>
+						  </div>
+						{% else %}
+						  <h6 style="padding : 20px 0;" class="noMargin">{{ order.fulfillment_status_label }}</h6>
+
+					  {% endcase %}
+
+					</td>
+					<td data-label="{{ 'customer.orders.total' | t }} :">{{ order.total_price | money }}</td>
+				  </tr>
+				{% endfor %}
+			  </tbody>
+			</table>
+
+		  {% else %}
+
+			<p>{{ 'customer.orders.none' | t }}</p>
+
+		  {% endif %}
+		  {% if paginate.pages > 1 %}
+			{% include 'pagination' %}
+		  {% endif %}
+		{% endpaginate %}
+	  </div>
+	</div>
+	{% unless customer.metafields.subscriptions.customer_string%}
+	  <div class="grid__item medium-up--one-quarter">
+		<div class="account__user-details account__container">
+		  <h2 class="h4">{{ 'customer.account.details' | t }}</h2>
+
+		  {{ customer.default_address | format_address }}
+
+		  <p><a href="/account/addresses" class="underline btn--secondary" style="margin-bottom:20px;">{{ 'customer.account.view_addresses' | t }}</a></p>
+		</div>
+	  </div>
+	{% endunless %}
+  </div>
+</div>
+</div>

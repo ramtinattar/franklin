@@ -1,0 +1,44 @@
+{% comment %}
+{% include 'button'
+, adaptive_width     : true
+, classes            : ""
+, href 			   : ''
+, attribute : data-do-something
+, target             : "_blank"
+, text : ''
+%}
+// A ajouter pour avoir button primary automatique
+{% unless classes %}{% assign classes = 'button--primary' %}{% endunless %}
+{% endcomment %}
+{% if left_arrow %}
+<div class="arrow-button__container arrow-button__container--left">
+	{% if button_tag %}<button{% else %}<a{% endif %}
+		{% if href %}href="{{ href}} "{% endif %}
+		{% if target %}target="{{ target}}"{% endif %}
+		{% if attribute %}{{ attribute }}{% endif %}
+		class="arrow-button__link {{ classes }} {% if adaptive_width %}button--adaptive{% endif %}"
+		>
+		<div class="arrow-button">
+			{{ text }}
+			<div class="arrow-button__line"></div>
+		</div>
+
+	{% if button_tag %}</button>{% else %}</a>{% endif %}
+</div>
+{% else %}
+<div class="arrow-button__container">
+	{% if button_tag %}<button{% else %}<a{% endif %}
+		{% if href %}href="{{ href}} "{% endif %}
+		{% if target %}target="{{ target}}"{% endif %}
+		{% if attribute %}{{ attribute }}{% endif %}
+		class="arrow-button__link {{ classes }} {% if adaptive_width %}button--adaptive{% endif %}"
+		>
+		<div class="arrow-button">
+			{{ text }}
+			<div class="arrow-button__line"></div>
+			<div class="arrow-button__line--hover"></div>
+		</div>
+
+	{% if button_tag %}</button>{% else %}</a>{% endif %}
+</div>
+{% endif %}

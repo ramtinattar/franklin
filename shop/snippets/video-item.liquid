@@ -1,0 +1,18 @@
+<div id="video{{_index}}" class="article-injection-embeded-video embed-responsive embed-responsive-16by9">
+    <div class="article-injection-embeded-vide__cover">
+        <div class="article-injection-embeded-vide__cover__img"{% if _img != blank %} style="background-image: url('{{ _img }}')"{% endif %}></div>
+        <img src="https://cdn.shopify.com/s/files/1/0253/0043/4980/files/Group_1.png?v=1589027350"
+            class="{{ _video.id }} embed-video-trigger article-injection-embeded-vide__cover__play" alt="video youtube">
+    </div>
+    <div id="youtube-placeholder-{{ _video.id }}-{{_index}}"
+        class="embed-responsive-item"
+        data-youtube-id ="{{ _video.id }}"
+
+        data-fs         ="{{ _fs }}"
+        data-rel        ="{{ _rel }}"
+        data-controls   ="{{ _controls }}"
+        data-autoplay   ="{{ _autoplay }}"
+        data-loop       ="{{ _loop }}"
+    >
+    </div>
+</div>

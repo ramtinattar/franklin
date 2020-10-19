@@ -1,0 +1,34 @@
+{% for block in section.blocks %}
+	{% if block.type == 'anchor-menu' %}
+	{% include 'anchor-menu' with Settings : block.settings, id : block.id %}
+
+	{% elsif block.type == 'banner' %}
+	{% include 'banner' with Settings:block.settings, id : block.id %}
+
+	{% elsif block.type == 'collection-slider' %}
+	{% include 'collection-slider' with Settings:block.settings, id:block.id, sliderCollection : collections[block.settings.collection] %}
+
+	{% elsif block.type == 'collection' %}
+	{% assign selectedCollection = collection %}
+	{% if block.settings.collection != blank %}
+		{% assign selectedCollection = collections[block.settings.collection] %}
+	{% endif %}
+	{% include 'collection' with Settings:block.settings, id:block.id, sectionCollection:selectedCollection %}
+
+	{% elsif block.type == 'faq' %}
+	{% include 'faq' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'featured-collection' %}
+		{% include 'featured-collection' with Settings:block.settings, id : block.id %}
+
+	{% elsif block.type == 'featured-reviews' %}
+	{% include 'featured-reviews' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'related-collections' %}
+	{% include 'related-collections' with Settings:block.settings, id:block.id %}
+
+	{% elsif block.type == 'text-cta' %}
+	{% include 'text-cta' with Settings:block.settings, id : block.id %}
+
+	{% endif %}
+{% endfor %}

@@ -1,0 +1,145 @@
+{% include 'related-collections' with Settings:section.settings, id:section.id %}
+
+{% schema %}
+{
+	"name": "Related Collections",
+	"settings": [
+	{
+	  "type": "text",
+	  "id": "title",
+	  "label": "Title",
+	  "default": "Franklin pour toute la famille."
+  },
+  {
+    "type": "richtext",
+    "id": "text",
+    "label": "texte",
+    "default": "<p>Vous avez d’autres animaux à la maison ? Découvrez nos produits adaptés aux besoin de chacun.</p>"
+},
+{
+	"type":"header",
+	"content" : "Collections"
+},
+{
+  "type": "collection",
+  "id": "collection_1",
+  "label": "Collection 1"
+},
+{
+  "type": "image_picker",
+  "id": "image_1",
+  "label": "Image 1"
+},
+{
+  "type": "text",
+  "id": "title_1",
+  "label": "Titre 1",
+  "default": "Nos produits <br /> chien"
+},
+{
+  "type": "collection",
+  "id": "collection_2",
+  "label": "Collection 2"
+},
+{
+  "type": "image_picker",
+  "id": "image_2",
+  "label": "Image 2"
+},
+{
+  "type": "text",
+  "id": "title_2",
+  "label": "Titre 2",
+  "default": "Nos produits <br /> chien"
+},
+		{
+			"type":"header",
+			"content" : "Section"
+		},
+		{
+			"type": "select",
+			"id": "section_spacing",
+			"label": "Section bottom spacing",
+			"options": [
+			{
+				"value" : "section--xl-spacing",
+				"label" : "XL Spacing"
+			},{
+				"value" : "section--l-spacing",
+				"label" : "L Spacing"
+			},{
+				"value" : "section--m-spacing",
+				"label" : "M Spacing"
+			},{
+				"value" : "section--s-spacing",
+				"label" : "S Spacing"
+			},{
+				"value" : "section--xs-spacing",
+				"label" : "XS Spacing"
+			},{
+				"value" : "section--no-spacing",
+				"label" : "No Spacing"
+			}
+			]
+		},
+		{
+			"type": "select",
+			"id": "section_spacing_mobile",
+			"label": "Section bottom spacing mobile",
+			"options": [
+			{
+				"value":"",
+				"label":"Same value"
+			},
+			{
+				"value" : "mobile-section--xl-spacing",
+				"label" : "XL Spacing"
+			},{
+				"value" : "mobile-section--l-spacing",
+				"label" : "L Spacing"
+			},{
+				"value" : "mobile-section--m-spacing",
+				"label" : "M Spacing"
+			},{
+				"value" : "mobile-section--s-spacing",
+				"label" : "S Spacing"
+			},{
+				"value" : "mobile-section--xs-spacing",
+				"label" : "XS Spacing"
+			},{
+				"value" : "mobile-section--no-spacing",
+				"label" : "No Spacing"
+			}
+			],
+			"default":""
+		},
+		{
+		  "type": "select",
+		  "id": "section_bg",
+		  "label": "Couleur du fond",
+		  "options": [
+		  {
+		    "value" : "bg--white",
+		    "label" : "BG white"
+		  },
+		  {
+		    "value" : "bg--color",
+		    "label" : "BG Color"
+		  },{
+		    "value" : "bg--primary",
+		    "label" : "BG Primary"
+		  },{
+		    "value" : "bg--secondary",
+		    "label" : "BG secondary"
+		  }
+		  ]
+		}
+		],
+		"presets": [
+		{
+			"name": "Slider Collection",
+			"category": "Studio Zerance"
+		}
+		]
+	}
+	{% endschema %}

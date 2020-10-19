@@ -1,0 +1,81 @@
+<section id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="page-account">
+  <div class="container--medium customer--container account">
+    <h1 class="heading z-h2 account__title">{{ 'customer.account.title' | t }}</h1>
+    <div class="account__subtitles">
+      {% if customer.metafields.subscriptions.customer_string %}
+    <!--BeginRechargeCode-->
+    <p class="text text--normal"><a href="/tools/recurring/customer_portal/{{customer.metafields.subscriptions.customer_string}}/subscriptions/">{{ settings.account_info }}</a></p>
+    <!--EndRechargeCode-->
+  {% endif %}
+      <p class="text text--normal account__go-subscription hide"><a href="/tools/recurring/customer_portal/{{customer.metafields.subscriptions.customer_string}}/subscriptions/">{{ settings.account_info }}</a></p>
+      <p class="text text--normal account__disconnect">
+        <a href="/account/logout">Déconnexion</a>
+      </p>
+
+    </div>
+
+
+	<div class="grid">
+      <div class="grid__cell 4/12--desk mt-20 account__cell">
+
+        <h2 class="heading z-h3 account__subtitle">{{ 'customer.account.details' | t }}</h2>
+        {{ customer.default_address | format_address }}
+        <div class="address__form">
+          <a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+        </div>
+      </div>
+
+      <div class="grid__cell 8/12--desk mt-20 account__cell">
+      <h2 class="heading z-h3 account__subtitle">{{ 'customer.orders.title' | t }}</h2>
+      {% paginate customer.orders by 20 %}
+        {% if customer.orders.size != 0 %}
+          <table class="responsive-table order-table">
+            <thead>
+            <tr>
+              <th>{{ 'customer.orders.order_number' | t }}</th>
+              <th>{{ 'customer.orders.date' | t }}</th>
+              <th>{{ 'customer.orders.payment_status' | t }}</th>
+              <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+              <th>{{ 'customer.orders.total' | t }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in customer.orders %}
+              <tr class="responsive-table">
+              <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name | link_to: order.customer_url }}</td>
+              <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | date: format: 'month_day_year' }}</td>
+              <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+              <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
+              <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>{{ 'customer.orders.none' | t }}</p>
+        {% endif %}
+
+        {% if paginate.pages > 1 %}
+          {% include 'pagination' %}
+        {% endif %}
+
+      {% endpaginate %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+  {% if customer.metafields.subscriptions.customer_string%}
+  $('body').hide();
+  $(function(){
+      if(getCookie('login')){
+        deleteCookie('login');
+        window.location.href='/tools/recurring/customer_portal/{{ customer.metafields.subscriptions.customer_string }}/subscriptions/';
+      }else{
+        $('body').show();
+      }
+  })
+  {% endif %}
+</script>

@@ -1,0 +1,6 @@
+{% layout 'noindex' %}
+getter-start<div data-quickview class="background-overlay quickview">
+	<div data-quickview-product class="quickview-product">
+		{% include 'product' with ajax : true, _product : product %}
+	</div>
+</div>getter-stop

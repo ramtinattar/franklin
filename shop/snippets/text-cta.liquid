@@ -1,0 +1,80 @@
+	{% if block.id != blank %}
+		{% assign section_id = block.id %}
+	{% else %}
+		{% assign section_id = section.id %}
+	{% endif %}
+	<style>
+	{% if Settings.background_mobile != blank %}
+		@media all and (max-width : 768px){
+			#section-{{section_id}}{
+				background:url('{{ Settings.background_mobile | img_url : "master" }}');
+			}
+		}
+	{% else %}
+	@media all and (max-width : 768px){
+		#section-{{section_id}}{
+			background-color : {{ Settings.background_color_mobile }};
+		}
+	}
+	{% endif %}
+	{% if Settings.background_desktop != blank %}
+		@media all and (min-width : 768px){
+			#section-{{section_id}}{
+				background:url('{{ Settings.background_desktop | img_url : "master" }}');
+			}
+		}
+	{% endif %}
+	{% if Settings.button_width != blank %}
+		#section-{{section_id}} .arrow-button__container{
+			width : {{Settings.button_width}}px;
+		}
+	{% endif %}
+	</style>
+
+{% assign headingTag = Settings.heading_tag | default : 'h2' %}
+{% assign headingClass = Settings.heading_class | default : 'z-h2' %}
+
+<section {% if Settings.transparency_height %}data-transparency-height {% endif %}class="relative {% if Settings.hide_desktop == true %}hide-desktop {% endif %}{% if Settings.hide_mobile == true %}hide-mobile {% endif %}{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }} section text-cta" id="section-{{ section_id }}" data-section-id="{{ section_id }}" data-section-type="text-cta">
+	{% if Settings.border_top == true %}
+		<div class="page-width only-desktop">
+			<hr />
+		</div>
+	{% endif %}
+	{% if Settings.breadcrumb %}
+		<div class="text-cta__breadcrumb only-desktop">
+			{% include 'breadcrumb' %}
+		</div>
+	{% endif %}
+	<div class="{% if Settings.section_spacing %}{{ Settings.section_spacing }} {% endif %} {{ Settings.section_spacing_mobile }}">
+
+	</div>
+	<div class="page-width {{ Settings.align }} text-cta__page-container">
+		<div class="text-cta__container">
+			{% if Settings.title != blank %}
+				<{{ headingTag}} class="text-cta__title heading {{ headingClass }}">{{ Settings.title }}</{{ headingTag}}>
+			{% endif %}
+			{% if Settings.text != blank %}
+				<div class="text-cta__text t-1 {{ Settings.text_width }} {% if Settings.text_hide_mobile == true%}only-desktop{% endif %} {% if Settings.text_mobile != blank %}only-desktop{% endif %}">
+					{{ Settings.text }}
+				</div>
+			{% endif %}
+			{% if Settings.text_mobile != blank %}
+			<div class="only-mobile text-cta__text t-1 {{ Settings.text_width }}">
+				{{ Settings.text_mobile }}
+			</div>
+			{% endif %}
+			{% if Settings.button_text != blank %}
+				<div class="text-cta__buttons-container">
+					{% if Settings.arrow_button == true %}
+						{% include 'arrow-button' with href:Settings.url,  classes : 'heading', text : Settings.button_text %}
+					{% else %}
+						{% include 'button' with classes : Settings.button_type, href:Settings.url, text : Settings.button_text %}
+					{% endif %}
+					{% if Settings.button_text_2 != blank and Settings.url_2 != blank %}
+						{% include 'button' with classes : Settings.button_type_2, href:Settings.url_2, text : Settings.button_text_2 %}
+					{% endif %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</section>

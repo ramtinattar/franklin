@@ -1,0 +1,29 @@
+{% assign productHandle = cardProduct.handle %}
+{% for tag in cardProduct.tags %}
+	{% if tag contains 'handle_' %}
+		{% assign productHandle = tag | remove : 'handle_' %}
+	{% endif %}
+{% endfor %}
+{% assign quickviewAttr = 'data-open-quickview="echantillon" data-product-handle="' | append : productHandle | append : '"' %}
+
+{% assign __dimensions       = dimensions | default: "600x" %}
+
+{% if cardProduct != blank %}
+<div class="product-card__echantillon">
+	<div class="product-card__image-container__echantillon">
+		<img src="{{cardProduct.featured_image | img_url:'200x'}}" alt="cardProduct.featured_image.alt">
+	</div>
+	<div class="product-card__content__echantillon">
+			<h4 class="product-card__title z-h10 heading">{{ cardProduct.title }}</h4>
+			<h5 class="product-card__subtitle uppercase text t-7">{{ cardProduct.vendor }}</h5>
+
+		<div class="only-desktop product-card__content__echantillon-quick-view" {{ quickviewAttr }}>
+			{% include 'icon-eye' %}
+		</div>
+	</div>
+	<div class="product-card__checkbox__echantillon" data-echantillon-variant-id="{{ cardProduct.first_available_variant.id }}">
+		<input data-echantillons-checkbox class="product-card__checkbox__echantillon--hidden" type="checkbox" name="" value="">
+	</div>
+
+</div>
+{% endif %}

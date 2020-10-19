@@ -1,0 +1,137 @@
+{% comment %}
+ copy the content in the snippet cart-item and paste inside script tag
+{% endcomment %}
+
+{% raw %}
+<script data-cart-item--subscribe-off type="text/x-handlebars-template">
+  <div data-cart-item data-item-status="SUBSCRIBE-OFF" class="cart-item cart-item--subscribe-off">
+    <div class="cart-item__grid">
+      <div class="cart-item__image-container">
+        <a href="{{ item_url }}">
+          <img src="{{ item_image }}" alt="{{ item_product_title }} - {{ item_variant_title }}" />
+        </a>
+      </div>
+      <div class="cart-item__content">
+        <div class="cart-item__header">
+          <div class="z-h8 heading cart-item__title">{{ item_product_title }} (x<span data-item-quantity data-quantity="{{ item_quantity }}" >{{ item_quantity }}</span>)</div>
+          <div class="z-h8 heading cart-item__price">
+            <span>{{ item_price }}</span>
+          </div>
+        </div>
+        <div class="cart-item__infos">
+          <div class="cart-item__info-left">
+            <div class="text t-11 uppercase">{{ item_vendor }}</div>
+            <div class="text t-11 uppercase">Conditionnement {{ item_variant_title }}</div>
+          </div>
+          <div class="cart-item__info-right uppercase text t-13 cart-item__delete" data-item-update="{{ item_key }}" data-item-quantity="0">Supprimer</div>
+        </div>
+        <div class="cart-item__oneshot-container">
+          <div class="cart-item__oneshot-title-quantity">
+            <!-- <div class="text t-4 uppercase bold cart-item__subscription-title">
+              Produit unique
+            </div> -->
+            <div class="cart-item__quantity-container product__qty-container">
+              <div data-item-update="{{ item_key }}" data-item-quantity="{{ item_quantity_minus }}" class="product__qty-btn">
+                -
+              </div>
+              <div data-item-quantity data-quantity="{{ item_quantity }}" class="product__qty bold t-11">
+                {{ item_quantity }}
+              </div>
+              <div data-item-update="{{ item_key }}" data-item-quantity="{{ item_quantity_plus }}" class="product__qty-btn">
+                +
+              </div>
+            </div>
+          </div>
+          <div class="flex-grow">
+
+          </div>
+          <div class="cart-item__subscription-right">
+            <div data-item-popup-toggle data-item-popup-key="{{ item_key }}" data-item-popup class="text t-13 cart-item__delete">
+              Modifier
+            </div>
+          </div>
+        </div>
+        <div class="cart-item__highlight-container">
+          <div class="cart-item__highlight">
+            <div class="cart-item__highlight-subscribe">
+              <div class="product__choice-outbox" data-item-subscribe data-item-key="{{ item_key }}">
+                <div class="product__choice-inbox">
+
+                </div>
+              </div>
+              <div class="text t-5 uppercase cart-item__highlight-title">
+                S'abonner (-{{ item_discount_percentage }}%)
+              </div>
+            </div>
+            <div class="cart-item__highlight-prices">
+              <span class="cart-item__highlight-oneshot-price">{{ item_price }}</span>
+              <span class="cart-item__highlight-subscription-price bold">{{ item_discount_variant_price }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="cart-item__highlight-why">
+          <div class="subscribe-popup__hover text t-13">
+            {{ product_why_subscribe }}
+            <div class="subscribe-popup__block">
+              <div class="subscribe-popup__block-content">
+                <div class="heading z-h12 subscribe-popup__title">
+                  {{ subscribe_popup_title }}
+                </div>
+                <div class="subscribe-popup__description">
+                  <div class="popup__picto-container">
+                    <img src="{{ subscribe_popup_picto_1 }}" class="popup__picto" alt="Picto popup 1"/>
+                    <div class="text t-7 bold uppercase popup__title">
+                      {{ subscribe_popup_title_1 }}
+                    </div>
+                    <div class="text t-10 popup__text">
+                      {{ subscribe_popup_text_1 }}
+                    </div>
+                  </div>
+                  <div class="popup__picto-container">
+                    <img src="{{ subscribe_popup_picto_2 }}" class="popup__picto" alt="Picto popup 2"/>
+                    <div class="text t-7 bold uppercase popup__title">
+                      {{ subscribe_popup_title_2 }}
+                    </div>
+                    <div class="text t-10 popup__text">
+                      {{ subscribe_popup_text_2 }}
+                    </div>
+                  </div>
+                  <div class="popup__picto-container">
+                    <img src="{{ subscribe_popup_picto_3 }}" class="popup__picto" alt="Picto popup 3"/>
+                    <div class="text t-7 bold uppercase popup__title">
+                      {{ subscribe_popup_title_3 }}
+                    </div>
+                    <div class="text t-10 popup__text">
+                      {{ subscribe_popup_text_3 }}
+                    </div>
+                  </div>
+                  <div class="popup__picto-container">
+                    <img src="{{ subscribe_popup_picto_4 }}" class="popup__picto" alt="Picto popup 4"/>
+                    <div class="text t-7 bold uppercase popup__title">
+                      {{ subscribe_popup_title_4 }}
+                    </div>
+                    <div class="text t-10 popup__text">
+                      {{ subscribe_popup_text_4 }}
+                    </div>
+                  </div>
+                </div>
+                <div class="subscribe-popup__link">
+                  <div class="arrow-button__container">
+                    <a href="{{ subscribe_popup_url }}" class="arrow-button__link secondary collection-slider__button" target="_blank">
+                      <div class="arrow-button arrow-button--white">
+                        {{ subscribe_popup_cta }}
+                        <div class="arrow-button__line"></div>
+                        <div class="arrow-button__line--hover"></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+{% endraw %}
